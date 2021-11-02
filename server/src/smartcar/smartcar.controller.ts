@@ -17,9 +17,23 @@ export class SmartcarController {
   }
 
   @Get('exchange')
-  exchange(@Query('code') code: number, @Res() response: Response) {
-    this.smartcarService.exchange(code);
-    const redirectUri = this.configService.get<string>('SMARTCAR_REDIRECT_URL');
-    response.redirect(redirectUri);
+  async exchange(@Query('code') code: string, @Query('error') error: string) {
+    console.log(`Code: ${code}`);
+
+    if (error) {
+      // the user denied your requested permissions
+      return new Error(error);
+    }
+
+    return await this.smartcarService.exchange(code);
+    // const redirectUri = this.configService.get<string>(
+    //   'SMARTCAR_REDIRECT_URI',
+    // ) as string;
+    // response.redirect(redirectUri);
+  }
+
+  @Get('vehicle')
+  async getVehicle() {
+    return await this.smartcarService.getVehicle();
   }
 }
