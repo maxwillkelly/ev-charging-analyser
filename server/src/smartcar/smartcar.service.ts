@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import Smartcar, { Access, AuthClient } from 'smartcar';
+import SmartCar, { Access, AuthClient } from 'smartcar';
+import { GetVehicleDto } from './dto/getVehicle.dto';
 
 @Injectable()
-export class SmartcarService {
+export class SmartCarService {
   private readonly client: AuthClient = null;
-  private access: Access = null;
 
   constructor(private configService: ConfigService) {
     const clientId = this.configService.get<string>('SMARTCAR_CLIENT_ID');
@@ -14,7 +14,7 @@ export class SmartcarService {
     );
     const redirectUri = this.configService.get<string>('SMARTCAR_REDIRECT_URI');
 
-    this.client = new Smartcar.AuthClient({
+    this.client = new SmartCar.AuthClient({
       clientId,
       clientSecret,
       redirectUri,
@@ -27,18 +27,17 @@ export class SmartcarService {
     return this.client.getAuthUrl(scope);
   }
 
-  async exchange(code: string): Promise<boolean> {
-    this.access = await this.client.exchangeCode(code);
-    return true;
+  async exchange(code: string): Promise<Access> {
+    return await this.client.exchangeCode(code);
   }
 
-  async getVehicle(): Promise<Record<string, any>> {
-    const vehicles = await Smartcar.getVehicles(this.access.accessToken);
+  async getVehicle(smartCarAccessToken: string): Promise<Record<string, any>> {
+    const vehicles = await SmartCar.getVehicles(smartCarAccessToken);
 
     // instantiate first vehicle in vehicle list
-    const vehicle = new Smartcar.Vehicle(
+    const vehicle = new SmartCar.Vehicle(
       vehicles.vehicles[0],
-      this.access.accessToken,
+      smartCarAccessToken,
     );
 
     // get identifying information about a vehicle

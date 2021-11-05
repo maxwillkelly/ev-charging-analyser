@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { AppController } from './app.controller';
-import { SmartcarService } from './smartcar/smartcar.service';
-import { SmartcarController } from './smartcar/smartcar.controller';
+import { SmartCarService } from './smartCar/smartCar.service';
+import { SmartCarController } from './smartCar/smartCar.controller';
 
 const validationSchema = Joi.object({
   PORT: Joi.number().default(5000),
@@ -19,7 +19,7 @@ const validationSchema = Joi.object({
       validationSchema,
     }),
   ],
-  controllers: [AppController, SmartcarController],
-  providers: [SmartcarService],
+  controllers: [AppController, SmartCarController],
+  providers: [SmartCarService],
 })
 export class AppModule {}

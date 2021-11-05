@@ -1,39 +1,30 @@
-import { Controller, Get, Query, Res } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Body, Controller, Get, Query, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { SmartcarService } from './smartcar.service';
-
-@Controller('smartcar')
-export class SmartcarController {
-  constructor(
-    private readonly smartcarService: SmartcarService,
-    private configService: ConfigService,
-  ) {}
+import { SmartCarService } from './smartCar.service';
+import { Access } from 'smartcar';
+import { GetVehicleDto } from './dto/getVehicle.dto';
+@Controller('smartCar')
+export class SmartCarController {
+  constructor(private readonly smartCarService: SmartCarService) {}
 
   @Get('login')
   login(@Res() response: Response) {
-    const link = this.smartcarService.getAuthUrl();
+    const link = this.smartCarService.getAuthUrl();
     response.redirect(link);
   }
 
   @Get('exchange')
-  async exchange(@Query('code') code: string, @Query('error') error: string) {
-    console.log(`Code: ${code}`);
+  async exchange(
+    @Query('code') code: string,
+    @Query('error') error: string,
+  ): Promise<Access | Error> {
+    if (error) return new Error(error);
 
-    if (error) {
-      // the user denied your requested permissions
-      return new Error(error);
-    }
-
-    return await this.smartcarService.exchange(code);
-    // const redirectUri = this.configService.get<string>(
-    //   'SMARTCAR_REDIRECT_URI',
-    // ) as string;
-    // response.redirect(redirectUri);
+    return await this.smartCarService.exchange(code);
   }
 
   @Get('vehicle')
-  async getVehicle() {
-    return await this.smartcarService.getVehicle();
+  async getVehicle(@Body() dto: GetVehicleDto) {
+    return await this.smartCarService.getVehicle(dto.smartCarAccessToken);
   }
 }
