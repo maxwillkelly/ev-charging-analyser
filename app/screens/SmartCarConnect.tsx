@@ -5,10 +5,13 @@ import { useMutation } from "react-query";
 import { useUserStore } from "../stores/useUserStore";
 import { GetSmartCarTokenDto } from "../api/dtos/GetSmartCarToken.dto";
 import { getSmartCarTokenAsync } from "../api/smartCarApi";
+import { RootStackScreenProps } from "../types";
 
 type Status = "Initial" | "Loading" | "Success" | "Error";
 
-const SmartCarConnect: React.FC = () => {
+const SmartCarConnect = ({
+  navigation,
+}: RootStackScreenProps<"SmartCarConnect">) => {
   const [status, setStatus] = useState<Status>("Initial");
   const [error, setError] = useState<Error>();
   const { smartCarToken, setSmartCarToken } = useUserStore();
@@ -20,7 +23,7 @@ const SmartCarConnect: React.FC = () => {
       onError: (error) => {
         setError(error);
         setStatus("Error");
-      },
+      }, 
       onSuccess: (data) => {
         setSmartCarToken(data);
         setStatus("Success");
@@ -44,13 +47,16 @@ const SmartCarConnect: React.FC = () => {
       </View>
     );
 
-  if (status === "Success")
-    return (
-      <View style={styles.container}>
-        <Text>Car connection successful</Text>
-        <Text>{JSON.stringify(smartCarToken, null, 2)}</Text>
-      </View>
-    );
+  if (status === "Success") {
+    navigation.navigate("Vehicle");
+
+    // return (
+    //   <View style={styles.container}>
+    //     <Text>Car connection successful</Text>
+    //     <Text>{JSON.stringify(smartCarToken, null, 2)}</Text>
+    //   </View>
+    // );
+  }
 
   if (status === "Error") {
     return (

@@ -21,6 +21,7 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import SmartCarConnect from "../screens/SmartCarConnect";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
+import VehicleScreen from "../screens/VehicleScreen";
 import {
   RootStackParamList,
   RootTabParamList,
@@ -66,6 +67,11 @@ function RootNavigator() {
         name="SmartCarConnect"
         component={SmartCarConnect}
         options={{ title: "Connect Car" }}
+      />
+      <Stack.Screen
+        name="Vehicle"
+        component={VehicleScreen}
+        options={{ title: "Vehicle" }}
       />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />

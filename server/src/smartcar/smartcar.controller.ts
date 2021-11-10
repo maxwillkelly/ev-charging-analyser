@@ -1,8 +1,16 @@
-import { Body, Controller, Get, Query, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { SmartCarService } from './smartCar.service';
 import { Access } from 'smartcar';
-import { GetVehicleDto } from './dto/getVehicle.dto';
+
 @Controller('smartCar')
 export class SmartCarController {
   constructor(private readonly smartCarService: SmartCarService) {}
@@ -24,7 +32,10 @@ export class SmartCarController {
   }
 
   @Get('vehicle')
-  async getVehicle(@Body() dto: GetVehicleDto) {
-    return await this.smartCarService.getVehicle(dto.smartCarAccessToken);
+  async getVehicle(
+    @Query('smartCarAccessToken', ParseUUIDPipe) smartCarAccessToken: string,
+  ) {
+    console.log(smartCarAccessToken);
+    return await this.smartCarService.getVehicle(smartCarAccessToken);
   }
 }
