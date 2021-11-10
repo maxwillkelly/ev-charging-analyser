@@ -64,7 +64,7 @@ const SmartCarConnect: React.FC = () => {
   return (
     <WebView
       style={styles.container}
-      originWhitelist={["*"]}
+      originWhitelist={["http://localhost:3000/smartcar/login", "https"]}
       source={{ uri: "http://localhost:5000/smartcar/login" }}
       onNavigationStateChange={handleNavigationStateChangeAsync}
     />
