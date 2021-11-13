@@ -1,10 +1,18 @@
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import morgan from 'morgan';
 
 async function bootstrap() {
-  const PORT = process.env.PORT || 5000;
   const app = await NestFactory.create(AppModule);
+  app.use(morgan('tiny'));
+  app.enableCors();
+  app.useGlobalPipes(new ValidationPipe());
+
+  const configService = app.get(ConfigService);
+  const port = configService.get<number>('PORT') as number;
 
   const config = new DocumentBuilder()
     .setTitle('ev-charging-analyser-server')
@@ -15,7 +23,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/', app, document);
 
-  await app.listen(PORT);
+  await app.listen(port);
 }
 
 bootstrap();
