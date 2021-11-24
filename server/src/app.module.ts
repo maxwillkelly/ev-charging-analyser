@@ -13,6 +13,7 @@ const validationSchema = Joi.object({
   POSTGRES_DB: Joi.string(),
   POSTGRES_USER: Joi.string(),
   POSTGRES_PASSWORD: Joi.string(),
+  POSTGRES_PRISMA_URL: Joi.string(),
 });
 
 @Module({
