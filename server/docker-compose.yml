@@ -12,3 +12,27 @@ services:
       - ${SERVER_PORT}:${SERVER_PORT}
       - 9229:9229
     command: yarn start:dev
+    networks:
+      - api-postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14.1-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PG_DATA: /var/lib/postgresql/data
+    ports: 
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - api-postgres
+
+networks:
+  api-postgres:
+
+volumes:
+  pgdata:

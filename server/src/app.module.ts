@@ -10,6 +10,9 @@ const validationSchema = Joi.object({
   SMARTCAR_CLIENT_ID: Joi.string().uuid(),
   SMARTCAR_CLIENT_SECRET: Joi.string().uuid(),
   SMARTCAR_REDIRECT_URI: Joi.string().uri(),
+  POSTGRES_DB: Joi.string(),
+  POSTGRES_USER: Joi.string(),
+  POSTGRES_PASSWORD: Joi.string(),
 });
 
 @Module({
