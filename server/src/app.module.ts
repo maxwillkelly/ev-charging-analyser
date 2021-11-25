@@ -1,10 +1,14 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { AppController } from './app.controller';
 import { SmartCarService } from './smartCar/smartCar.service';
 import { SmartCarController } from './smartCar/smartCar.controller';
 import { PrismaService } from './prisma/prisma.service';
+import { AuthModule } from './auth/auth.module';
+import { UsersController } from './users/users.controller';
+import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
 
 const validationSchema = Joi.object({
   SERVER_PORT: Joi.number().default(5000),
@@ -17,14 +21,17 @@ const validationSchema = Joi.object({
   POSTGRES_PRISMA_URL: Joi.string(),
 });
 
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema,
     }),
+    AuthModule,
+    UsersModule,
   ],
-  controllers: [AppController, SmartCarController],
-  providers: [SmartCarService, PrismaService],
+  controllers: [AppController, SmartCarController, UsersController],
+  providers: [SmartCarService, PrismaService, UsersService],
 })
 export class AppModule {}
