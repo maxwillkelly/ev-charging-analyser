@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { useQuery } from "react-query";
 import { VehicleDto } from "../api/dtos/VehicleDto.dto";

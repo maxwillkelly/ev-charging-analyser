@@ -1,13 +1,12 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Provider as PaperProvider } from "react-native-paper";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
-
-// import 'react-native-url-polyfill/auto';
 
 const queryClient = new QueryClient();
 
@@ -20,10 +19,12 @@ export default function App() {
   } else {
     return (
       <QueryClientProvider client={queryClient}>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </SafeAreaProvider>
+        <PaperProvider>
+          <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </SafeAreaProvider>
+        </PaperProvider>
       </QueryClientProvider>
     );
   }
