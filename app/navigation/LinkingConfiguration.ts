@@ -15,20 +15,41 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          // TabOne: {
+          //   screens: {
+          //     TabOneScreen: "one",
+          //   },
+          // },
+          Car: {
             screens: {
-              TabOneScreen: "one",
+              CarScreen: "car",
             },
           },
-          TabTwo: {
+          Map: {
             screens: {
-              TabTwoScreen: "two",
+              MapScreen: "map",
+            },
+          },
+          Journeys: {
+            screens: {
+              JourneysScreen: "journeys",
+            },
+          },
+          Charging: {
+            screens: {
+              ChargingScreen: "charging",
+            },
+          },
+          Settings: {
+            screens: {
+              SettingsScreen: "settings",
             },
           },
         },
       },
       SmartCarConnect: "smartCarConnect",
       Modal: "modal",
+      Login: "login",
       NotFound: "*",
     },
   },

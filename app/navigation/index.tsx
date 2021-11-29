@@ -16,11 +16,12 @@ import { ColorSchemeName, Pressable } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
+import LoginScreen from "../screens/LoginScreen";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import SmartCarConnect from "../screens/SmartCarConnect";
 import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import CarScreen from "../screens/CarScreen";
 import VehicleScreen from "../screens/VehicleScreen";
 import {
   RootStackParamList,
@@ -28,6 +29,10 @@ import {
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import MapScreen from "../screens/MapScreen";
+import JourneysScreen from "../screens/JourneysScreen";
+import ChargingScreen from "../screens/ChargingScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 
 export default function Navigation({
   colorScheme,
@@ -53,6 +58,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ title: "Login" }}
+      />
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
@@ -91,12 +101,12 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Car"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
@@ -118,12 +128,44 @@ function BottomTabNavigator() {
             </Pressable>
           ),
         })}
+      /> */}
+      <BottomTab.Screen
+        name="Car"
+        component={CarScreen}
+        options={{
+          title: "Car",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="Map"
+        component={MapScreen}
         options={{
-          title: "Tab Two",
+          title: "Map",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Journeys"
+        component={JourneysScreen}
+        options={{
+          title: "Journeys",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Charging"
+        component={ChargingScreen}
+        options={{
+          title: "Charging",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          title: "Settings",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
