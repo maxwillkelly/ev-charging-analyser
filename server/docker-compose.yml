@@ -36,8 +36,6 @@ services:
       - api-postgres
 
 networks:
-  api-postgres:
-
-    null
+  api-postgres: null
 volumes:
   pgdata: null
