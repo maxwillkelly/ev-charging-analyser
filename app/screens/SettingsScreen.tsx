@@ -2,10 +2,10 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 
-const CarScreen = () => {
+const SettingsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Car</Text>
+      <Text style={styles.title}>Settings</Text>
     </View>
   );
 }
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CarScreen;
+export default SettingsScreen;
