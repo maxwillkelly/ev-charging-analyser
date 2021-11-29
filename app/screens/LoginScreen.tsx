@@ -3,6 +3,11 @@ import { View } from "react-native";
 import { Button, TextInput, HelperText } from "react-native-paper";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { loginAsync } from "../api/loginApi";
+import { useMutation } from "react-query";
+import { LoginDto, LoginResponse } from "../api/dtos/Login.dto";
+import { AxiosError } from "axios";
+import { RootStackScreenProps } from "../types";
 
 const validationSchema = yup.object({
   email: yup
@@ -15,13 +20,20 @@ const validationSchema = yup.object({
     .required("Password is required"),
 });
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
+  const mutation = useMutation<LoginResponse, AxiosError, LoginDto>(
+    "userToken",
+    loginAsync,
+    {
+      onSuccess: () => navigation.navigate("Root"),
+      onError: (error) => console.log(error),
+    }
+  );
+
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: (values) => mutation.mutate(values),
   });
 
   return (
@@ -32,6 +44,7 @@ const LoginScreen = () => {
           value={formik.values.email}
           onChangeText={formik.handleChange("email")}
           onBlur={formik.handleBlur("email")}
+          autoComplete
         />
         <HelperText
           type="error"
@@ -48,6 +61,8 @@ const LoginScreen = () => {
           onChangeText={formik.handleChange("password")}
           error={formik.touched.password && Boolean(formik.errors.password)}
           onBlur={formik.handleBlur("password")}
+          autoComplete={false}
+          secureTextEntry
         />
         <HelperText
           type="error"
@@ -56,7 +71,7 @@ const LoginScreen = () => {
           {formik.errors.password}
         </HelperText>
       </View>
-      <Button onPress={formik.handleSubmit}>Submit</Button>
+      <Button onPress={formik.handleSubmit}>Sign In</Button>
     </View>
   );
 };

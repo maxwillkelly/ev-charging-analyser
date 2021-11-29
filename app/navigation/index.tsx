@@ -21,7 +21,7 @@ import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import SmartCarConnect from "../screens/SmartCarConnect";
 import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import CarScreen from "../screens/CarScreen";
 import VehicleScreen from "../screens/VehicleScreen";
 import {
   RootStackParamList,
@@ -59,7 +59,7 @@ function RootNavigator() {
         component={LoginScreen}
         options={{ title: "Login" }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
         options={{ headerShown: false }}
@@ -81,7 +81,7 @@ function RootNavigator() {
       />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group> */}
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -126,10 +126,10 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="Car"
+        component={CarScreen}
         options={{
-          title: "Tab Two",
+          title: "Car",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />

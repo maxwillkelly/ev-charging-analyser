@@ -13,22 +13,22 @@ const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl("/")],
   config: {
     screens: {
-      // Root: {
-      //   screens: {
-      //     TabOne: {
-      //       screens: {
-      //         TabOneScreen: "one",
-      //       },
-      //     },
-      //     TabTwo: {
-      //       screens: {
-      //         TabTwoScreen: "two",
-      //       },
-      //     },
-      //   },
-      // },
-      // SmartCarConnect: "smartCarConnect",
-      // Modal: "modal",
+      Root: {
+        screens: {
+          TabOne: {
+            screens: {
+              TabOneScreen: "one",
+            },
+          },
+          Car: {
+            screens: {
+              CarScreen: "car",
+            },
+          },
+        },
+      },
+      SmartCarConnect: "smartCarConnect",
+      Modal: "modal",
       Login: "login",
       NotFound: "*",
     },
