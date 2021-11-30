@@ -1,16 +1,31 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, View } from "../components/Themed";
+import colours from "../styles/colours";
+import fonts from "../styles/fonts";
 
 const BatteryCard = () => {
-  return null;
+  return (
+    <View>
+      <Text>80%</Text>
+    </View>
+  );
 };
 
 const RangeCard = () => {
   return (
-    <View>
+    <View style={styles.rightCard}>
       <Text style={styles.cardHeading}>Range</Text>
-      <Text style={styles.cardHeading}>350 miles</Text>
+      <View style={styles.line}>
+        <MaterialCommunityIcons
+          name="map-marker-distance"
+          size={30}
+          color={colours.secondary}
+        />
+        {/* <View style={styles.divider} /> */}
+        <Text style={styles.cardHeading}>350 miles</Text>
+      </View>
     </View>
   );
 };
@@ -26,10 +41,13 @@ const LockCard = () => {
 const CarScreen = () => {
   return (
     <View style={styles.container}>
+      <View style={styles.carPlaceholder}></View>
       <Text style={styles.title}>Andy's Tesla Model X</Text>
-      <BatteryCard />
-      <RangeCard />
-      <LockCard />
+      <View style={styles.appletContainer}>
+        {/* <BatteryCard /> */}
+        <RangeCard />
+        {/* <LockCard /> */}
+      </View>
     </View>
   );
 };
@@ -41,12 +59,36 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
+    fontFamily: fonts.semiBold,
     fontSize: 20,
-    fontWeight: "bold",
+    marginVertical: 10,
   },
   cardHeading: {
     fontSize: 16,
     fontWeight: "400",
+  },
+  line: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  rightCard: {
+    backgroundColor: colours.lightestGrey,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    // width: 130,
+  },
+  divider: {
+    flex: 1,
+  },
+  carPlaceholder: {
+    height: 500,
+    borderColor: colours.jet,
+  },
+  appletContainer: {
+    flex: 1,
+    alignItems: "flex-start",
   },
 });
 

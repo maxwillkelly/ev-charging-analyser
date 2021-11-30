@@ -10,6 +10,12 @@ import colours from "./styles/colours";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
+import {
+  Montserrat_500Medium,
+  Montserrat_600SemiBold,
+  Montserrat_700Bold,
+  useFonts,
+} from "@expo-google-fonts/montserrat";
 
 const queryClient = new QueryClient();
 
@@ -20,15 +26,15 @@ const theme: Theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: colours.primary,
-    accent: '#03dac4',
-    background: '#f6f6f6',
+    accent: "#03dac4",
+    background: "#f6f6f6",
     surface: colours.white,
     error: colours.error,
     text: colours.black,
-    onSurface: '#000000',
-    disabled: color('#000000').alpha(0.26).rgb().string(),
-    placeholder: color('#000000').alpha(0.54).rgb().string(),
-    backdrop: color('#000000').alpha(0.5).rgb().string(),
+    onSurface: "#000000",
+    disabled: color("#000000").alpha(0.26).rgb().string(),
+    placeholder: color("#000000").alpha(0.54).rgb().string(),
+    backdrop: color("#000000").alpha(0.5).rgb().string(),
     notification: colours.lightestGrey,
   },
   animation: {
@@ -40,7 +46,13 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
-  if (!isLoadingComplete) {
+  let [fontsLoaded] = useFonts({
+    Montserrat_500Medium,
+    Montserrat_600SemiBold,
+    Montserrat_700Bold,
+  });
+
+  if (!isLoadingComplete || !fontsLoaded) {
     return null;
   } else {
     return (
