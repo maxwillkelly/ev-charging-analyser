@@ -42,11 +42,14 @@ const LockCard = () => {
     <View style={styles.rightCard}>
       <Text style={styles.cardHeading}>Car Locked</Text>
       <View style={styles.cardCentred}>
+      <View style={styles.cardCentredVertical}>
+
         <MaterialCommunityIcons
           name="lock-open"
           size={30}
           color={colours.secondary}
         />
+        </View>
       </View>
     </View>
   );
@@ -109,10 +112,17 @@ const styles = StyleSheet.create({
   },
   cardCentred: {
     flex: 1,
+    flexDirection: "row",
     backgroundColor: colours.lightestGrey,
     alignContent: "center",
     justifyContent: "center",
     width: "100%",
+  },
+  cardCentredVertical: {
+    backgroundColor: colours.lightestGrey,
+    flexDirection: "column",
+    alignContent: "center",
+    justifyContent: "center",
   },
   line: {
     backgroundColor: colours.lightestGrey,
