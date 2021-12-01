@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   NavigationContainer,
@@ -134,7 +134,7 @@ function BottomTabNavigator() {
         component={CarScreen}
         options={{
           title: "Car",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="car" size={30} color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -142,7 +142,7 @@ function BottomTabNavigator() {
         component={MapScreen}
         options={{
           title: "Map",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="map-marker" size={30} color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -150,7 +150,7 @@ function BottomTabNavigator() {
         component={JourneysScreen}
         options={{
           title: "Journeys",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="map-marker-path" size={30} color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -158,7 +158,7 @@ function BottomTabNavigator() {
         component={ChargingScreen}
         options={{
           title: "Charging",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="lightning-bolt" size={30} color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -166,7 +166,7 @@ function BottomTabNavigator() {
         component={SettingsScreen}
         options={{
           title: "Settings",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="car-cog" size={30} color={color} />,
         }}
       />
     </BottomTab.Navigator>
