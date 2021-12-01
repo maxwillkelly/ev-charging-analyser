@@ -7,8 +7,13 @@ import fonts from "../styles/fonts";
 
 const BatteryCard = () => {
   return (
-    <View>
-      <Text>80%</Text>
+    <View style={styles.leftCard}>
+      <Text style={styles.cardHeading}>Battery</Text>
+      <View style={styles.cardCentred}>
+        <View style={styles.batteryWidgetVertical}>
+          <Text style={styles.batteryPercentage}>80%</Text>
+        </View>
+      </View>
     </View>
   );
 };
@@ -22,9 +27,10 @@ const RangeCard = () => {
           name="map-marker-distance"
           size={30}
           color={colours.secondary}
+          style={styles.leftIcon}
         />
         {/* <View style={styles.divider} /> */}
-        <Text style={styles.cardHeading}>350 miles</Text>
+        <Text style={styles.cardBody}>350 miles</Text>
       </View>
     </View>
   );
@@ -32,8 +38,15 @@ const RangeCard = () => {
 
 const LockCard = () => {
   return (
-    <View>
-      <Text style={styles.cardHeading}>Car Unlocked</Text>
+    <View style={styles.rightCard}>
+      <Text style={styles.cardHeading}>Car Locked</Text>
+      <View style={styles.cardCentred}>
+        <MaterialCommunityIcons
+          name="lock-open"
+          size={30}
+          color={colours.secondary}
+        />
+      </View>
     </View>
   );
 };
@@ -44,9 +57,9 @@ const CarScreen = () => {
       <View style={styles.carPlaceholder}></View>
       <Text style={styles.title}>Andy's Tesla Model X</Text>
       <View style={styles.appletContainer}>
-        {/* <BatteryCard /> */}
+        <BatteryCard />
         <RangeCard />
-        {/* <LockCard /> */}
+        <LockCard />
       </View>
     </View>
   );
@@ -61,34 +74,81 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: fonts.semiBold,
     fontSize: 20,
-    marginVertical: 10,
+    marginVertical: 20,
+  },
+  batteryPercentage: {
+    fontFamily: fonts.medium,
+    fontSize: 28,
+    textAlign: "center",
+  },
+  batteryWidgetVertical: {
+    backgroundColor: colours.green,
+    borderRadius: 6,
+    marginVertical: 5,
+    marginHorizontal: 2,
+    width: "100%",
+    height: "100%"
   },
   cardHeading: {
+    fontFamily: fonts.semiBold,
     fontSize: 16,
-    fontWeight: "400",
+  },
+  cardBody: {
+    fontFamily: fonts.medium,
+    fontSize: 20,
+  },
+  cardCentred: {
+    flex: 1,
+    backgroundColor: colours.lightestGrey,
+    alignContent: "center",
+    justifyContent: "center",
+    width: "100%",
   },
   line: {
+    backgroundColor: colours.lightestGrey,
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
-  rightCard: {
+  leftCard: {
+    borderRadius: 6,
+    margin: 10,
+    padding: 10,
     backgroundColor: colours.lightestGrey,
+    height: 198,
+    width: 142,
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  },
+  rightCard: {
+    borderRadius: 6,
+    margin: 10,
+    padding: 10,
+    backgroundColor: colours.lightestGrey,
+    height: 94,
+    width: 177,
     alignItems: "flex-start",
     justifyContent: "center",
-    // width: 130,
   },
   divider: {
     flex: 1,
   },
   carPlaceholder: {
-    height: 500,
+    marginTop: 80,
+    height: 162,
+    width: 330,
+    borderWidth: 1,
     borderColor: colours.jet,
   },
   appletContainer: {
     flex: 1,
+    flexWrap: "wrap",
+    alignContent: "stretch",
     alignItems: "flex-start",
+  },
+  leftIcon: {
+    marginRight: 30,
   },
 });
 

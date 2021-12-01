@@ -11,6 +11,8 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import {
+  Montserrat_300Light,
+  Montserrat_400Regular,
   Montserrat_500Medium,
   Montserrat_600SemiBold,
   Montserrat_700Bold,
@@ -47,6 +49,8 @@ export default function App() {
   const colorScheme = useColorScheme();
 
   let [fontsLoaded] = useFonts({
+    Montserrat_300Light,
+    Montserrat_400Regular,
     Montserrat_500Medium,
     Montserrat_600SemiBold,
     Montserrat_700Bold,
