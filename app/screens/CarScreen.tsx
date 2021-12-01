@@ -12,6 +12,7 @@ const BatteryCard = () => {
       <View style={styles.cardCentred}>
         <View style={styles.batteryWidgetVertical}>
           <Text style={styles.batteryPercentage}>80%</Text>
+          <View style={styles.batteryLevel}></View>
         </View>
       </View>
     </View>
@@ -77,17 +78,26 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   batteryPercentage: {
+    color: colours.white,
     fontFamily: fonts.medium,
     fontSize: 28,
     textAlign: "center",
   },
-  batteryWidgetVertical: {
+  batteryLevel: {
     backgroundColor: colours.green,
+    width: "100%",
+    height: "80%",
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
+  },
+  batteryWidgetVertical: {
+    backgroundColor: colours.lightGrey,
     borderRadius: 6,
     marginVertical: 5,
     marginHorizontal: 2,
-    width: "100%",
-    height: "100%"
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   cardHeading: {
     fontFamily: fonts.semiBold,
