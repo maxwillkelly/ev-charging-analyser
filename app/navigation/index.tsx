@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   NavigationContainer,
@@ -33,6 +33,8 @@ import MapScreen from "../screens/MapScreen";
 import JourneysScreen from "../screens/JourneysScreen";
 import ChargingScreen from "../screens/ChargingScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import fonts from "../styles/fonts";
+import colours from "../styles/colours";
 
 export default function Navigation({
   colorScheme,
@@ -102,9 +104,27 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Car"
-      screenOptions={{
+      screenOptions={({ route, navigation }) => ({
         tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}
+        headerTitleStyle: {
+          fontFamily: fonts.medium,
+        },
+        headerLeft: () => (
+          <Pressable
+            onPress={() => navigation.navigate("Modal")}
+            style={({ pressed }) => ({
+              opacity: pressed ? 0.5 : 1,
+            })}
+          >
+            <MaterialCommunityIcons
+              name="arrow-left"
+              size={25}
+              color={colours.secondary}
+              style={{ marginHorizontal: 15 }}
+            />
+          </Pressable>
+        ),
+      })}
     >
       {/* <BottomTab.Screen
         name="TabOne"
@@ -133,8 +153,11 @@ function BottomTabNavigator() {
         name="Car"
         component={CarScreen}
         options={{
-          title: "Car",
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="car" size={30} color={color} />,
+          title: "Andy's Tesla Model X",
+          tabBarLabel: "Car",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="car" size={30} color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
@@ -142,7 +165,9 @@ function BottomTabNavigator() {
         component={MapScreen}
         options={{
           title: "Map",
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="map-marker" size={30} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="map-marker" size={30} color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
@@ -150,7 +175,13 @@ function BottomTabNavigator() {
         component={JourneysScreen}
         options={{
           title: "Journeys",
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="map-marker-path" size={30} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="map-marker-path"
+              size={30}
+              color={color}
+            />
+          ),
         }}
       />
       <BottomTab.Screen
@@ -158,7 +189,13 @@ function BottomTabNavigator() {
         component={ChargingScreen}
         options={{
           title: "Charging",
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="lightning-bolt" size={30} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="lightning-bolt"
+              size={30}
+              color={color}
+            />
+          ),
         }}
       />
       <BottomTab.Screen
@@ -166,7 +203,9 @@ function BottomTabNavigator() {
         component={SettingsScreen}
         options={{
           title: "Settings",
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="car-cog" size={30} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="car-cog" size={30} color={color} />
+          ),
         }}
       />
     </BottomTab.Navigator>
