@@ -42,13 +42,12 @@ const LockCard = () => {
     <View style={styles.rightCard}>
       <Text style={styles.cardHeading}>Car Locked</Text>
       <View style={styles.cardCentred}>
-      <View style={styles.cardCentredVertical}>
-
-        <MaterialCommunityIcons
-          name="lock-open"
-          size={30}
-          color={colours.secondary}
-        />
+        <View style={styles.cardCentredVertical}>
+          <MaterialCommunityIcons
+            name="lock-open"
+            size={30}
+            color={colours.secondary}
+          />
         </View>
       </View>
     </View>
@@ -62,8 +61,10 @@ const CarScreen = () => {
       <Text style={styles.title}>Andy's Tesla Model X</Text>
       <View style={styles.appletContainer}>
         <BatteryCard />
-        <RangeCard />
-        <LockCard />
+        <View>
+          <RangeCard />
+          <LockCard />
+        </View>
       </View>
     </View>
   );
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.medium,
     fontSize: 28,
     textAlign: "center",
+    // position: "absolute"
   },
   batteryLevel: {
     backgroundColor: colours.green,
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
   },
   cardHeading: {
     fontFamily: fonts.semiBold,
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     backgroundColor: colours.lightestGrey,
-    height: 198,
+    height: 206,
     width: 142,
     alignItems: "flex-start",
     justifyContent: "flex-start",
@@ -166,6 +168,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignContent: "stretch",
     alignItems: "flex-start",
+    width: "100%"
   },
   leftIcon: {
     marginRight: 30,
