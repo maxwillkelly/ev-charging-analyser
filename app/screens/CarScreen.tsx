@@ -12,7 +12,19 @@ const BatteryCard = () => {
       <Text style={styles.cardHeading}>Battery</Text>
       <View style={styles.cardCentred}>
         <View style={styles.batteryWidgetVertical}>
-          <Text style={styles.batteryPercentage}>80%</Text>
+          <View
+            style={{
+              zIndex: 10,
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "transparent",
+            }}
+          >
+            <Text style={styles.batteryPercentage}>80%</Text>
+          </View>
           <View style={styles.batteryLevel}></View>
         </View>
       </View>
@@ -31,7 +43,6 @@ const RangeCard = () => {
           color={colours.secondary}
           style={styles.leftIcon}
         />
-        {/* <View style={styles.divider} /> */}
         <Text style={styles.cardBody}>350 miles</Text>
       </View>
     </View>
@@ -43,12 +54,30 @@ const LockCard = () => {
 
   return (
     <Pressable onPress={toggleLocked}>
-      <View style={locked ? styles.rightCard : [styles.rightCard, styles.activeCard]}>
-        <Text style={locked ? styles.cardHeading : [styles.cardHeading, styles.active]}>
+      <View
+        style={
+          locked ? styles.rightCard : [styles.rightCard, styles.active]
+        }
+      >
+        <Text
+          style={
+            locked ? styles.cardHeading : [styles.cardHeading, styles.active]
+          }
+        >
           Car {locked ? "Locked" : "Unlocked"}
         </Text>
-        <View style={locked ? styles.cardCentred : [styles.cardCentred, styles.active]}>
-          <View style={locked ? styles.cardCentredVertical : [styles.cardCentredVertical, styles.active]}>
+        <View
+          style={
+            locked ? styles.cardCentred : [styles.cardCentred, styles.active]
+          }
+        >
+          <View
+            style={
+              locked
+                ? styles.cardCentredVertical
+                : [styles.cardCentredVertical, styles.active]
+            }
+          >
             <MaterialCommunityIcons
               name="lock-open"
               size={30}
@@ -92,8 +121,6 @@ const styles = StyleSheet.create({
     color: colours.white,
     fontFamily: fonts.medium,
     fontSize: 28,
-    textAlign: "center",
-    // position: "absolute"
   },
   batteryLevel: {
     backgroundColor: colours.green,
@@ -129,7 +156,7 @@ const styles = StyleSheet.create({
   },
   active: {
     backgroundColor: colours.primary,
-    color: colours.white
+    color: colours.white,
   },
   cardCentredVertical: {
     backgroundColor: colours.lightestGrey,
@@ -163,13 +190,6 @@ const styles = StyleSheet.create({
     width: 177,
     alignItems: "flex-start",
     justifyContent: "center",
-  },
-  activeCard: {
-    backgroundColor: colours.primary,
-    color: colours.white
-  },
-  divider: {
-    flex: 1,
   },
   carPlaceholder: {
     marginTop: 80,
