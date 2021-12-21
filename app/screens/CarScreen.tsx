@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Pressable, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, View } from "../components/Themed";
 import colours from "../styles/colours";
@@ -42,22 +42,22 @@ const LockCard = () => {
   const [locked, toggleLocked] = useToggle();
 
   return (
-    <TouchableOpacity onPress={toggleLocked}>
-      <View style={styles.rightCard}>
-        <Text style={styles.cardHeading}>
+    <Pressable onPress={toggleLocked}>
+      <View style={locked ? styles.rightCard : [styles.rightCard, styles.activeCard]}>
+        <Text style={locked ? styles.cardHeading : [styles.cardHeading, styles.active]}>
           Car {locked ? "Locked" : "Unlocked"}
         </Text>
-        <View style={styles.cardCentred}>
-          <View style={styles.cardCentredVertical}>
+        <View style={locked ? styles.cardCentred : [styles.cardCentred, styles.active]}>
+          <View style={locked ? styles.cardCentredVertical : [styles.cardCentredVertical, styles.active]}>
             <MaterialCommunityIcons
               name="lock-open"
               size={30}
-              color={colours.secondary}
+              color={locked ? colours.secondary : colours.white}
             />
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
@@ -127,6 +127,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
   },
+  active: {
+    backgroundColor: colours.primary,
+    color: colours.white
+  },
   cardCentredVertical: {
     backgroundColor: colours.lightestGrey,
     flexDirection: "column",
@@ -159,6 +163,10 @@ const styles = StyleSheet.create({
     width: 177,
     alignItems: "flex-start",
     justifyContent: "center",
+  },
+  activeCard: {
+    backgroundColor: colours.primary,
+    color: colours.white
   },
   divider: {
     flex: 1,
