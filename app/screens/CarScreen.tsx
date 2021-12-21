@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Pressable, StyleSheet, TouchableOpacity } from "react-native";
+import { Pressable, StyleSheet, Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, View } from "../components/Themed";
 import colours from "../styles/colours";
@@ -55,9 +55,7 @@ const LockCard = () => {
   return (
     <Pressable onPress={toggleLocked}>
       <View
-        style={
-          locked ? styles.rightCard : [styles.rightCard, styles.active]
-        }
+        style={locked ? styles.rightCard : [styles.rightCard, styles.active]}
       >
         <Text
           style={
@@ -79,7 +77,7 @@ const LockCard = () => {
             }
           >
             <MaterialCommunityIcons
-              name={locked ? "lock" : "lock-open"} 
+              name={locked ? "lock" : "lock-open"}
               size={30}
               color={locked ? colours.secondary : colours.white}
             />
@@ -93,7 +91,10 @@ const LockCard = () => {
 const CarScreen = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.carPlaceholder}></View>
+      <Image
+        source={require("../assets/images/tesla-model-x.png")}
+        style={{ marginTop: 80, height: 162, width: 330 }}
+      />
       <Text style={styles.title}>Andy's Tesla Model X</Text>
       <View style={styles.appletContainer}>
         <BatteryCard />
@@ -190,13 +191,6 @@ const styles = StyleSheet.create({
     width: 177,
     alignItems: "flex-start",
     justifyContent: "center",
-  },
-  carPlaceholder: {
-    marginTop: 80,
-    height: 162,
-    width: 330,
-    borderWidth: 1,
-    borderColor: colours.jet,
   },
   appletContainer: {
     flex: 1,
