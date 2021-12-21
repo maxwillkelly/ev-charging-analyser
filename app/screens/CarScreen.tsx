@@ -201,9 +201,7 @@ const styles = StyleSheet.create({
   appletContainer: {
     flex: 1,
     flexWrap: "wrap",
-    alignContent: "stretch",
     alignItems: "flex-start",
-    width: "100%",
   },
   leftIcon: {
     marginRight: 30,
