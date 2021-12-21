@@ -1,9 +1,10 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, View } from "../components/Themed";
 import colours from "../styles/colours";
 import fonts from "../styles/fonts";
+import useToggle from "../hooks/useToggle";
 
 const BatteryCard = () => {
   return (
@@ -38,19 +39,25 @@ const RangeCard = () => {
 };
 
 const LockCard = () => {
+  const [locked, toggleLocked] = useToggle();
+
   return (
-    <View style={styles.rightCard}>
-      <Text style={styles.cardHeading}>Car Locked</Text>
-      <View style={styles.cardCentred}>
-        <View style={styles.cardCentredVertical}>
-          <MaterialCommunityIcons
-            name="lock-open"
-            size={30}
-            color={colours.secondary}
-          />
+    <TouchableOpacity onPress={toggleLocked}>
+      <View style={styles.rightCard}>
+        <Text style={styles.cardHeading}>
+          Car {locked ? "Locked" : "Unlocked"}
+        </Text>
+        <View style={styles.cardCentred}>
+          <View style={styles.cardCentredVertical}>
+            <MaterialCommunityIcons
+              name="lock-open"
+              size={30}
+              color={colours.secondary}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -168,7 +175,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignContent: "stretch",
     alignItems: "flex-start",
-    width: "100%"
+    width: "100%",
   },
   leftIcon: {
     marginRight: 30,
