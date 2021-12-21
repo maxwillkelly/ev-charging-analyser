@@ -79,7 +79,7 @@ const LockCard = () => {
             }
           >
             <MaterialCommunityIcons
-              name="lock-open"
+              name={locked ? "lock" : "lock-open"} 
               size={30}
               color={locked ? colours.secondary : colours.white}
             />
