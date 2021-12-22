@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
+import { CarsController } from './cars/cars.controller';
 
 const validationSchema = Joi.object({
   SERVER_PORT: Joi.number().default(5000),
@@ -31,7 +32,7 @@ const validationSchema = Joi.object({
     AuthModule,
     UsersModule,
   ],
-  controllers: [AppController, SmartCarController, UsersController],
+  controllers: [AppController, SmartCarController, UsersController, CarsController],
   providers: [SmartCarService, PrismaService, UsersService],
 })
 export class AppModule {}

@@ -32,10 +32,10 @@ export class SmartCarController {
   }
 
   @Get('vehicle')
-  async getVehicle(
+  async getAttributes(
     @Query('smartCarAccessToken', ParseUUIDPipe) smartCarAccessToken: string,
   ) {
     console.log(smartCarAccessToken);
-    return await this.smartCarService.getVehicle(smartCarAccessToken);
+    return await this.smartCarService.getAttributes(smartCarAccessToken);
   }
 }

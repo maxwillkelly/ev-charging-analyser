@@ -23,7 +23,17 @@ export class SmartCarService {
   }
 
   getAuthUrl(): string {
-    const scope = ['required:read_vehicle_info'];
+    const scope = [
+      // 'required:read_battery',
+      // 'required:read_charge',
+      // 'required:control_charge',
+      // 'required:read_location',
+      'required:control_security',
+      // 'required:read_odometer',
+      // 'required:read_tires',
+      'required:read_vehicle_info',
+      // 'required:read_vin',
+    ];
     return this.client.getAuthUrl(scope);
   }
 
@@ -31,7 +41,7 @@ export class SmartCarService {
     return await this.client.exchangeCode(code);
   }
 
-  async getVehicle(smartCarAccessToken: string): Promise<Record<string, any>> {
+  async getVehicle(smartCarAccessToken: string): Promise<any> {
     const vehicles = await SmartCar.getVehicles(smartCarAccessToken);
 
     // instantiate first vehicle in vehicle list
@@ -40,8 +50,27 @@ export class SmartCarService {
       smartCarAccessToken,
     );
 
+    return vehicle;
+  }
+
+  async getAttributes(
+    smartCarAccessToken: string,
+  ): Promise<Record<string, any>> {
+    const vehicle = await this.getVehicle(smartCarAccessToken);
     // get identifying information about a vehicle
     const attributes = await vehicle.attributes();
     return attributes;
+  }
+
+  async lockCar(smartCarAccessToken: string) {
+    const vehicle = await this.getVehicle(smartCarAccessToken);
+
+    return vehicle.lock();
+  }
+
+  async unlockCar(smartCarAccessToken: string) {
+    const vehicle = await this.getVehicle(smartCarAccessToken);
+
+    return vehicle.unlock();
   }
 }
