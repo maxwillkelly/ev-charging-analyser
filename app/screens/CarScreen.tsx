@@ -5,9 +5,10 @@ import { Text, View } from "../components/Themed";
 import colours from "../styles/colours";
 import fonts from "../styles/fonts";
 import useToggle from "../hooks/useToggle";
-import { useMutation, useQuery } from "react-query";
-import { lockAsync } from "../api/carApi";
-import { LoginDto, LoginResponse } from "../api/dtos/Login.dto";
+import { useMutation } from "react-query";
+import { lockAsync, unlockAsync } from "../api/carApi";
+import { CarActionResponse } from "../api/dtos/CarAction.dto";
+import { useUserStore } from "../stores/useUserStore";
 
 const BatteryCard = () => {
   return (
@@ -54,11 +55,44 @@ const RangeCard = () => {
 
 const LockCard = () => {
   const [locked, toggleLocked] = useToggle();
-  // const query = useQuery<LoginResponse>("userToken");
-  // const lockMutation = useMutation(() => lockAsync({ dto: query.data }))
+  const { smartCarToken } = useUserStore();
+
+  const lockMutation = useMutation<CarActionResponse>(
+    "lockUnlockEvent",
+    () => {
+      console.log(smartCarToken)
+      if (!smartCarToken?.accessToken)
+        throw new Error("Smartcar Access Token not stored");
+      else
+        return lockAsync({ smartCarAccessToken: smartCarToken?.accessToken });
+    },
+    {
+      onSuccess: toggleLocked,
+      onError: (error) => console.log(error),
+    }
+  );
+
+  const unlockMutation = useMutation<CarActionResponse>(
+    "lockUnlockEvent",
+    () => {
+      if (!smartCarToken?.accessToken)
+        throw new Error("Smartcar Access Token not stored");
+      else
+        return unlockAsync({ smartCarAccessToken: smartCarToken?.accessToken });
+    },
+    {
+      onSuccess: toggleLocked,
+      onError: (error) => console.log(error),
+    }
+  );
+
+  const toggle = () => {
+    if (locked) unlockMutation.mutate();
+    else lockMutation.mutate();
+  };
 
   return (
-    <Pressable onPress={toggleLocked}>
+    <Pressable onPress={toggle}>
       <View
         style={locked ? styles.rightCard : [styles.rightCard, styles.active]}
       >

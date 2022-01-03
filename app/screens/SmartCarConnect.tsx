@@ -14,7 +14,7 @@ const SmartCarConnect = ({
 }: RootStackScreenProps<"SmartCarConnect">) => {
   const [status, setStatus] = useState<Status>("Initial");
   const [error, setError] = useState<Error>();
-  const { smartCarToken, setSmartCarToken } = useUserStore();
+  const { setSmartCarToken } = useUserStore();
 
   const mutation = useMutation<GetSmartCarTokenDto, Error, string>(
     "smartCarToken",

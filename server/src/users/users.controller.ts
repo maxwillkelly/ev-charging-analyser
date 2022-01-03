@@ -1,5 +1,4 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
 import { hash } from 'bcryptjs';
 import { AuthService } from 'src/auth/auth.service';
 import { LoginDto } from 'src/auth/dtos/login.dto';
