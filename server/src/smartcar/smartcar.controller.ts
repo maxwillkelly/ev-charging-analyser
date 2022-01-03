@@ -1,8 +1,8 @@
 import { Controller, Get, ParseUUIDPipe, Query, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { SmartCarService } from './smartCar.service';
-import { Access } from 'smartcar';
-import { GetVehicleResponse } from './dto/getVehicle.dto';
+import { Access, Attributes } from 'smartcar';
+import { AttributesDto } from './dtos/attributes';
 
 @Controller('smartCar')
 export class SmartCarController {
@@ -18,17 +18,16 @@ export class SmartCarController {
   async exchange(
     @Query('code') code: string,
     @Query('error') error: string,
-  ): Promise<Access> {
+  ): Promise<Access | Error> {
     if (error) return new Error(error);
 
-    return await this.smartCarService.exchange(code);
+    return this.smartCarService.exchange(code);
   }
 
-  // @ApiOkResponse({ type: GetVehicleResponse })
   @Get('vehicle')
   async getVehicleAttributes(
     @Query('smartCarAccessToken', ParseUUIDPipe) smartCarAccessToken: string,
-  ): Promise<GetVehicleResponse> {
-    return await this.smartCarService.getVehicleAttributes(smartCarAccessToken);
+  ): Promise<AttributesDto> {
+    return this.smartCarService.getVehicleAttributes(smartCarAccessToken);
   }
 }

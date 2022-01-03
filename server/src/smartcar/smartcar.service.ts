@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import SmartCar, { Access, AuthClient } from 'smartcar';
-import { GetVehicleResponse } from './dto/getVehicle.dto';
-import { LockCarResponse } from './dto/lockCar.dto';
-import { UnlockCarResponse } from './dto/unlockCar.dto';
+import SmartCar, {
+  Access,
+  ActionResponse,
+  Attributes,
+  AuthClient,
+  Vehicle,
+} from 'smartcar';
 
 @Injectable()
 export class SmartCarService {
@@ -39,12 +42,12 @@ export class SmartCarService {
     return this.client.getAuthUrl(scope);
   }
 
-  async exchange(code: string): Promise<Access> {
-    return await this.client.exchangeCode(code);
+  exchange(code: string): Access {
+    return this.client.exchangeCode(code);
   }
 
-  async getVehicle(smartCarAccessToken: string): Promise<any> {
-    const vehicles = await SmartCar.getVehicles(smartCarAccessToken);
+  getVehicle(smartCarAccessToken: string): Vehicle {
+    const vehicles = SmartCar.getVehicles(smartCarAccessToken);
 
     // instantiate first vehicle in vehicle list
     const vehicle = new SmartCar.Vehicle(
@@ -55,24 +58,18 @@ export class SmartCarService {
     return vehicle;
   }
 
-  async getVehicleAttributes(
-    smartCarAccessToken: string,
-  ): Promise<GetVehicleResponse> {
-    const vehicle = await this.getVehicle(smartCarAccessToken);
-    // get identifying information about a vehicle
-    const attributes = await vehicle.attributes();
-    return attributes;
+  getVehicleAttributes(smartCarAccessToken: string): Attributes {
+    const vehicle = this.getVehicle(smartCarAccessToken);
+    return vehicle.attributes();
   }
 
-  async lockCar(smartCarAccessToken: string): Promise<LockCarResponse> {
-    const vehicle = await this.getVehicle(smartCarAccessToken);
-
+  lockCar(smartCarAccessToken: string): ActionResponse {
+    const vehicle = this.getVehicle(smartCarAccessToken);
     return vehicle.lock();
   }
 
-  async unlockCar(smartCarAccessToken: string): Promise<UnlockCarResponse> {
-    const vehicle = await this.getVehicle(smartCarAccessToken);
-
+  unlockCar(smartCarAccessToken: string): ActionResponse {
+    const vehicle = this.getVehicle(smartCarAccessToken);
     return vehicle.unlock();
   }
 }
