@@ -1,4 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { LockCarResponse } from 'src/smartCar/dto/lockCar.dto';
+import { UnlockCarResponse } from 'src/smartCar/dto/unlockCar.dto';
 import { SmartCarService } from 'src/smartCar/smartCar.service';
 import { CarActionDto } from './dtos/carAction.dto';
 
@@ -7,7 +9,7 @@ export class CarsController {
   constructor(private readonly smartCarService: SmartCarService) {}
 
   @Post('lock')
-  async lockCar(@Body() command: CarActionDto) {
+  async lockCar(@Body() command: CarActionDto): Promise<LockCarResponse> {
     const response = await this.smartCarService.lockCar(
       command.smartCarAccessToken,
     );
@@ -16,7 +18,7 @@ export class CarsController {
   }
 
   @Post('unlock')
-  async unlockCar(@Body() command: CarActionDto) {
+  async unlockCar(@Body() command: CarActionDto): Promise<UnlockCarResponse> {
     const response = await this.smartCarService.unlockCar(
       command.smartCarAccessToken,
     );

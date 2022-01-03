@@ -1,7 +1,9 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import SmartCar, { Access, AuthClient } from 'smartcar';
-import { GetVehicleDto } from './dto/getVehicle.dto';
+import { GetVehicleResponse } from './dto/getVehicle.dto';
+import { LockCarResponse } from './dto/lockCar.dto';
+import { UnlockCarResponse } from './dto/unlockCar.dto';
 
 @Injectable()
 export class SmartCarService {
@@ -53,22 +55,22 @@ export class SmartCarService {
     return vehicle;
   }
 
-  async getAttributes(
+  async getVehicleAttributes(
     smartCarAccessToken: string,
-  ): Promise<Record<string, any>> {
+  ): Promise<GetVehicleResponse> {
     const vehicle = await this.getVehicle(smartCarAccessToken);
     // get identifying information about a vehicle
     const attributes = await vehicle.attributes();
     return attributes;
   }
 
-  async lockCar(smartCarAccessToken: string) {
+  async lockCar(smartCarAccessToken: string): Promise<LockCarResponse> {
     const vehicle = await this.getVehicle(smartCarAccessToken);
 
     return vehicle.lock();
   }
 
-  async unlockCar(smartCarAccessToken: string) {
+  async unlockCar(smartCarAccessToken: string): Promise<UnlockCarResponse> {
     const vehicle = await this.getVehicle(smartCarAccessToken);
 
     return vehicle.unlock();
