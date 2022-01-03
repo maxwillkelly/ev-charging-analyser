@@ -5,6 +5,9 @@ import { Text, View } from "../components/Themed";
 import colours from "../styles/colours";
 import fonts from "../styles/fonts";
 import useToggle from "../hooks/useToggle";
+import { useMutation, useQuery } from "react-query";
+import { lockAsync } from "../api/carApi";
+import { LoginDto, LoginResponse } from "../api/dtos/Login.dto";
 
 const BatteryCard = () => {
   return (
@@ -51,6 +54,8 @@ const RangeCard = () => {
 
 const LockCard = () => {
   const [locked, toggleLocked] = useToggle();
+  // const query = useQuery<LoginResponse>("userToken");
+  // const lockMutation = useMutation(() => lockAsync({ dto: query.data }))
 
   return (
     <Pressable onPress={toggleLocked}>
