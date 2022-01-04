@@ -6,6 +6,8 @@ import { useUserStore } from "../stores/useUserStore";
 import { GetSmartCarTokenDto } from "../api/dtos/GetSmartCarToken.dto";
 import { getSmartCarTokenAsync } from "../api/smartCarApi";
 import { RootStackScreenProps } from "../types";
+import { CarDto } from "../api/dtos/Car.dto";
+import { addCarAsync } from "../api/carApi";
 
 type Status = "Initial" | "Loading" | "Success" | "Error";
 
@@ -16,14 +18,25 @@ const SmartCarConnect = ({
   const [error, setError] = useState<Error>();
   const { setSmartCarToken } = useUserStore();
 
-  const mutation = useMutation<GetSmartCarTokenDto, Error, string>(
+  const getTokenMutation = useMutation<GetSmartCarTokenDto, Error, string>(
     "smartCarToken",
     (url) => getSmartCarTokenAsync(url),
     {
       onError: (error) => {
         setError(error);
         setStatus("Error");
-      }, 
+      },
+    }
+  );
+
+  const storeTokenMutation = useMutation<CarDto, Error, GetSmartCarTokenDto>(
+    "car",
+    addCarAsync,
+    {
+      onError: (error) => {
+        setError(error);
+        setStatus("Error");
+      },
       onSuccess: (data) => {
         setSmartCarToken(data);
         setStatus("Success");
@@ -36,7 +49,8 @@ const SmartCarConnect = ({
   ) => {
     if (navState.url.includes("exchange")) {
       setStatus("Loading");
-      await mutation.mutateAsync(navState.url);
+      const token = await getTokenMutation.mutateAsync(navState.url);
+      const car = await storeTokenMutation.mutateAsync(token);
     }
   };
 
