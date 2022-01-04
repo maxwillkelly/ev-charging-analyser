@@ -3,8 +3,7 @@ import { ActionResponseDto } from 'src/smartCar/dtos/actionResponse.dto';
 import { SmartCarService } from 'src/smartCar/smartCar.service';
 import { CarActionDto } from './dtos/carAction.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Car } from '@prisma/client';
-import { AddCarDto } from './dtos/addCar.dto';
+import { AddCarDto, CarDto } from './dtos/addCar.dto';
 
 @Controller('cars')
 export class CarsController {
@@ -14,7 +13,7 @@ export class CarsController {
   ) {}
 
   @Post('add')
-  async addCar(@Body() command: AddCarDto): Promise<Car> {
+  async addCar(@Body() command: AddCarDto): Promise<CarDto> {
     return await this.prismaService.car.create({ data: command });
   }
 
