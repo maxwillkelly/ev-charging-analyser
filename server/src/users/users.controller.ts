@@ -10,7 +10,7 @@ import { LoginResponse } from 'src/auth/dtos/login.dto';
 @Controller('users')
 export class UsersController {
   constructor(
-    private readonly prisma: PrismaService,
+    private readonly prismaService: PrismaService,
     private readonly authService: AuthService,
   ) {}
 
@@ -29,7 +29,7 @@ export class UsersController {
     const { firstName, lastName, email, password } = command;
     const hashedPassword = await hash(password, 10);
 
-    const user = await this.prisma.user.create({
+    const user = await this.prismaService.user.create({
       data: { firstName, lastName, email, password: hashedPassword },
     });
 
