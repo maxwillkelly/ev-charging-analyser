@@ -1,6 +1,6 @@
 import { IsUUID } from 'class-validator';
 
-export class GetVehicleDto {
+export class CarActionDto {
   @IsUUID()
   smartCarAccessToken: string;
 }

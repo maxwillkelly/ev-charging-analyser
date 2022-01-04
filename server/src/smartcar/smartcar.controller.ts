@@ -1,15 +1,8 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  ParseUUIDPipe,
-  Query,
-  Res,
-} from '@nestjs/common';
+import { Controller, Get, ParseUUIDPipe, Query, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { SmartCarService } from './smartCar.service';
-import { Access } from 'smartcar';
+import { Access, Attributes } from 'smartcar';
+import { AttributesDto } from './dtos/attributes';
 
 @Controller('smartCar')
 export class SmartCarController {
@@ -28,14 +21,13 @@ export class SmartCarController {
   ): Promise<Access | Error> {
     if (error) return new Error(error);
 
-    return await this.smartCarService.exchange(code);
+    return this.smartCarService.exchange(code);
   }
 
   @Get('vehicle')
-  async getVehicle(
+  async getVehicleAttributes(
     @Query('smartCarAccessToken', ParseUUIDPipe) smartCarAccessToken: string,
-  ) {
-    console.log(smartCarAccessToken);
-    return await this.smartCarService.getVehicle(smartCarAccessToken);
+  ): Promise<AttributesDto> {
+    return this.smartCarService.getVehicleAttributes(smartCarAccessToken);
   }
 }
