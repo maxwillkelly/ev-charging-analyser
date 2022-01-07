@@ -15,11 +15,6 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Root: {
         screens: {
-          // TabOne: {
-          //   screens: {
-          //     TabOneScreen: "one",
-          //   },
-          // },
           Car: {
             screens: {
               CarScreen: "car",
@@ -47,6 +42,7 @@ const linking: LinkingOptions<RootStackParamList> = {
           },
         },
       },
+      CarList: "carList",
       SmartCarConnect: "smartCarConnect",
       Modal: "modal",
       Login: "login",

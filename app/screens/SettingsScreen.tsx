@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Button, Settings, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
+import { RootTabScreenProps } from '../types';
 
-const SettingsScreen = () => {
+const SettingsScreen = ({ navigation }: RootTabScreenProps<"Settings">) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
+      <Button title="Log out" onPress={() => navigation.navigate("Login")} />
     </View>
   );
 }

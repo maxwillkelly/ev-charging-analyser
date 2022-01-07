@@ -15,6 +15,7 @@ declare global {
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  CarList: undefined;
   SmartCarConnect: undefined;
   Vehicle: undefined;
   Modal: undefined;

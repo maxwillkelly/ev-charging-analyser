@@ -62,7 +62,7 @@ const SmartCarConnect = ({
     );
 
   if (status === "Success") {
-    navigation.navigate("Vehicle");
+    navigation.navigate("CarList");
 
     // return (
     //   <View style={styles.container}>

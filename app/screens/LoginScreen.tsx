@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
     "userToken",
     loginAsync,
     {
-      onSuccess: () => navigation.navigate("Root"),
+      onSuccess: () => navigation.navigate("CarList"),
       onError: (error) => console.log(error),
     }
   );
