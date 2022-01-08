@@ -1,10 +1,11 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { Button, StyleSheet, Image, Pressable } from "react-native";
+import { StyleSheet, Image, Pressable } from "react-native";
 import { Text, View } from "../components/Themed";
 import colours from "../styles/colours";
 import fonts from "../styles/fonts";
-import { RootTabScreenProps } from "../types";
+import { RootStackParamList } from "../types";
 
 type Car = {
   id: string;
@@ -14,7 +15,7 @@ type Car = {
 
 type CarCardProps = {
   car: Car;
-  navigation: RootTabScreenProps<"CarList">;
+  navigation: NativeStackNavigationProp<RootStackParamList>;
 };
 
 type BatteryWidgetProps = {
@@ -110,7 +111,7 @@ const carCardStyles = StyleSheet.create({
   },
 });
 
-const CarListScreen = ({ navigation }: RootTabScreenProps<"CarList">) => {
+const CarListScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
   const cars: Car[] = [
     {
       id: "290290290",
