@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, Image } from "react-native";
+import { Button, StyleSheet, Image, Pressable } from "react-native";
 import { Text, View } from "../components/Themed";
 import colours from "../styles/colours";
 import fonts from "../styles/fonts";
@@ -13,39 +13,92 @@ type Car = {
 
 type CarCardProps = {
   car: Car;
+  navigation: RootTabScreenProps<"CarList">;
 };
 
-const CarCard: React.FC<CarCardProps> = ({ car }) => {
+type BatteryWidgetProps = {
+  batteryPercentage: number;
+};
+
+const BatteryWidgetHorizontal: React.FC<BatteryWidgetProps> = ({
+  batteryPercentage,
+}) => {
   return (
-    <View style={carCardStyles.carCard}>
-      <View style={carCardStyles.content}>
-        <View style={carCardStyles.row}>
-          <Image
-            source={require("../assets/images/tesla-model-x.png")}
-            style={{ height: 68, width: 138 }}
-          />
-        </View>
-        <Text style={carCardStyles.name}>{car.name}</Text>
+    <View style={bwHStyles.card}>
+      <View style={bwHStyles.batteryIcon}>
+        <View style={bwHStyles.batteryLevel}></View>
       </View>
+      <Text style={bwHStyles.percentage}>{batteryPercentage}%</Text>
     </View>
+  );
+};
+
+const bwHStyles = StyleSheet.create({
+  card: {
+    backgroundColor: colours.lightestGrey,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    height: 50,
+  },
+  batteryIcon: {
+    backgroundColor: colours.lightGrey,
+    borderRadius: 6,
+    marginVertical: 5,
+    marginHorizontal: 2,
+    width: "60%",
+  },
+  batteryLevel: {
+    backgroundColor: colours.green,
+    width: "80%",
+    height: "100%",
+    borderBottomLeftRadius: 6,
+    borderTopLeftRadius: 6,
+  },
+  percentage: {
+    fontFamily: fonts.bold,
+    fontSize: 18,
+  },
+});
+
+const CarCard: React.FC<CarCardProps> = ({ car, navigation }) => {
+  return (
+    <Pressable onPress={() => navigation.navigate("Root")}>
+      <View style={carCardStyles.carCard}>
+        <View style={carCardStyles.content}>
+          <View style={carCardStyles.row}>
+            <Image
+              source={require("../assets/images/tesla-model-x.png")}
+              style={{ height: 68, width: 138 }}
+            />
+            <BatteryWidgetHorizontal
+              batteryPercentage={car.batteryPercentage}
+            />
+          </View>
+          <Text style={carCardStyles.name}>{car.name}</Text>
+        </View>
+      </View>
+    </Pressable>
   );
 };
 
 const carCardStyles = StyleSheet.create({
   carCard: {
-    backgroundColor: colours.lightestGrey,
-    height: 200,
+    height: 144,
     width: "100%",
+    marginVertical: 12,
   },
   content: {
+    backgroundColor: colours.lightestGrey,
     flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    width: "100%",
-    // height: 137,
+    padding: 16,
+    borderRadius: 6,
   },
   row: {
+    backgroundColor: colours.lightestGrey,
     flex: 1,
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
     width: "100%",
@@ -63,6 +116,11 @@ const CarListScreen = ({ navigation }: RootTabScreenProps<"CarList">) => {
       name: "Andy's Tesla Model X",
       batteryPercentage: 80,
     },
+    {
+      id: "5005000",
+      name: "Molly's Ford Mustang Mach-E",
+      batteryPercentage: 80,
+    },
   ];
 
   return (
@@ -71,13 +129,9 @@ const CarListScreen = ({ navigation }: RootTabScreenProps<"CarList">) => {
         <Text style={styles.title}>Cars</Text>
         <View style={styles.carContainer}>
           {cars.map((car) => (
-            <CarCard key={car.id} car={car} />
+            <CarCard key={car.id} car={car} navigation={navigation} />
           ))}
         </View>
-        <Button
-          title="Car Screen"
-          onPress={() => navigation.navigate("Root")}
-        />
       </View>
     </View>
   );
