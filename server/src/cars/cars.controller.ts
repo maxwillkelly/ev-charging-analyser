@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ActionResponseDto } from 'src/smartCar/dtos/actionResponse.dto';
 import { SmartCarService } from 'src/smartCar/smartCar.service';
 import { CarActionDto } from './dtos/carAction.dto';
@@ -15,6 +15,11 @@ export class CarsController {
   @Post('add')
   async addCar(@Body() command: AddCarDto): Promise<CarDto> {
     return await this.prismaService.car.create({ data: command });
+  }
+
+  @Get()
+  async getCars(): Promise<CarDto[]> {
+    return await this.prismaService.car.findMany();
   }
 
   @Post('lock')
