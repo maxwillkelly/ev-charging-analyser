@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { Button, StyleSheet, Image, Pressable } from "react-native";
 import { Text, View } from "../components/Themed";
@@ -133,6 +134,13 @@ const CarListScreen = ({ navigation }: RootTabScreenProps<"CarList">) => {
           ))}
         </View>
       </View>
+      <Pressable style={{ margin: 16 }} onPress={() => navigation.navigate("SmartCarConnect")}>
+        <MaterialCommunityIcons
+          name="plus-circle"
+          size={70}
+          color={colours.primary}
+        />
+      </Pressable>
     </View>
   );
 };
@@ -140,8 +148,7 @@ const CarListScreen = ({ navigation }: RootTabScreenProps<"CarList">) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // flexWrap: "wrap",
-    // alignItems: "flex-start",
+    alignItems: "flex-end",
   },
   innerContainer: {
     marginHorizontal: 24,
