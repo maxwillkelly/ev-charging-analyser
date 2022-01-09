@@ -8,6 +8,7 @@ import { useMutation } from "react-query";
 import { LoginDto, LoginResponse } from "../api/dtos/Login.dto";
 import { AxiosError } from "axios";
 import { RootStackScreenProps } from "../types";
+import { useUserStore } from "../stores/useUserStore";
 
 const validationSchema = yup.object({
   email: yup
@@ -21,12 +22,17 @@ const validationSchema = yup.object({
 });
 
 const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
+  const { login } = useUserStore();
+
   const mutation = useMutation<LoginResponse, AxiosError, LoginDto>(
     "userToken",
     loginAsync,
     {
-      onSuccess: () => navigation.navigate("CarList"),
-      onError: (error) => console.log(error),
+      onSuccess: (dto) => {
+        login(dto);
+        navigation.navigate("CarList")
+      },
+      onError: (error) => console.error(error),
     }
   );
 

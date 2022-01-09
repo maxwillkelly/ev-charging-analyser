@@ -7,10 +7,13 @@ import { LoginResponse } from './dtos/login.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private jwtService: JwtService,
+  ) {}
 
   async validateUser(email: string, password: string): Promise<User> {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: { email },
     });
 
@@ -25,7 +28,9 @@ export class AuthService {
 
   async login(user: User): Promise<LoginResponse> {
     const payload = { email: user.email, sub: user.id };
+
     return {
+      user,
       token: this.jwtService.sign(payload),
     };
   }

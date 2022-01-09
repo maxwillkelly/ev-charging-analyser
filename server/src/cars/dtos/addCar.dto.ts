@@ -2,7 +2,7 @@ import { IsDate, IsOptional, IsUUID } from 'class-validator';
 
 export class AddCarDto {
   @IsUUID()
-  id: string;
+  userId: string;
 
   @IsUUID()
   accessToken: string;

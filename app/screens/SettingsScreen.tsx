@@ -1,13 +1,19 @@
 import * as React from 'react';
-import { Button, Settings, StyleSheet } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
+import { useUserStore } from '../stores/useUserStore';
 import { RootTabScreenProps } from '../types';
 
 const SettingsScreen = ({ navigation }: RootTabScreenProps<"Settings">) => {
+  const { logout } = useUserStore();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
-      <Button title="Log out" onPress={() => navigation.navigate("Login")} />
+      <Button title="Log out" onPress={() => { 
+        logout();
+        navigation.navigate("Login") 
+      }} />
     </View>
   );
 }
