@@ -19,7 +19,11 @@ export class CarsController {
 
   @Get()
   async getCars(): Promise<CarDto[]> {
-    return await this.prismaService.car.findMany();
+    const carsQuery = await this.prismaService.car.findMany();
+    const cars = carsQuery.map((c) => {
+      return { ...c, name: "Andy's Tesla Model X", batteryPercentage: 80 };
+    });
+    return cars;
   }
 
   @Post('lock')
