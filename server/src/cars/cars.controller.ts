@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ActionResponseDto } from 'src/smartCar/dtos/actionResponse.dto';
 import { SmartCarService } from 'src/smartCar/smartCar.service';
 import { CarActionDto } from './dtos/carAction.dto';
@@ -17,12 +17,18 @@ export class CarsController {
     return await this.prismaService.car.create({ data: command });
   }
 
-  @Get()
-  async getCars(): Promise<CarDto[]> {
-    const carsQuery = await this.prismaService.car.findMany();
+  @Get(':userId')
+  async getCars(@Param('userId') userId: string): Promise<CarDto[]> {
+    const carsQuery = await this.prismaService.car.findMany({
+      where: {
+        userId,
+      },
+    });
+
     const cars = carsQuery.map((c) => {
       return { ...c, name: "Andy's Tesla Model X", batteryPercentage: 80 };
     });
+
     return cars;
   }
 

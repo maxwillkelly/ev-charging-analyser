@@ -4,7 +4,7 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { AxiosError } from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Image,
@@ -16,6 +16,7 @@ import { useQuery } from "react-query";
 import { getCarsAsync } from "../api/carApi";
 import { CarDto } from "../api/dtos/Car.dto";
 import { Text, View } from "../components/Themed";
+import { useUserStore } from "../stores/useUserStore";
 import colours from "../styles/colours";
 import fonts from "../styles/fonts";
 import { RootStackParamList } from "../types";
@@ -121,9 +122,15 @@ const carCardStyles = StyleSheet.create({
 const CarListScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList>) => {
+  const { user } = useUserStore();
+
+  useEffect(() => {
+    if (!user) navigation.navigate("Login");
+  }, [user]);
+
   const { isLoading, error, data } = useQuery<CarDto[], AxiosError>(
     "cars",
-    getCarsAsync
+    () => (user ? getCarsAsync(user.id) : [])
   );
 
   if (isLoading)

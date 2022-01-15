@@ -13,9 +13,9 @@ export const addCarAsync = async (dto: AddCarDto): Promise<CarDto> => {
     });
 };
 
-export const getCarsAsync = async (): Promise<CarDto[]> => {
+export const getCarsAsync = async (userId: string): Promise<CarDto[]> => {
   return axios
-    .get(`${CONTROLLER_URL}`)
+    .get(`${CONTROLLER_URL}/${userId}`)
     .then((response) => response.data)
     .catch((response) => {
       throw response;
