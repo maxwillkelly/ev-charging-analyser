@@ -1,20 +1,21 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
+import { AxiosError } from "axios";
 import React from "react";
-import { StyleSheet, Image, Pressable } from "react-native";
+import { StyleSheet, Image, Pressable, ActivityIndicator } from "react-native";
+import { useQuery } from "react-query";
+import { getCarsAsync } from "../api/carApi";
+import { CarDto } from "../api/dtos/Car.dto";
 import { Text, View } from "../components/Themed";
 import colours from "../styles/colours";
 import fonts from "../styles/fonts";
 import { RootStackParamList } from "../types";
 
-type Car = {
-  id: string;
-  name: string;
-  batteryPercentage: number;
-};
-
 type CarCardProps = {
-  car: Car;
+  car: CarDto;
   navigation: NativeStackNavigationProp<RootStackParamList>;
 };
 
@@ -111,45 +112,60 @@ const carCardStyles = StyleSheet.create({
   },
 });
 
-const CarListScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
-  const cars: Car[] = [
-    {
-      id: "290290290",
-      name: "Andy's Tesla Model X",
-      batteryPercentage: 80,
-    },
-    {
-      id: "5005000",
-      name: "Molly's Ford Mustang Mach-E",
-      batteryPercentage: 80,
-    },
-  ];
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.innerContainer}>
-        <Text style={styles.title}>Cars</Text>
-        <View style={styles.carContainer}>
-          {cars.map((car) => (
-            <CarCard key={car.id} car={car} navigation={navigation} />
-          ))}
-        </View>
-      </View>
-      <Pressable style={{ margin: 16 }} onPress={() => navigation.navigate("SmartCarConnect")}>
-        <MaterialCommunityIcons
-          name="plus-circle"
-          size={70}
-          color={colours.primary}
-        />
-      </Pressable>
-    </View>
+const CarListScreen = ({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList>) => {
+  const { isLoading, error, data } = useQuery<CarDto[], AxiosError>(
+    "cars",
+    getCarsAsync
   );
+
+  if (isLoading)
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#999999" />
+      </View>
+    );
+
+  if (error)
+    return (
+      <View style={styles.container}>
+        <Text>Error occurred</Text>
+        <Text>{JSON.stringify(error, null, 2)}</Text>
+      </View>
+    );
+
+  if (data)
+    return (
+      <View style={styles.container}>
+        <View style={styles.innerContainer}>
+          <Text style={styles.title}>Cars</Text>
+          <View style={styles.carContainer}>
+            {data.map((car) => (
+              <CarCard key={car.id} car={car} navigation={navigation} />
+            ))}
+          </View>
+        </View>
+        <Pressable
+          style={{ margin: 16, alignSelf: "flex-end" }}
+          onPress={() => navigation.navigate("SmartCarConnect")}
+        >
+          <MaterialCommunityIcons
+            name="plus-circle"
+            size={70}
+            color={colours.primary}
+          />
+        </Pressable>
+      </View>
+    );
+
+  return null;
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "flex-end",
+    alignItems: "flex-start",
   },
   innerContainer: {
     marginHorizontal: 24,
