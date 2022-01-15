@@ -1,4 +1,4 @@
-import { IsDate, IsOptional, IsUUID } from 'class-validator';
+import { IsDate, IsDateString, IsOptional, IsUUID } from 'class-validator';
 
 export class AddCarDto {
   @IsUUID()
@@ -10,10 +10,10 @@ export class AddCarDto {
   @IsUUID()
   refreshToken: string;
 
-  @IsDate()
+  @IsDateString()
   expiration: string;
 
-  @IsDate()
+  @IsDateString()
   refreshExpiration: string;
 }
 
