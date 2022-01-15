@@ -5,7 +5,13 @@ import {
 } from "@react-navigation/native-stack";
 import { AxiosError } from "axios";
 import React from "react";
-import { StyleSheet, Image, Pressable, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  Pressable,
+  ActivityIndicator,
+  ScrollView,
+} from "react-native";
 import { useQuery } from "react-query";
 import { getCarsAsync } from "../api/carApi";
 import { CarDto } from "../api/dtos/Car.dto";
@@ -140,11 +146,13 @@ const CarListScreen = ({
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <Text style={styles.title}>Cars</Text>
-          <View style={styles.carContainer}>
-            {data.map((car) => (
-              <CarCard key={car.id} car={car} navigation={navigation} />
-            ))}
-          </View>
+          <ScrollView>
+            <View style={styles.carContainer}>
+              {data.map((car) => (
+                <CarCard key={car.id} car={car} navigation={navigation} />
+              ))}
+            </View>
+          </ScrollView>
         </View>
         <Pressable
           style={{ margin: 16, alignSelf: "flex-end" }}
