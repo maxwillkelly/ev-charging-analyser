@@ -30,7 +30,7 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
     {
       onSuccess: (dto) => {
         login(dto);
-        navigation.navigate("CarList")
+        navigation.navigate("CarList");
       },
       onError: (error) => console.error(error),
     }

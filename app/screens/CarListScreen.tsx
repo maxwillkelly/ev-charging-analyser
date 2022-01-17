@@ -124,14 +124,17 @@ const CarListScreen = ({
 }: NativeStackScreenProps<RootStackParamList>) => {
   const { user } = useUserStore();
 
+  const { isLoading, error, data } = useQuery<CarDto[], AxiosError>(
+    "cars",
+    () => getCarsAsync(user?.id),
+    {
+      enabled: !!user?.id,
+    }
+  );
+
   useEffect(() => {
     if (!user) navigation.navigate("Login");
   }, [user]);
-
-  const { isLoading, error, data } = useQuery<CarDto[], AxiosError>(
-    "cars",
-    () => (user ? getCarsAsync(user.id) : [])
-  );
 
   if (isLoading)
     return (

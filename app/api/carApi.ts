@@ -13,7 +13,8 @@ export const addCarAsync = async (dto: AddCarDto): Promise<CarDto> => {
     });
 };
 
-export const getCarsAsync = async (userId: string): Promise<CarDto[]> => {
+export const getCarsAsync = async (userId: string | undefined): Promise<CarDto[]> => {
+  if (!userId) return []
   return axios
     .get(`${CONTROLLER_URL}/${userId}`)
     .then((response) => response.data)
