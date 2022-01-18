@@ -1,13 +1,9 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AxiosError } from "axios";
 import React, { useEffect } from "react";
 import {
   StyleSheet,
-  Image,
   Pressable,
   ActivityIndicator,
   ScrollView,
@@ -15,62 +11,12 @@ import {
 import { useQuery } from "react-query";
 import { getCarsAsync } from "../api/carApi";
 import { NewCarDto } from "../api/dtos/Attributes.dto";
-import { BatteryWidgetHorizontal } from "../components/car-list/BatteryWidgetHorizontal";
+import { CarCard } from "../components/car-list/CarCard";
 import { Text, View } from "../components/Themed";
 import { useUserStore } from "../stores/useUserStore";
 import colours from "../styles/colours";
 import fonts from "../styles/fonts";
 import { RootStackParamList } from "../types";
-
-type CarCardProps = {
-  car: NewCarDto;
-  navigation: NativeStackNavigationProp<RootStackParamList>;
-};
-
-const CarCard: React.FC<CarCardProps> = ({ car, navigation }) => {
-  return (
-    <Pressable onPress={() => navigation.navigate("Root")}>
-      <View style={carCardStyles.carCard}>
-        <View style={carCardStyles.content}>
-          <View style={carCardStyles.row}>
-            <Image
-              source={require("../assets/images/tesla-model-x.png")}
-              style={{ height: 68, width: 138 }}
-            />
-            <BatteryWidgetHorizontal percentRemaining={car.percentRemaining} />
-          </View>
-          <Text style={carCardStyles.name}>{car.name}</Text>
-        </View>
-      </View>
-    </Pressable>
-  );
-};
-
-const carCardStyles = StyleSheet.create({
-  carCard: {
-    height: 144,
-    width: "100%",
-    marginVertical: 12,
-  },
-  content: {
-    backgroundColor: colours.lightestGrey,
-    flex: 1,
-    padding: 16,
-    borderRadius: 6,
-  },
-  row: {
-    backgroundColor: colours.lightestGrey,
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    width: "100%",
-  },
-  name: {
-    fontSize: 20,
-    fontFamily: fonts.semiBold,
-  },
-});
 
 const CarListScreen = ({
   navigation,
