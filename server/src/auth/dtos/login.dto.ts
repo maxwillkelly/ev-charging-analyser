@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsUUID } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsUUID, ValidateNested } from 'class-validator';
+import { UserDto } from './user.dto';
 
 export class LoginDto {
   @IsEmail()
@@ -9,6 +10,9 @@ export class LoginDto {
 }
 
 export class LoginResponse {
+  @ValidateNested()
+  user: UserDto;
+
   @IsUUID()
   token: string;
 }

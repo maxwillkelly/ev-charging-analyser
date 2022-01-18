@@ -1,13 +1,13 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as React from "react";
 import { Button, StyleSheet } from "react-native";
 
-import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+import { RootStackParamList } from "../types";
 
 export default function TabOneScreen({
   navigation,
-}: RootTabScreenProps<"TabOne">) {
+}: NativeStackScreenProps<RootStackParamList>) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome</Text>
@@ -20,7 +20,6 @@ export default function TabOneScreen({
         title="Connect car"
         onPress={() => navigation.navigate("SmartCarConnect")}
       />
-      {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
     </View>
   );
 }

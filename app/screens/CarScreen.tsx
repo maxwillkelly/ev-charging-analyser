@@ -60,7 +60,6 @@ const LockCard = () => {
   const lockMutation = useMutation<CarActionResponse>(
     "lockUnlockEvent",
     () => {
-      console.log(smartCarToken)
       if (!smartCarToken?.accessToken)
         throw new Error("Smartcar Access Token not stored");
       else
@@ -68,7 +67,7 @@ const LockCard = () => {
     },
     {
       onSuccess: toggleLocked,
-      onError: (error) => console.log(error),
+      onError: (error) => console.error(error),
     }
   );
 
@@ -82,7 +81,7 @@ const LockCard = () => {
     },
     {
       onSuccess: toggleLocked,
-      onError: (error) => console.log(error),
+      onError: (error) => console.error(error),
     }
   );
 

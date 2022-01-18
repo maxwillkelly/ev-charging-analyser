@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import WebView, { WebViewNavigation } from "react-native-webview";
-import { useMutation } from "react-query";
+import { QueryClient, useMutation, useQueryClient } from "react-query";
 import { useUserStore } from "../stores/useUserStore";
 import { GetSmartCarTokenDto } from "../api/dtos/GetSmartCarToken.dto";
 import { getSmartCarTokenAsync } from "../api/smartCarApi";
 import { RootStackScreenProps } from "../types";
-import { CarDto } from "../api/dtos/Car.dto";
+import { AddCarDto, CarDto } from "../api/dtos/Car.dto";
 import { addCarAsync } from "../api/carApi";
+import { AxiosError } from "axios";
 
 type Status = "Initial" | "Loading" | "Success" | "Error";
 
@@ -16,30 +17,39 @@ const SmartCarConnect = ({
 }: RootStackScreenProps<"SmartCarConnect">) => {
   const [status, setStatus] = useState<Status>("Initial");
   const [error, setError] = useState<Error>();
-  const { setSmartCarToken } = useUserStore();
+  const queryClient = useQueryClient();
+  const { setSmartCarToken, user } = useUserStore();
 
-  const getTokenMutation = useMutation<GetSmartCarTokenDto, Error, string>(
+  useEffect(() => {
+    if (!user) navigation.navigate("Login");
+  }, [user]);
+
+  const getTokenMutation = useMutation<GetSmartCarTokenDto, AxiosError, string>(
     "smartCarToken",
     (url) => getSmartCarTokenAsync(url),
     {
       onError: (error) => {
-        setError(error);
-        setStatus("Error");
-      },
-    }
-  );
-
-  const storeTokenMutation = useMutation<CarDto, Error, GetSmartCarTokenDto>(
-    "car",
-    addCarAsync,
-    {
-      onError: (error) => {
+        console.error(error);
         setError(error);
         setStatus("Error");
       },
       onSuccess: (data) => {
         setSmartCarToken(data);
-        setStatus("Success");
+      },
+    }
+  );
+
+  const storeTokenMutation = useMutation<CarDto, Error, AddCarDto>(
+    "car",
+    addCarAsync,
+    {
+      onError: (error) => {
+        console.error(error);
+        setError(error);
+        setStatus("Error");
+      },
+      onSuccess: () => {
+        navigation.navigate("CarList");
       },
     }
   );
@@ -49,8 +59,22 @@ const SmartCarConnect = ({
   ) => {
     if (navState.url.includes("exchange")) {
       setStatus("Loading");
+
+      const userId = user?.id;
+
+      if (!userId) {
+        navigation.navigate("Login");
+        return null;
+      }
+
       const token = await getTokenMutation.mutateAsync(navState.url);
-      const car = await storeTokenMutation.mutateAsync(token);
+
+      const car = await storeTokenMutation.mutateAsync({
+        userId,
+        ...token,
+      });
+
+      queryClient.invalidateQueries("cars");
     }
   };
 
@@ -60,17 +84,6 @@ const SmartCarConnect = ({
         <ActivityIndicator size="large" color="#999999" />
       </View>
     );
-
-  if (status === "Success") {
-    navigation.navigate("Vehicle");
-
-    // return (
-    //   <View style={styles.container}>
-    //     <Text>Car connection successful</Text>
-    //     <Text>{JSON.stringify(smartCarToken, null, 2)}</Text>
-    //   </View>
-    // );
-  }
 
   if (status === "Error") {
     return (

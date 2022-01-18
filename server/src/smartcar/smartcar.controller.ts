@@ -1,7 +1,7 @@
 import { Controller, Get, ParseUUIDPipe, Query, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { SmartCarService } from './smartCar.service';
-import { Access, Attributes } from 'smartcar';
+import { Access } from 'smartcar';
 import { AttributesDto } from './dtos/attributes';
 
 @Controller('smartCar')

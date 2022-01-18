@@ -1,8 +1,19 @@
-import { IsDate, IsOptional, IsUUID } from 'class-validator';
+import {
+  IsDate,
+  IsDateString,
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  IsUUID,
+} from 'class-validator';
+import { AttributesDto } from 'src/smartCar/dtos/attributes';
+import { BatteryLevelDto } from './batteryLevel.dto';
 
 export class AddCarDto {
   @IsUUID()
-  id: string;
+  userId: string;
 
   @IsUUID()
   accessToken: string;
@@ -10,10 +21,10 @@ export class AddCarDto {
   @IsUUID()
   refreshToken: string;
 
-  @IsDate()
+  @IsDateString()
   expiration: string;
 
-  @IsDate()
+  @IsDateString()
   refreshExpiration: string;
 }
 
@@ -42,4 +53,15 @@ export class CarDto {
 
   @IsDate()
   updatedAt: Date;
+}
+
+export class NewCarDto extends AttributesDto {
+  @IsString()
+  name: string;
+
+  @IsNumber()
+  percentRemaining: number;
+
+  @IsNumber()
+  range: number;
 }

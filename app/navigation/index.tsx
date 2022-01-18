@@ -35,6 +35,7 @@ import ChargingScreen from "../screens/ChargingScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import fonts from "../styles/fonts";
 import colours from "../styles/colours";
+import CarListScreen from "../screens/CarListScreen";
 
 export default function Navigation({
   colorScheme,
@@ -60,6 +61,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="CarList"
+        component={CarListScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Login"
         component={LoginScreen}
@@ -111,7 +117,7 @@ function BottomTabNavigator() {
         },
         headerLeft: () => (
           <Pressable
-            onPress={() => navigation.navigate("Modal")}
+            onPress={() => navigation.navigate("CarList")}
             style={({ pressed }) => ({
               opacity: pressed ? 0.5 : 1,
             })}

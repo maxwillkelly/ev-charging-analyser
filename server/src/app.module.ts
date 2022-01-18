@@ -32,7 +32,12 @@ const validationSchema = Joi.object({
     AuthModule,
     UsersModule,
   ],
-  controllers: [AppController, SmartCarController, UsersController, CarsController],
+  controllers: [
+    AppController,
+    SmartCarController,
+    UsersController,
+    CarsController,
+  ],
   providers: [SmartCarService, PrismaService, UsersService],
 })
 export class AppModule {}
