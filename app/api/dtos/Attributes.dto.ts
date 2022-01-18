@@ -9,6 +9,7 @@ export type AttributesDto = {
 };
 
 export interface NewCarDto extends AttributesDto {
-  batteryPercentage: number;
+  percentRemaining: number;
+  range: number;
   name: string;
 }

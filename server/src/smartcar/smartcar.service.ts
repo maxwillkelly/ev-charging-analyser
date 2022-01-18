@@ -5,6 +5,7 @@ import SmartCar, {
   ActionResponse,
   Attributes,
   AuthClient,
+  Battery,
   getVehicles,
   Vehicle,
   VehicleIds,
@@ -31,9 +32,9 @@ export class SmartCarService {
 
   getAuthUrl(): string {
     const scope = [
-      // 'required:read_battery',
-      // 'required:read_charge',
-      // 'required:control_charge',
+      'required:read_battery',
+      'required:read_charge',
+      'required:control_charge',
       // 'required:read_location',
       'required:control_security',
       // 'required:read_odometer',
@@ -59,9 +60,8 @@ export class SmartCarService {
   }
 
   async getVehiclesAttributes(
-    smartCarAccessToken: string,
+    vehicles: SmartCar.Vehicle[],
   ): Promise<Attributes[]> {
-    const vehicles = await this.getVehicles(smartCarAccessToken);
     const vehiclesAttributes = await Promise.all(
       vehicles.map(async (v) => await v.attributes()),
     );
@@ -85,13 +85,20 @@ export class SmartCarService {
     return vehicle.attributes();
   }
 
+  async getBatteryLevels(vehicles: Vehicle[]): Promise<Battery[]> {
+    const batteryLevels = await Promise.all(
+      vehicles.map(async (v) => await v.battery()),
+    );
+    return batteryLevels;
+  }
+
   async lockCar(smartCarAccessToken: string): Promise<ActionResponse> {
     const vehicle = await this.getVehicle(smartCarAccessToken);
-    return vehicle.lock();
+    return await vehicle.lock();
   }
 
   async unlockCar(smartCarAccessToken: string): Promise<ActionResponse> {
     const vehicle = await this.getVehicle(smartCarAccessToken);
-    return vehicle.unlock();
+    return await vehicle.unlock();
   }
 }

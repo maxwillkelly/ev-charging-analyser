@@ -21,30 +21,21 @@ export class CarsController {
   async getCars(
     @Param('smartCarAccessToken') smartCarAccessToken: string,
   ): Promise<NewCarDto[]> {
-    const attributes = await this.smartCarService.getVehiclesAttributes(
+    const vehicles = await this.smartCarService.getVehicles(
       smartCarAccessToken,
     );
-    // const carsQuery = await this.prismaService.car.findMany({
-    //   where: {
-    //     userId,
-    //   },
-    // });
 
-    // const cars = carsQuery.map((c) => {
-    //   const attributes = this.smartCarService.getVehicleAttributes(
-    //     c.accessToken,
-    //   );
+    const cars = Promise.all(
+      vehicles.map(async (v) => {
+        const attributes = await v.attributes();
+        const batteryLevel = await v.battery();
 
-    console.log(JSON.stringify(attributes, null, 2));
+        const { make, model, year } = attributes;
+        const name = `${year} ${make} ${model}`;
 
-    const cars = attributes.map((a) => {
-      const { make, model, year } = a;
-      const name = `${year} ${make} ${model}`;
-
-      return { ...a, name, batteryPercentage: 80 };
-    });
-
-    console.log(JSON.stringify(cars, null, 2));
+        return { ...attributes, ...batteryLevel, name };
+      }),
+    );
 
     return cars;
   }

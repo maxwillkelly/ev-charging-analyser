@@ -4,7 +4,7 @@ export interface CarDto extends GetSmartCarTokenDto {
   id: string;
   userId: string;
   name: string;
-  batteryPercentage: number;
+  percentRemaining: number;
   createdAt: string;
   updatedAt: string;
 }

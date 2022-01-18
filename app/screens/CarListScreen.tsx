@@ -27,18 +27,20 @@ type CarCardProps = {
 };
 
 type BatteryWidgetProps = {
-  batteryPercentage: number;
+  percentRemaining: number;
 };
 
 const BatteryWidgetHorizontal: React.FC<BatteryWidgetProps> = ({
-  batteryPercentage,
+  percentRemaining,
 }) => {
   return (
     <View style={bwHStyles.card}>
       <View style={bwHStyles.batteryIcon}>
         <View style={bwHStyles.batteryLevel}></View>
       </View>
-      <Text style={bwHStyles.percentage}>{batteryPercentage}%</Text>
+      <Text style={bwHStyles.percentage}>
+        {Math.round(percentRemaining * 100)}%
+      </Text>
     </View>
   );
 };
@@ -83,7 +85,7 @@ const CarCard: React.FC<CarCardProps> = ({ car, navigation }) => {
               style={{ height: 68, width: 138 }}
             />
             <BatteryWidgetHorizontal
-              batteryPercentage={car.batteryPercentage}
+              percentRemaining={car.percentRemaining}
             />
           </View>
           <Text style={carCardStyles.name}>{car.name}</Text>

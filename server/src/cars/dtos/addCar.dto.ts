@@ -2,12 +2,14 @@ import {
   IsDate,
   IsDateString,
   IsInt,
+  IsNumber,
   IsOptional,
   IsPositive,
   IsString,
   IsUUID,
 } from 'class-validator';
 import { AttributesDto } from 'src/smartCar/dtos/attributes';
+import { BatteryLevelDto } from './batteryLevel.dto';
 
 export class AddCarDto {
   @IsUUID()
@@ -57,7 +59,9 @@ export class NewCarDto extends AttributesDto {
   @IsString()
   name: string;
 
-  @IsInt()
-  @IsPositive()
-  batteryPercentage: number;
+  @IsNumber()
+  percentRemaining: number;
+
+  @IsNumber()
+  range: number;
 }
