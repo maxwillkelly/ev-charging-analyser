@@ -29,7 +29,7 @@ declare module 'smartcar' {
    * Return the user's id.
    * @param accessToken - access token
    */
-  function getUser(accessToken: string): User;
+  async function getUser(accessToken: string): Promise<User>;
   /**
    * @example
    * {
@@ -64,13 +64,13 @@ declare module 'smartcar' {
    * @param [paging.limit] - number of vehicles to return
    * @param [paging.offset] - index to start vehicle list
    */
-  function getVehicles(
+  async function getVehicles(
     accessToken: string,
     paging?: {
       limit?: number;
       offset?: number;
     },
-  ): VehicleIds;
+  ): Promise<VehicleIds>;
   /**
    * @example
    * {
@@ -102,7 +102,7 @@ declare module 'smartcar' {
    * value is string or boolean value.
    * @param [options.version] - API version to use
    */
-  function getCompatibility(
+  async function getCompatibility(
     vin: string,
     scope: string[],
     country?: string,
@@ -112,7 +112,7 @@ declare module 'smartcar' {
       flags?: any;
       version?: any;
     },
-  ): Compatibility;
+  ): Promise<Compatibility>;
   /**
    * Generate hash challenege for webhooks. It does HMAC_SHA256(amt, challenge)
    * @param amt - Application Management Token
@@ -353,87 +353,87 @@ declare module 'smartcar' {
      * @param [paging.limit] - number of permissions to return
      * @param [options.offset] - The current start index of the returned list of elements.
      */
-    permissions(paging?: { limit?: string }): Permissions;
+    async permissions(paging?: { limit?: string }): Promise<Permissions>;
     /**
      * Subscribe the vehicle to given webhook Id
      * @param webhookId - Webhook Id to subscribe to.
      */
-    subscribe(webhookId: string): any;
+    async subscribe(webhookId: string): Promise<any>;
     /**
      * Unsubscribe  the vehicle from given webhook Id
      * @param amt - Application management token to be used as authorization
      * @param webhookId - Webhook Id to unsubscribe from.
      */
-    unsubscribe(amt: string, webhookId: string): Meta;
+    async unsubscribe(amt: string, webhookId: string): Promise<Meta>;
     /**
      * Make batch requests for supported items
      * @param paths - A list of paths of endpoints to send requests to.
      */
-    batch(paths: string[]): Batch;
+    async batch(paths: string[]): Promise<Batch>;
     /**
      * Returns the vehicle's manufacturer identifier (VIN).
      */
-    vin(): Vin;
+    async vin(): Promise<Vin>;
     /**
      * Returns the current charge status of the vehicle.
      */
-    charge(): Charge;
+    async charge(): Promise<Charge>;
     /**
      * Returns the state of charge (SOC) and remaining range of an electric or
      * plug-in hybrid vehicle's battery.
      */
-    battery(): Battery;
+    async battery(): Promise<Battery>;
     /**
      * Returns the capacity of an electric or plug-in hybrid vehicle's battery.
      */
-    batteryCapacity(): BatteryCapacity;
+    async batteryCapacity(): Promise<BatteryCapacity>;
     /**
      * Returns the status of the fuel remaining in the vehicle's gas tank.
      */
-    fuel(): Fuel;
+    async fuel(): Promise<Fuel>;
     /**
      * Returns the air pressure of each of the vehicle's tires.
      */
-    tirePressure(): TirePressure;
+    async tirePressure(): Promise<TirePressure>;
     /**
      * Returns the remaining life span of a vehicle's engine oil
      */
-    engineOil(): EngineOil;
+    async engineOil(): Promise<EngineOil>;
     /**
      * Returns the vehicle's last known odometer reading.
      */
-    odometer(): Odometer;
+    async odometer(): Promise<Odometer>;
     /**
      * Returns the last known location of the vehicle in geographic coordinates.
      */
-    location(): Location;
+    async location(): Promise<Location>;
     /**
      * Returns make model year and id of the vehicle
      */
-    attributes(): Attributes;
+    async attributes(): Promise<Attributes>;
     /**
      * Attempts to lock the vehicle.
      */
-    lock(): ActionResponse;
+    async lock(): Promise<ActionResponse>;
     /**
      * Attempts to lock the vehicle.
      */
-    unlock(): ActionResponse;
+    async unlock(): Promise<ActionResponse>;
     /**
      * Attempts to start charging the vehicle.
      */
-    startCharge(): ActionResponse;
+    async startCharge(): Promise<ActionResponse>;
     /**
      * Attempts to stop charging the vehicle.
      */
-    stopCharge(): ActionResponse;
+    async stopCharge(): Promise<ActionResponse>;
     /**
      * Disconnect this vehicle from the connected application.
      * Note: Calling this method will invalidate your token's access to the vehicle.
      * You will have to reauthorize the user to your application again if you wish
      * to make requests to it again.
      */
-    disconnect(): ActionResponse;
+    async disconnect(): Promise<ActionResponse>;
   }
 
   /**

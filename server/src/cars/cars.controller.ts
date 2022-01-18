@@ -3,7 +3,7 @@ import { ActionResponseDto } from 'src/smartCar/dtos/actionResponse.dto';
 import { SmartCarService } from 'src/smartCar/smartCar.service';
 import { CarActionDto } from './dtos/carAction.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { AddCarDto, CarDto } from './dtos/addCar.dto';
+import { AddCarDto, CarDto, NewCarDto } from './dtos/addCar.dto';
 
 @Controller('cars')
 export class CarsController {
@@ -17,17 +17,34 @@ export class CarsController {
     return await this.prismaService.car.create({ data: command });
   }
 
-  @Get(':userId')
-  async getCars(@Param('userId') userId: string): Promise<CarDto[]> {
-    const carsQuery = await this.prismaService.car.findMany({
-      where: {
-        userId,
-      },
+  @Get(':smartCarAccessToken')
+  async getCars(
+    @Param('smartCarAccessToken') smartCarAccessToken: string,
+  ): Promise<NewCarDto[]> {
+    const attributes = await this.smartCarService.getVehiclesAttributes(
+      smartCarAccessToken,
+    );
+    // const carsQuery = await this.prismaService.car.findMany({
+    //   where: {
+    //     userId,
+    //   },
+    // });
+
+    // const cars = carsQuery.map((c) => {
+    //   const attributes = this.smartCarService.getVehicleAttributes(
+    //     c.accessToken,
+    //   );
+
+    console.log(JSON.stringify(attributes, null, 2));
+
+    const cars = attributes.map((a) => {
+      const { make, model, year } = a;
+      const name = `${year} ${make} ${model}`;
+
+      return { ...a, name, batteryPercentage: 80 };
     });
 
-    const cars = carsQuery.map((c) => {
-      return { ...c, name: "Andy's Tesla Model X", batteryPercentage: 80 };
-    });
+    console.log(JSON.stringify(cars, null, 2));
 
     return cars;
   }

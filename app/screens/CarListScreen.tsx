@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { useQuery } from "react-query";
 import { getCarsAsync } from "../api/carApi";
-import { CarDto } from "../api/dtos/Car.dto";
+import { NewCarDto } from "../api/dtos/Attributes.dto";
 import { Text, View } from "../components/Themed";
 import { useUserStore } from "../stores/useUserStore";
 import colours from "../styles/colours";
@@ -22,7 +22,7 @@ import fonts from "../styles/fonts";
 import { RootStackParamList } from "../types";
 
 type CarCardProps = {
-  car: CarDto;
+  car: NewCarDto;
   navigation: NativeStackNavigationProp<RootStackParamList>;
 };
 
@@ -122,13 +122,13 @@ const carCardStyles = StyleSheet.create({
 const CarListScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList>) => {
-  const { user } = useUserStore();
+  const { user, smartCarToken } = useUserStore();
 
-  const { isLoading, error, data } = useQuery<CarDto[], AxiosError>(
+  const { isIdle, isLoading, error, data } = useQuery<NewCarDto[], AxiosError>(
     "cars",
-    () => getCarsAsync(user?.id),
+    () => getCarsAsync(smartCarToken?.accessToken),
     {
-      enabled: !!user?.id,
+      enabled: !!smartCarToken?.accessToken,
     }
   );
 
@@ -151,16 +151,18 @@ const CarListScreen = ({
       </View>
     );
 
-  if (data)
+  if (isIdle || data)
     return (
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <Text style={styles.title}>Cars</Text>
           <ScrollView>
             <View style={styles.carContainer}>
-              {data.map((car) => (
-                <CarCard key={car.id} car={car} navigation={navigation} />
-              ))}
+              {data
+                ? data.map((car) => (
+                    <CarCard key={car.id} car={car} navigation={navigation} />
+                  ))
+                : null}
             </View>
           </ScrollView>
         </View>

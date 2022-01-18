@@ -1,4 +1,13 @@
-import { IsDate, IsDateString, IsOptional, IsUUID } from 'class-validator';
+import {
+  IsDate,
+  IsDateString,
+  IsInt,
+  IsOptional,
+  IsPositive,
+  IsString,
+  IsUUID,
+} from 'class-validator';
+import { AttributesDto } from 'src/smartCar/dtos/attributes';
 
 export class AddCarDto {
   @IsUUID()
@@ -42,4 +51,13 @@ export class CarDto {
 
   @IsDate()
   updatedAt: Date;
+}
+
+export class NewCarDto extends AttributesDto {
+  @IsString()
+  name: string;
+
+  @IsInt()
+  @IsPositive()
+  batteryPercentage: number;
 }

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { NewCarDto } from "./dtos/Attributes.dto";
 import { AddCarDto, CarDto } from "./dtos/Car.dto";
 import { CarActionDto, CarActionResponse } from "./dtos/CarAction.dto";
 
@@ -13,10 +14,10 @@ export const addCarAsync = async (dto: AddCarDto): Promise<CarDto> => {
     });
 };
 
-export const getCarsAsync = async (userId: string | undefined): Promise<CarDto[]> => {
-  if (!userId) return []
+export const getCarsAsync = async (smartCarAccessToken: string | undefined): Promise<NewCarDto[]> => {
+  if (!smartCarAccessToken) return []
   return axios
-    .get(`${CONTROLLER_URL}/${userId}`)
+    .get(`${CONTROLLER_URL}/${smartCarAccessToken}`)
     .then((response) => response.data)
     .catch((response) => {
       throw response;
