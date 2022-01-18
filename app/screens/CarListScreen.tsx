@@ -15,6 +15,7 @@ import {
 import { useQuery } from "react-query";
 import { getCarsAsync } from "../api/carApi";
 import { NewCarDto } from "../api/dtos/Attributes.dto";
+import { BatteryWidgetHorizontal } from "../components/car-list/BatteryWidgetHorizontal";
 import { Text, View } from "../components/Themed";
 import { useUserStore } from "../stores/useUserStore";
 import colours from "../styles/colours";
@@ -26,54 +27,6 @@ type CarCardProps = {
   navigation: NativeStackNavigationProp<RootStackParamList>;
 };
 
-type BatteryWidgetProps = {
-  percentRemaining: number;
-};
-
-const BatteryWidgetHorizontal: React.FC<BatteryWidgetProps> = ({
-  percentRemaining,
-}) => {
-  return (
-    <View style={bwHStyles.card}>
-      <View style={bwHStyles.batteryIcon}>
-        <View style={bwHStyles.batteryLevel}></View>
-      </View>
-      <Text style={bwHStyles.percentage}>
-        {Math.round(percentRemaining * 100)}%
-      </Text>
-    </View>
-  );
-};
-
-const bwHStyles = StyleSheet.create({
-  card: {
-    backgroundColor: colours.lightestGrey,
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    height: 50,
-  },
-  batteryIcon: {
-    backgroundColor: colours.lightGrey,
-    borderRadius: 6,
-    marginVertical: 5,
-    marginHorizontal: 2,
-    width: "60%",
-  },
-  batteryLevel: {
-    backgroundColor: colours.green,
-    width: "80%",
-    height: "100%",
-    borderBottomLeftRadius: 6,
-    borderTopLeftRadius: 6,
-  },
-  percentage: {
-    fontFamily: fonts.bold,
-    fontSize: 18,
-  },
-});
-
 const CarCard: React.FC<CarCardProps> = ({ car, navigation }) => {
   return (
     <Pressable onPress={() => navigation.navigate("Root")}>
@@ -84,9 +37,7 @@ const CarCard: React.FC<CarCardProps> = ({ car, navigation }) => {
               source={require("../assets/images/tesla-model-x.png")}
               style={{ height: 68, width: 138 }}
             />
-            <BatteryWidgetHorizontal
-              percentRemaining={car.percentRemaining}
-            />
+            <BatteryWidgetHorizontal percentRemaining={car.percentRemaining} />
           </View>
           <Text style={carCardStyles.name}>{car.name}</Text>
         </View>
