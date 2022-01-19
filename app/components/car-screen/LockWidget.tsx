@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, StyleSheet, Image } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, View } from "../../components/Themed";
 import colours from "../../styles/colours";
