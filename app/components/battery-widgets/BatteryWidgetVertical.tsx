@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
   batteryLevel: {
     backgroundColor: colours.green,
     width: "100%",
-    // height: "80%",
     borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
   },
