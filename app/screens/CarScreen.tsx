@@ -12,7 +12,10 @@ import { useUserStore } from "../stores/useUserStore";
 import { RootTabScreenProps } from "../types";
 import { BatteryWidgetVertical } from "../components/battery-widgets/BatteryWidgetVertical";
 
-const RangeCard = () => {
+type RangeCardProps = { range: number };
+
+const RangeCard: React.FC<RangeCardProps> = ({ range }) => {
+  const roundedRange = Math.round(range);
   return (
     <View style={styles.rightCard}>
       <Text style={styles.cardHeading}>Range</Text>
@@ -23,7 +26,7 @@ const RangeCard = () => {
           color={colours.secondary}
           style={styles.leftIcon}
         />
-        <Text style={styles.cardBody}>350 miles</Text>
+        <Text style={styles.cardBody}>{roundedRange} miles</Text>
       </View>
     </View>
   );
@@ -114,7 +117,7 @@ const CarScreen = ({ route }: RootTabScreenProps<"Car">) => {
       <View style={styles.appletContainer}>
         <BatteryWidgetVertical percentRemaining={car.percentRemaining} />
         <View>
-          <RangeCard />
+          <RangeCard range={car.range} />
           <LockCard />
         </View>
       </View>
