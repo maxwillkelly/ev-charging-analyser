@@ -40,7 +40,11 @@ const styles = StyleSheet.create({
 
 export const CarCard: React.FC<CarCardProps> = ({ car, navigation }) => {
   return (
-    <Pressable onPress={() => navigation.navigate("Root")}>
+    <Pressable
+      onPress={() =>
+        navigation.navigate("Root", { screen: "Car", params: { car } })
+      }
+    >
       <View style={styles.carCard}>
         <View style={styles.content}>
           <View style={styles.row}>

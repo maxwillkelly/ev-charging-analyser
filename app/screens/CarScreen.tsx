@@ -9,6 +9,12 @@ import { useMutation } from "react-query";
 import { lockAsync, unlockAsync } from "../api/carApi";
 import { CarActionResponse } from "../api/dtos/CarAction.dto";
 import { useUserStore } from "../stores/useUserStore";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import {
+  RootStackParamList,
+  RootTabParamList,
+  RootTabScreenProps,
+} from "../types";
 
 const BatteryCard = () => {
   return (
@@ -126,14 +132,15 @@ const LockCard = () => {
   );
 };
 
-const CarScreen = () => {
+const CarScreen = ({ navigation, route }: RootTabScreenProps<"Car">) => {
+  const { car } = route.params;
   return (
     <View style={styles.container}>
       <Image
         source={require("../assets/images/tesla-model-x.png")}
         style={{ marginTop: 80, height: 162, width: 330 }}
       />
-      <Text style={styles.title}>Andy's Tesla Model X</Text>
+      <Text style={styles.title}>{car.name}</Text>
       <View style={styles.appletContainer}>
         <BatteryCard />
         <View>
