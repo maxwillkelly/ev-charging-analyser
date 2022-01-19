@@ -11,26 +11,7 @@ import { CarActionResponse } from "../api/dtos/CarAction.dto";
 import { useUserStore } from "../stores/useUserStore";
 import { RootTabScreenProps } from "../types";
 import { BatteryWidgetVertical } from "../components/battery-widgets/BatteryWidgetVertical";
-
-type RangeCardProps = { range: number };
-
-const RangeCard: React.FC<RangeCardProps> = ({ range }) => {
-  const roundedRange = Math.round(range);
-  return (
-    <View style={styles.rightCard}>
-      <Text style={styles.cardHeading}>Range</Text>
-      <View style={styles.line}>
-        <MaterialCommunityIcons
-          name="map-marker-distance"
-          size={30}
-          color={colours.secondary}
-          style={styles.leftIcon}
-        />
-        <Text style={styles.cardBody}>{roundedRange} miles</Text>
-      </View>
-    </View>
-  );
-};
+import { RangeWidget } from "../components/car-screen/RangeWidget";
 
 const LockCard = () => {
   const [locked, toggleLocked] = useToggle();
@@ -117,7 +98,7 @@ const CarScreen = ({ route }: RootTabScreenProps<"Car">) => {
       <View style={styles.appletContainer}>
         <BatteryWidgetVertical percentRemaining={car.percentRemaining} />
         <View>
-          <RangeCard range={car.range} />
+          <RangeWidget range={car.range} />
           <LockCard />
         </View>
       </View>
