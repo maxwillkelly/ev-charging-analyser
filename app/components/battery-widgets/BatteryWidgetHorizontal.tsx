@@ -3,10 +3,7 @@ import { StyleSheet } from "react-native";
 import { Text, View } from "../Themed";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
-
-type BatteryWidgetProps = {
-  percentRemaining: number;
-};
+import { BatteryWidgetProps, getPercentageString } from "./shared";
 
 const styles = StyleSheet.create({
   card: {
@@ -39,7 +36,7 @@ const styles = StyleSheet.create({
 export const BatteryWidgetHorizontal: React.FC<BatteryWidgetProps> = ({
   percentRemaining,
 }) => {
-  const percentageString = `${Math.round(percentRemaining * 100)}%`;
+  const percentageString = getPercentageString(percentRemaining);
   return (
     <View style={styles.card}>
       <View style={styles.batteryIcon}>

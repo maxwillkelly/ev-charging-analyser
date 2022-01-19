@@ -9,38 +9,8 @@ import { useMutation } from "react-query";
 import { lockAsync, unlockAsync } from "../api/carApi";
 import { CarActionResponse } from "../api/dtos/CarAction.dto";
 import { useUserStore } from "../stores/useUserStore";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import {
-  RootStackParamList,
-  RootTabParamList,
-  RootTabScreenProps,
-} from "../types";
-
-const BatteryCard = () => {
-  return (
-    <View style={styles.leftCard}>
-      <Text style={styles.cardHeading}>Battery</Text>
-      <View style={styles.cardCentred}>
-        <View style={styles.batteryWidgetVertical}>
-          <View
-            style={{
-              zIndex: 10,
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "transparent",
-            }}
-          >
-            <Text style={styles.batteryPercentage}>80%</Text>
-          </View>
-          <View style={styles.batteryLevel}></View>
-        </View>
-      </View>
-    </View>
-  );
-};
+import { RootTabScreenProps } from "../types";
+import { BatteryWidgetVertical } from "../components/battery-widgets/BatteryWidgetVertical";
 
 const RangeCard = () => {
   return (
@@ -132,7 +102,7 @@ const LockCard = () => {
   );
 };
 
-const CarScreen = ({ navigation, route }: RootTabScreenProps<"Car">) => {
+const CarScreen = ({ route }: RootTabScreenProps<"Car">) => {
   const { car } = route.params;
   return (
     <View style={styles.container}>
@@ -142,7 +112,7 @@ const CarScreen = ({ navigation, route }: RootTabScreenProps<"Car">) => {
       />
       <Text style={styles.title}>{car.name}</Text>
       <View style={styles.appletContainer}>
-        <BatteryCard />
+        <BatteryWidgetVertical percentRemaining={car.percentRemaining} />
         <View>
           <RangeCard />
           <LockCard />
