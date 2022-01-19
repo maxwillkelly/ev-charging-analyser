@@ -1,90 +1,12 @@
 import * as React from "react";
-import { Pressable, StyleSheet, Image } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { StyleSheet, Image } from "react-native";
 import { Text, View } from "../components/Themed";
 import colours from "../styles/colours";
 import fonts from "../styles/fonts";
-import useToggle from "../hooks/useToggle";
-import { useMutation } from "react-query";
-import { lockAsync, unlockAsync } from "../api/carApi";
-import { CarActionResponse } from "../api/dtos/CarAction.dto";
-import { useUserStore } from "../stores/useUserStore";
 import { RootTabScreenProps } from "../types";
 import { BatteryWidgetVertical } from "../components/battery-widgets/BatteryWidgetVertical";
 import { RangeWidget } from "../components/car-screen/RangeWidget";
-
-const LockCard = () => {
-  const [locked, toggleLocked] = useToggle();
-  const { smartCarToken } = useUserStore();
-
-  const lockMutation = useMutation<CarActionResponse>(
-    "lockUnlockEvent",
-    () => {
-      if (!smartCarToken?.accessToken)
-        throw new Error("Smartcar Access Token not stored");
-      else
-        return lockAsync({ smartCarAccessToken: smartCarToken?.accessToken });
-    },
-    {
-      onSuccess: toggleLocked,
-      onError: (error) => console.error(error),
-    }
-  );
-
-  const unlockMutation = useMutation<CarActionResponse>(
-    "lockUnlockEvent",
-    () => {
-      if (!smartCarToken?.accessToken)
-        throw new Error("Smartcar Access Token not stored");
-      else
-        return unlockAsync({ smartCarAccessToken: smartCarToken?.accessToken });
-    },
-    {
-      onSuccess: toggleLocked,
-      onError: (error) => console.error(error),
-    }
-  );
-
-  const toggle = () => {
-    if (locked) unlockMutation.mutate();
-    else lockMutation.mutate();
-  };
-
-  return (
-    <Pressable onPress={toggle}>
-      <View
-        style={locked ? styles.rightCard : [styles.rightCard, styles.active]}
-      >
-        <Text
-          style={
-            locked ? styles.cardHeading : [styles.cardHeading, styles.active]
-          }
-        >
-          Car {locked ? "Locked" : "Unlocked"}
-        </Text>
-        <View
-          style={
-            locked ? styles.cardCentred : [styles.cardCentred, styles.active]
-          }
-        >
-          <View
-            style={
-              locked
-                ? styles.cardCentredVertical
-                : [styles.cardCentredVertical, styles.active]
-            }
-          >
-            <MaterialCommunityIcons
-              name={locked ? "lock" : "lock-open"}
-              size={30}
-              color={locked ? colours.secondary : colours.white}
-            />
-          </View>
-        </View>
-      </View>
-    </Pressable>
-  );
-};
+import { LockWidget } from "../components/car-screen/LockWidget";
 
 const CarScreen = ({ route }: RootTabScreenProps<"Car">) => {
   const { car } = route.params;
@@ -99,7 +21,7 @@ const CarScreen = ({ route }: RootTabScreenProps<"Car">) => {
         <BatteryWidgetVertical percentRemaining={car.percentRemaining} />
         <View>
           <RangeWidget range={car.range} />
-          <LockCard />
+          <LockWidget />
         </View>
       </View>
     </View>

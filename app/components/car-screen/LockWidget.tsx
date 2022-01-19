@@ -1,0 +1,119 @@
+import React from "react";
+import { Pressable, StyleSheet, Image } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Text, View } from "../../components/Themed";
+import colours from "../../styles/colours";
+import useToggle from "../../hooks/useToggle";
+import { useMutation } from "react-query";
+import { lockAsync, unlockAsync } from "../../api/carApi";
+import { CarActionResponse } from "../../api/dtos/CarAction.dto";
+import { useUserStore } from "../../stores/useUserStore";
+import fonts from "../../styles/fonts";
+
+export const LockWidget = () => {
+  const [locked, toggleLocked] = useToggle();
+  const { smartCarToken } = useUserStore();
+
+  const lockMutation = useMutation<CarActionResponse>(
+    "lockUnlockEvent",
+    () => {
+      if (!smartCarToken?.accessToken)
+        throw new Error("Smartcar Access Token not stored");
+      else
+        return lockAsync({ smartCarAccessToken: smartCarToken?.accessToken });
+    },
+    {
+      onSuccess: toggleLocked,
+      onError: (error) => console.error(error),
+    }
+  );
+
+  const unlockMutation = useMutation<CarActionResponse>(
+    "lockUnlockEvent",
+    () => {
+      if (!smartCarToken?.accessToken)
+        throw new Error("Smartcar Access Token not stored");
+      else
+        return unlockAsync({ smartCarAccessToken: smartCarToken?.accessToken });
+    },
+    {
+      onSuccess: toggleLocked,
+      onError: (error) => console.error(error),
+    }
+  );
+
+  const toggle = () => {
+    if (locked) unlockMutation.mutate();
+    else lockMutation.mutate();
+  };
+
+  return (
+    <Pressable onPress={toggle}>
+      <View
+        style={locked ? styles.rightCard : [styles.rightCard, styles.active]}
+      >
+        <Text
+          style={
+            locked ? styles.cardHeading : [styles.cardHeading, styles.active]
+          }
+        >
+          Car {locked ? "Locked" : "Unlocked"}
+        </Text>
+        <View
+          style={
+            locked ? styles.cardCentred : [styles.cardCentred, styles.active]
+          }
+        >
+          <View
+            style={
+              locked
+                ? styles.cardCentredVertical
+                : [styles.cardCentredVertical, styles.active]
+            }
+          >
+            <MaterialCommunityIcons
+              name={locked ? "lock" : "lock-open"}
+              size={30}
+              color={locked ? colours.secondary : colours.white}
+            />
+          </View>
+        </View>
+      </View>
+    </Pressable>
+  );
+};
+
+const styles = StyleSheet.create({
+  cardHeading: {
+    fontFamily: fonts.semiBold,
+    fontSize: 16,
+  },
+  cardCentred: {
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: colours.lightestGrey,
+    alignContent: "center",
+    justifyContent: "center",
+    width: "100%",
+  },
+  active: {
+    backgroundColor: colours.primary,
+    color: colours.white,
+  },
+  cardCentredVertical: {
+    backgroundColor: colours.lightestGrey,
+    flexDirection: "column",
+    alignContent: "center",
+    justifyContent: "center",
+  },
+  rightCard: {
+    borderRadius: 6,
+    margin: 10,
+    padding: 10,
+    backgroundColor: colours.lightestGrey,
+    height: 94,
+    width: 177,
+    alignItems: "flex-start",
+    justifyContent: "center",
+  },
+});
