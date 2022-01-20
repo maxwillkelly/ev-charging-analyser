@@ -1,25 +1,27 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import { Text, View } from '../components/Themed';
+import * as React from "react";
+import { StyleSheet } from "react-native";
+import { Map } from "../components/map-screen/Map";
+import { Text, View } from "../components/Themed";
 
 const MapScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Map</Text>
+      <Map />
+      {/* <Text style={styles.title}>Map</Text> */}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
+  // title: {
+  //   fontSize: 20,
+  //   fontWeight: 'bold',
+  // },
 });
 
 export default MapScreen;
