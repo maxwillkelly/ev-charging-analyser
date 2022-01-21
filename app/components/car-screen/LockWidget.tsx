@@ -5,7 +5,7 @@ import { Text, View } from "../../components/Themed";
 import colours from "../../styles/colours";
 import useToggle from "../../hooks/useToggle";
 import { useMutation } from "react-query";
-import { lockAsync, unlockAsync } from "../../api/carApi";
+import { lockAsync, unlockAsync } from "../../api/carsApi";
 import { CarActionResponse } from "../../api/dtos/CarAction.dto";
 import { useUserStore } from "../../stores/useUserStore";
 import fonts from "../../styles/fonts";

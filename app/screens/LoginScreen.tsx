@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Button, TextInput, HelperText } from "react-native-paper";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { loginAsync } from "../api/loginApi";
+import { loginAsync } from "../api/usersApi";
 import { useMutation } from "react-query";
 import { LoginDto, LoginResponse } from "../api/dtos/Login.dto";
 import { AxiosError } from "axios";

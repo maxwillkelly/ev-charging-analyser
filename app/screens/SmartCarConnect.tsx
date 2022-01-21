@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import WebView, { WebViewNavigation } from "react-native-webview";
-import { QueryClient, useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useUserStore } from "../stores/useUserStore";
 import { GetSmartCarTokenDto } from "../api/dtos/GetSmartCarToken.dto";
 import { getSmartCarTokenAsync } from "../api/smartCarApi";
 import { RootStackScreenProps } from "../types";
 import { AddCarDto, CarDto } from "../api/dtos/Car.dto";
-import { addCarAsync } from "../api/carApi";
+import { addCarAsync } from "../api/carsApi";
 import { AxiosError } from "axios";
+import { BASE_URL } from "../api";
 
 type Status = "Initial" | "Loading" | "Success" | "Error";
 
@@ -57,7 +58,7 @@ const SmartCarConnect = ({
   const handleNavigationStateChangeAsync = async (
     navState: WebViewNavigation
   ) => {
-    if (navState.url.includes("exchange")) {
+    if (navState.url.includes(`${BASE_URL}/smartcar/exchange`)) {
       setStatus("Loading");
 
       const userId = user?.id;
@@ -97,8 +98,8 @@ const SmartCarConnect = ({
   return (
     <WebView
       style={styles.container}
-      originWhitelist={["http://localhost:3000/smartcar/login", "https"]}
-      source={{ uri: "http://localhost:5000/smartcar/login" }}
+      originWhitelist={[`${BASE_URL}/smartcar/login`, "https"]}
+      source={{ uri: `${BASE_URL}/smartcar/login` }}
       onNavigationStateChange={handleNavigationStateChangeAsync}
     />
   );
