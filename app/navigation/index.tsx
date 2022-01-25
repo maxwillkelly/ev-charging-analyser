@@ -37,6 +37,7 @@ import fonts from "../styles/fonts";
 import colours from "../styles/colours";
 import CarListScreen from "../screens/CarListScreen";
 import OnboardingLocationScreen from "../screens/onboarding/OnboardingLocationScreen";
+import OnboardingSteps from "../components/onboarding/OnboardingSteps";
 
 export default function Navigation({
   colorScheme,
@@ -213,7 +214,7 @@ const TabBarIcon: React.FC<TabBarIconProps> = (props) => {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 };
 
-const Step = createNativeStackNavigator<OnboardingTabParamList>();
+const Step = createBottomTabNavigator<OnboardingTabParamList>();
 
 const StepNavigator: React.FC = () => (
   <Step.Navigator
@@ -221,6 +222,7 @@ const StepNavigator: React.FC = () => (
     screenOptions={({ route, navigation }) => ({
       headerShown: false,
     })}
+    tabBar={() => <OnboardingSteps />}
     // screenOptions={({ route, navigation }) => ({
     //   headerTitleStyle: {
     //     fontFamily: fonts.medium,

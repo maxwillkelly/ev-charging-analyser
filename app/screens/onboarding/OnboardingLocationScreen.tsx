@@ -1,5 +1,5 @@
 import React from "react";
-import OnboardingScreen from "./OnboardingScreen";
+import OnboardingScreen from "../../components/onboarding/OnboardingScreen";
 
 const OnboardingLocationScreen: React.FC = () => {
   return (

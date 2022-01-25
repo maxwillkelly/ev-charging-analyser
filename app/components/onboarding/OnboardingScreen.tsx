@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { View, Text } from "../../components/Themed";
+import { View, Text } from "../Themed";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
 
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-end",
+    paddingBottom: 20,
   },
   iconContainer: {
     flex: 1,

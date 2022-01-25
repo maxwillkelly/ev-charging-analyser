@@ -21,7 +21,7 @@ const SettingsScreen = ({ navigation }: RootTabScreenProps<"Settings">) => {
         title="Onboard"
         onPress={() => {
           logout();
-          navigation.navigate("Onboarding");
+          navigation.navigate("Onboarding", { screen: "Location" });
         }}
       />
     </View>
