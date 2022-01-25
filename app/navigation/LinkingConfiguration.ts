@@ -42,6 +42,11 @@ const linking: LinkingOptions<RootStackParamList> = {
           },
         },
       },
+      Onboarding: {
+        screens: {
+          Location: "location"
+        }
+      },
       CarList: "carList",
       SmartCarConnect: "smartCarConnect",
       Modal: "modal",

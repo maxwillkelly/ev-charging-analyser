@@ -20,10 +20,10 @@ import LoginScreen from "../screens/LoginScreen";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import SmartCarConnect from "../screens/SmartCarConnect";
-import TabOneScreen from "../screens/TabOneScreen";
 import CarScreen from "../screens/CarScreen";
 import VehicleScreen from "../screens/VehicleScreen";
 import {
+  OnboardingTabParamList,
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
@@ -36,6 +36,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import fonts from "../styles/fonts";
 import colours from "../styles/colours";
 import CarListScreen from "../screens/CarListScreen";
+import OnboardingLocationScreen from "../screens/onboarding/OnboardingLocationScreen";
 
 export default function Navigation({
   colorScheme,
@@ -77,6 +78,11 @@ function RootNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="Onboarding"
+        component={StepNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
@@ -91,9 +97,9 @@ function RootNavigator() {
         component={VehicleScreen}
         options={{ title: "Vehicle" }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
+      {/* <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
+      </Stack.Group> */}
     </Stack.Navigator>
   );
 }
@@ -104,7 +110,7 @@ function RootNavigator() {
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
-function BottomTabNavigator() {
+const BottomTabNavigator: React.FC = () => {
   const colorScheme = useColourScheme();
 
   return (
@@ -132,29 +138,6 @@ function BottomTabNavigator() {
         ),
       })}
     >
-      {/* <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
-          title: "Tab One",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      /> */}
       <BottomTab.Screen
         name="Car"
         component={CarScreen}
@@ -216,14 +199,49 @@ function BottomTabNavigator() {
       />
     </BottomTab.Navigator>
   );
-}
+};
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
-function TabBarIcon(props: {
+type TabBarIconProps = {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
-}) {
+};
+
+const TabBarIcon: React.FC<TabBarIconProps> = (props) => {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
-}
+};
+
+const Step = createNativeStackNavigator<OnboardingTabParamList>();
+
+const StepNavigator: React.FC = () => (
+  <Step.Navigator
+    initialRouteName="Location"
+    screenOptions={({ route, navigation }) => ({
+      headerShown: false,
+    })}
+    // screenOptions={({ route, navigation }) => ({
+    //   headerTitleStyle: {
+    //     fontFamily: fonts.medium,
+    //   },
+    //   headerLeft: () => (
+    //     <Pressable
+    //       onPress={() => navigation.navigate("CarList")}
+    //       style={({ pressed }) => ({
+    //         opacity: pressed ? 0.5 : 1,
+    //       })}
+    //     >
+    //       <MaterialCommunityIcons
+    //         name="arrow-left"
+    //         size={25}
+    //         color={colours.secondary}
+    //         style={{ marginHorizontal: 15 }}
+    //       />
+    //     </Pressable>
+    //   ),
+    // })}
+  >
+    <Step.Screen name="Location" component={OnboardingLocationScreen} />
+  </Step.Navigator>
+);
