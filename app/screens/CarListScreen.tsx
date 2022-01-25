@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useQuery } from "react-query";
-import { getCarsAsync } from "../api/carApi";
+import { getCarsAsync } from "../api/carsApi";
 import { NewCarDto } from "../api/dtos/Attributes.dto";
 import { CarCard } from "../components/car-list/CarCard";
 import { Text, View } from "../components/Themed";

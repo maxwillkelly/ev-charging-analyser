@@ -1,9 +1,10 @@
 import axios from "axios";
+import { BASE_URL } from ".";
 import { NewCarDto } from "./dtos/Attributes.dto";
 import { AddCarDto, CarDto } from "./dtos/Car.dto";
 import { CarActionDto, CarActionResponse } from "./dtos/CarAction.dto";
 
-const CONTROLLER_URL = "http://localhost:5000/cars";
+const CONTROLLER_URL = `${BASE_URL}/cars`;
 
 export const addCarAsync = async (dto: AddCarDto): Promise<CarDto> => {
   return axios
