@@ -8,7 +8,7 @@ import color from "color";
 import colours from "./styles/colours";
 
 import useCachedResources from "./hooks/useCachedResources";
-import useColorScheme from "./hooks/useColorScheme";
+import useColourScheme from "./hooks/useColourScheme";
 import Navigation from "./navigation";
 import {
   Montserrat_300Light,
@@ -46,7 +46,7 @@ const theme: Theme = {
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
+  const colorScheme = useColourScheme();
 
   let [fontsLoaded] = useFonts({
     Montserrat_300Light,
