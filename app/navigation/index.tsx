@@ -222,7 +222,8 @@ const StepNavigator: React.FC = () => (
     screenOptions={({ route, navigation }) => ({
       headerShown: false,
     })}
-    tabBar={() => <OnboardingSteps />}
+    tabBar={() => null}
+    // tabBar={({ navigation }) => <OnboardingSteps navigation={navigation} />
     // screenOptions={({ route, navigation }) => ({
     //   headerTitleStyle: {
     //     fontFamily: fonts.medium,

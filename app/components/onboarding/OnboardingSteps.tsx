@@ -4,8 +4,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { View } from "../../components/Themed";
 import colours from "../../styles/colours";
 import Stepper from "./Stepper";
+import { RootStackParamList } from "../../types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const OnboardingSteps: React.FC = () => {
+type Props = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "Onboarding">;
+  onNext: () => void;
+}
+
+const OnboardingSteps: React.FC<Props> = ({ navigation, onNext }) => {
   return (
     <View style={styles.container}>
       <View style={styles.group}>
@@ -14,7 +21,7 @@ const OnboardingSteps: React.FC = () => {
           size={40}
           style={styles.icon}
           color={colours.secondary}
-          onPress={() => console.log("Clicked left")}
+          onPress={() => navigation.goBack()}
         />
         <Stepper stepNumber={5} selected={4} />
         <MaterialCommunityIcons
@@ -22,7 +29,7 @@ const OnboardingSteps: React.FC = () => {
           size={40}
           style={styles.icon}
           color={colours.secondary}
-          onPress={() => console.log("Clicked right")}
+          onPress={onNext}
         />
       </View>
     </View>
