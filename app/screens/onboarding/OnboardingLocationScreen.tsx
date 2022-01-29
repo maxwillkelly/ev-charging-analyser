@@ -21,6 +21,7 @@ const OnboardingLocationScreen = ({ navigation }: RootStackScreenProps<"Onboardi
     <OnboardingScreen
       title="Location Services"
       description="This application requires location services to be enabled in order to function, click on the right arrow to launch the prompt"
+      navigation={navigation}
       onNext={onNextHandler}
     />
   );
