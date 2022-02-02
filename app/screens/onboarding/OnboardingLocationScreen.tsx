@@ -1,15 +1,9 @@
 import React from "react";
-import * as Location from "expo-location";
 import OnboardingScreen from "../../components/onboarding/OnboardingScreen";
 import { RootStackScreenProps } from "../../types";
+import { getLocationPermissions } from "../../services/Location";
 
 const OnboardingLocationScreen = ({ navigation }: RootStackScreenProps<"Onboarding">) => {
-  const getLocationPermissions = async (): Promise<boolean> => {
-    let { status } = await Location.requestBackgroundPermissionsAsync();
-    if (status === "granted") return true;
-    return false;
-  };
-
   const onNextHandler = async () => {
     const permitted = await getLocationPermissions();
     if (permitted) {

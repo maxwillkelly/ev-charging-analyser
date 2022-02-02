@@ -27,6 +27,7 @@
     "expo-location": "~13.0.4",
     "expo-splash-screen": "~0.13.5",
     "expo-status-bar": "~1.1.0",
+    "expo-task-manager": "~10.0.3",
     "expo-web-browser": "~10.0.3",
     "formik": "^2.2.9",
     "react": "17.0.1",
