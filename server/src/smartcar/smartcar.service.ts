@@ -7,6 +7,7 @@ import SmartCar, {
   AuthClient,
   Battery,
   getVehicles,
+  Location,
   Vehicle,
   VehicleIds,
 } from 'smartcar';
@@ -90,6 +91,11 @@ export class SmartCarService {
       vehicles.map(async (v) => await v.battery()),
     );
     return batteryLevels;
+  }
+
+  async getLocation(smartCarAccessToken: string): Promise<Location> {
+    const vehicle = await this.getVehicle(smartCarAccessToken);
+    return await vehicle.location();
   }
 
   async lockCar(smartCarAccessToken: string): Promise<ActionResponse> {

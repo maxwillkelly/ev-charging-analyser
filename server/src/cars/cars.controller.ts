@@ -40,6 +40,14 @@ export class CarsController {
     return cars;
   }
 
+  @Get('location')
+  async getLocation(@Param('smartCarAccessToken') smartCarAccessToken: string) {
+    const response = await this.smartCarService.getLocation(
+      smartCarAccessToken,
+    );
+    return response;
+  }
+
   @Post('lock')
   async lockCar(@Body() command: CarActionDto): Promise<ActionResponseDto> {
     const response = this.smartCarService.lockCar(command.smartCarAccessToken);
