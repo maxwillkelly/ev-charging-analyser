@@ -10,6 +10,7 @@ import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 import { CarsController } from './cars/cars.controller';
+import { CassandraService } from './cassandra/cassandra.service';
 
 const validationSchema = Joi.object({
   SERVER_PORT: Joi.number().default(5000),
@@ -38,6 +39,6 @@ const validationSchema = Joi.object({
     UsersController,
     CarsController,
   ],
-  providers: [SmartCarService, PrismaService, UsersService],
+  providers: [SmartCarService, PrismaService, UsersService, CassandraService],
 })
 export class AppModule {}
