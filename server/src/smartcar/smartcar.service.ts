@@ -36,7 +36,7 @@ export class SmartCarService {
       'required:read_battery',
       'required:read_charge',
       'required:control_charge',
-      // 'required:read_location',
+      'required:read_location',
       'required:control_security',
       // 'required:read_odometer',
       // 'required:read_tires',
