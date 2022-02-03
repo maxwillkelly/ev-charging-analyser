@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Image } from "react-native";
 import { Text, View } from "../components/Themed";
 import colours from "../styles/colours";
@@ -7,9 +7,16 @@ import { RootTabScreenProps } from "../types";
 import { BatteryWidgetVertical } from "../components/battery-widgets/BatteryWidgetVertical";
 import { RangeWidget } from "../components/car-screen/RangeWidget";
 import { LockWidget } from "../components/car-screen/LockWidget";
+import { useCarStore } from "../stores/useCarStore";
 
 const CarScreen = ({ route }: RootTabScreenProps<"Car">) => {
+  const { setSelectedCar } = useCarStore();
   const { car } = route.params;
+  
+  useEffect(() => {
+    setSelectedCar(car);
+  }, [])
+  
   return (
     <View style={styles.container}>
       <Image

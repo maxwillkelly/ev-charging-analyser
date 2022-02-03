@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
@@ -18,6 +18,8 @@ import {
   Montserrat_700Bold,
   useFonts,
 } from "@expo-google-fonts/montserrat";
+
+import * as Location from "./services/Location";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +57,14 @@ export default function App() {
     Montserrat_600SemiBold,
     Montserrat_700Bold,
   });
+
+  useEffect(() => {
+    const startLocationService = async () => {
+      await Location.subscribeToLocationUpdates();
+    }
+
+    startLocationService();
+  }, [])
 
   if (!isLoadingComplete || !fontsLoaded) {
     return null;

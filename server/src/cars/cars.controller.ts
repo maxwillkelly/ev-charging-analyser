@@ -4,6 +4,7 @@ import { SmartCarService } from 'src/smartCar/smartCar.service';
 import { CarActionDto } from './dtos/carAction.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AddCarDto, CarDto, NewCarDto } from './dtos/addCar.dto';
+import { Location } from 'smartcar';
 
 @Controller('cars')
 export class CarsController {
@@ -38,6 +39,17 @@ export class CarsController {
     );
 
     return cars;
+  }
+
+  @Get('location/:smartCarAccessToken')
+  async getLocation(
+    @Param('smartCarAccessToken') smartCarAccessToken: string,
+  ): Promise<Location> {
+    const response = await this.smartCarService.getLocation(
+      smartCarAccessToken,
+    );
+
+    return response;
   }
 
   @Post('lock')
