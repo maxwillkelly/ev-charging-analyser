@@ -35,7 +35,11 @@ services:
       - cassandra:/var/lib/cassandra
     networks:
       - api-cassandra
-
+    healthcheck:
+      test: [ "CMD-SHELL", "[ $$(nodetool statusgossip) = running ]" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
   postgres:
     image: postgres:14.1-alpine
     env_file:
@@ -53,7 +57,8 @@ services:
       - api-postgres
 
 networks:
-  api-cassandra: null
+  api-cassandra: 
+    driver: bridge
   api-postgres: null
 volumes:
   cassandra: null

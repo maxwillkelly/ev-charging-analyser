@@ -16,7 +16,6 @@ export class CassandraService {
     const localDataCenter = this.configService.get<string>(
       'CASSANDRA_LOCAL_DATA_CENTER',
     );
-    const keyspace = this.configService.get<string>('CASSANDRA_KEYSPACE');
     const username = this.configService.get<string>('CASSANDRA_USER');
     const password = this.configService.get<string>('CASSANDRA_PASSWORD');
 
@@ -24,7 +23,6 @@ export class CassandraService {
 
     this.client = new Client({
       contactPoints: [contactPoint],
-      // keyspace,
       localDataCenter,
       authProvider,
     });
@@ -40,7 +38,7 @@ export class CassandraService {
           'replication_factor' : 1 
         }`;
 
-    this.client.execute(cql);
+    this.client.connect(() => this.client.execute(cql));
   }
 
   createMapper(mappingOptions: mapping.MappingOptions) {
