@@ -24,15 +24,29 @@ export class CassandraService {
 
     this.client = new Client({
       contactPoints: [contactPoint],
-      keyspace,
+      // keyspace,
       localDataCenter,
       authProvider,
     });
   }
 
+  private createKeyspace() {
+    const keyspace = this.configService.get<string>('CASSANDRA_KEYSPACE');
+
+    const cql = `
+      CREATE KEYSPACE IF NOT EXISTS ${keyspace}
+        WITH REPLICATION = { 
+          'class' : 'SimpleStrategy', 
+          'replication_factor' : 1 
+        }`;
+
+    this.client.execute(cql);
+  }
+
   createMapper(mappingOptions: mapping.MappingOptions) {
     if (this.client == undefined) {
       this.createClient();
+      this.createKeyspace();
     }
     return new mapping.Mapper(this.client, mappingOptions);
   }

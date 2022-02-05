@@ -11,6 +11,9 @@ import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 import { CarsController } from './cars/cars.controller';
 import { CassandraService } from './cassandra/cassandra.service';
+import { LocationController } from './location/location.controller';
+import { LocationService } from './location/location.service';
+import { LocationRepository } from './location/location.repository';
 
 const validationSchema = Joi.object({
   SERVER_PORT: Joi.number().default(5000),
@@ -43,7 +46,15 @@ const validationSchema = Joi.object({
     SmartCarController,
     UsersController,
     CarsController,
+    LocationController,
   ],
-  providers: [SmartCarService, PrismaService, UsersService, CassandraService],
+  providers: [
+    SmartCarService,
+    PrismaService,
+    UsersService,
+    CassandraService,
+    LocationService,
+    LocationRepository,
+  ],
 })
 export class AppModule {}
