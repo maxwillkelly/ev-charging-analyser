@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { mapping } from 'cassandra-driver';
+import { v4 as uuid } from 'uuid';
 import { CassandraService } from 'src/cassandra/cassandra.service';
 import { RecordLocation } from './dtos/recordLocation.dto';
 import { Location } from './location.model';
@@ -54,6 +55,8 @@ export class LocationService implements OnModuleInit {
   }
 
   async recordLocation(location: RecordLocation): Promise<Location[]> {
-    return (await this.locationMapper.insert(location)).toArray();
+    return (
+      await this.locationMapper.insert({ id: uuid(), ...location })
+    ).toArray();
   }
 }

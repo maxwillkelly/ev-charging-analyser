@@ -1,11 +1,11 @@
-import { IsDateString, IsNumber, IsOptional, IsUUID } from 'class-validator';
+import { IsDateString, IsNumber, IsUUID, ValidateIf } from 'class-validator';
 
 export class RecordLocation {
-  @IsOptional()
+  @ValidateIf((o) => !o.userId || o.carId)
   @IsUUID()
   carId?: string;
 
-  @IsOptional()
+  @ValidateIf((o) => !o.carId || o.userId)
   @IsUUID()
   userId?: string;
 
