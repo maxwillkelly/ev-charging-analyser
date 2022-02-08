@@ -38,7 +38,7 @@ export class CassandraService {
           'replication_factor' : 1 
         }`;
 
-    this.client.connect(() => this.client.execute(cql));
+    this.run(cql);
   }
 
   createMapper(mappingOptions: mapping.MappingOptions) {
@@ -47,5 +47,14 @@ export class CassandraService {
       this.createKeyspace();
     }
     return new mapping.Mapper(this.client, mappingOptions);
+  }
+
+  run(cql: string) {
+    if (this.client == undefined) {
+      this.createClient();
+      this.createKeyspace();
+    }
+
+    this.client.connect(() => this.client.execute(cql));
   }
 }
