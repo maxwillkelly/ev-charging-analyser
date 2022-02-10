@@ -10,6 +10,7 @@ import { AxiosError } from "axios";
 import { LocationDto } from "../../api/dtos/Location.dto";
 import { View, Text } from "../Themed";
 import { NewCarDto } from "../../api/dtos/Attributes.dto";
+import { recordLocationAsync } from "../../api/locationApi";
 
 type Marker = {
   id: string;

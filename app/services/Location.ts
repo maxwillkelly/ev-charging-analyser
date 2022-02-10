@@ -1,5 +1,6 @@
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
+import { recordLocationAsync } from "../api/locationApi";
 
 const WATCH_LOCATION_TASK = "watch-location-task";
 
@@ -16,9 +17,11 @@ export const subscribeToLocationUpdates = async (): Promise<void> => {
     return;
   }
 
+  console.log("Location access permitted");
+
   const opts: Location.LocationTaskOptions = {
     accuracy: Location.Accuracy.Balanced,
-    timeInterval: 5000,
+    timeInterval: 10000,
     foregroundService: {
       notificationTitle: "Getting location updates...",
       notificationBody:
@@ -31,12 +34,18 @@ export const subscribeToLocationUpdates = async (): Promise<void> => {
   await Location.startLocationUpdatesAsync(WATCH_LOCATION_TASK, opts);
 };
 
-TaskManager.defineTask(WATCH_LOCATION_TASK, ({ data, error }) => {
-  if (error) {
-    console.log(`Error in ${WATCH_LOCATION_TASK}`, error.message);
-    return;
-  }
-  if (data) {
-    console.log(data);
-  }
-});
+export const registerLocationTask = (userId?: string) => {
+  if (!userId) return;
+  TaskManager.defineTask(WATCH_LOCATION_TASK, ({ data, error }) => {
+    if (error) {
+      console.log(`Error in ${WATCH_LOCATION_TASK}`, error.message);
+      return;
+    }
+    if (data) {
+      console.log(JSON.stringify(data, null, 2))
+      // recordLocationAsync({ userId, ...data, recordedAt:  });
+    }
+  });
+};
+
+export const unregisterLocationTask = async () => await TaskManager.unregisterTaskAsync(WATCH_LOCATION_TASK);

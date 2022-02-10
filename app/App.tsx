@@ -19,8 +19,6 @@ import {
   useFonts,
 } from "@expo-google-fonts/montserrat";
 
-import * as Location from "./services/Location";
-
 const queryClient = new QueryClient();
 
 const theme: Theme = {
@@ -57,14 +55,6 @@ export default function App() {
     Montserrat_600SemiBold,
     Montserrat_700Bold,
   });
-
-  useEffect(() => {
-    const startLocationService = async () => {
-      await Location.subscribeToLocationUpdates();
-    }
-
-    startLocationService();
-  }, [])
 
   if (!isLoadingComplete || !fontsLoaded) {
     return null;

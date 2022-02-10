@@ -18,6 +18,12 @@ import colours from "../styles/colours";
 import fonts from "../styles/fonts";
 import { RootStackParamList } from "../types";
 
+import {
+  registerLocationTask,
+  subscribeToLocationUpdates,
+  unregisterLocationTask,
+} from "../services/Location";
+
 const CarListScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList>) => {
@@ -33,6 +39,23 @@ const CarListScreen = ({
 
   useEffect(() => {
     if (!user) navigation.navigate("Login");
+  }, [user]);
+
+  useEffect(() => {
+    const startLocationService = async () => {
+      registerLocationTask(user?.id);
+      await subscribeToLocationUpdates();
+    };
+
+    startLocationService();
+
+    return () => {
+      const stopLocationService = async () => {
+        await unregisterLocationTask();
+      };
+
+      stopLocationService();
+    };
   }, [user]);
 
   if (isLoading)
