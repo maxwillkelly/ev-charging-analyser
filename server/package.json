@@ -30,6 +30,7 @@
     "@nestjs/swagger": "^5.1.4",
     "@prisma/client": "^3.7.0",
     "bcryptjs": "^2.4.3",
+    "cassandra-driver": "^4.6.3",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "joi": "^17.4.2",

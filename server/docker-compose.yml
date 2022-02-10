@@ -15,10 +15,31 @@ services:
       - 9229:9229
     command: yarn start:dev
     networks:
+      - api-cassandra
       - api-postgres
     depends_on:
+      - cassandra
       - postgres
 
+  cassandra:
+    image: cassandra:4.0
+    environment:
+      CASSANDRA_CONTACT_POINT: ${CASSANDRA_CONTACT_POINT}
+      CASSANDRA_LOCAL_DATA_CENTER: ${CASSANDRA_LOCAL_DATA_CENTER}
+      CASSANDRA_KEYSPACE: ${CASSANDRA_KEYSPACE}
+      CASSANDRA_USER: ${CASSANDRA_USER}
+      CASSANDRA_PASSWORD: ${CASSANDRA_PASSWORD}
+    ports:
+      - 9042:9042
+    volumes:
+      - cassandra:/var/lib/cassandra
+    networks:
+      - api-cassandra
+    healthcheck:
+      test: [ "CMD-SHELL", "[ $$(nodetool statusgossip) = running ]" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
   postgres:
     image: postgres:14.1-alpine
     env_file:
@@ -36,6 +57,9 @@ services:
       - api-postgres
 
 networks:
+  api-cassandra: 
+    driver: bridge
   api-postgres: null
 volumes:
+  cassandra: null
   pgdata: null
