@@ -16,10 +16,10 @@ services:
     networks:
       - api-cassandra
     healthcheck:
-      test: [ "CMD-SHELL", "[ $$(nodetool statusgossip) = running ]" ]
-      interval: 30s
+      test: [ "CMD", "cqlsh", "-u cassandra", "-p cassandra" ,"-k test" ]
+      interval: 5s
       timeout: 10s
-      retries: 5
+      retries: 6
   postgres:
     image: postgres:14.1-alpine
     env_file:
