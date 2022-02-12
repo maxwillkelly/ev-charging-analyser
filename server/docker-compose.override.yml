@@ -16,7 +16,14 @@ services:
     networks:
       - api-cassandra
     healthcheck:
-      test: [ "CMD", "cqlsh", "-u cassandra", "-p cassandra" ,"-k test" ]
+      test:
+        [
+          "CMD",
+          "cqlsh",
+          "-u ${CASSANDRA_USER}",
+          "-p ${CASSANDRA_PASSWORD}",
+          "-k ${CASSANDRA_KEYSPACE}"
+        ]
       interval: 5s
       timeout: 10s
       retries: 6
@@ -35,9 +42,21 @@ services:
       - pgdata:/var/lib/postgresql/data
     networks:
       - api-postgres
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-q",
+          "-d \"${POSTGRES_DB}\"",
+          "-U ${POSTGRES_USER}"
+        ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
 
 networks:
-  api-cassandra: 
+  api-cassandra:
     driver: bridge
   api-postgres: null
 volumes:
