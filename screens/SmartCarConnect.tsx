@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import WebView, { WebViewNavigation } from "react-native-webview";
 import { useMutation, useQueryClient } from "react-query";
@@ -10,12 +10,17 @@ import { AddCarDto, CarDto } from "../api/dtos/Car.dto";
 import { addCarAsync } from "../api/carsApi";
 import { AxiosError } from "axios";
 import { BASE_URL } from "../api";
+import {
+  OnShouldStartLoadWithRequest,
+  ShouldStartLoadRequest,
+} from "react-native-webview/lib/WebViewTypes";
 
 type Status = "Initial" | "Loading" | "Success" | "Error";
 
 const SmartCarConnect = ({
   navigation,
 }: RootStackScreenProps<"SmartCarConnect">) => {
+  const webView = useRef<WebView>(null);
   const [status, setStatus] = useState<Status>("Initial");
   const [error, setError] = useState<Error>();
   const queryClient = useQueryClient();
@@ -50,33 +55,41 @@ const SmartCarConnect = ({
         setStatus("Error");
       },
       onSuccess: () => {
+        queryClient.invalidateQueries("cars");
         navigation.navigate("CarList");
       },
     }
   );
 
-  const handleNavigationStateChangeAsync = async (
-    navState: WebViewNavigation
+  const handleNavigationStateChange: OnShouldStartLoadWithRequest = (
+    request
   ) => {
-    if (navState.url.includes(`${BASE_URL}/smartcar/exchange`)) {
+    const { url } = request;
+    if (url.includes(`${BASE_URL}/smartcar/exchange`)) {
       setStatus("Loading");
+
+      webView.current?.stopLoading();
 
       const userId = user?.id;
 
       if (!userId) {
         navigation.navigate("Login");
-        return null;
+        return false;
       }
 
-      const token = await getTokenMutation.mutateAsync(navState.url);
+      const mutateAsync = async () => {
+        const token = await getTokenMutation.mutateAsync(url);
 
-      const car = await storeTokenMutation.mutateAsync({
-        userId,
-        ...token,
-      });
+        const car = await storeTokenMutation.mutateAsync({
+          userId,
+          ...token,
+        });
+      };
 
-      queryClient.invalidateQueries("cars");
+      mutateAsync();
+      return false;
     }
+    return true;
   };
 
   if (status === "Loading")
@@ -97,10 +110,12 @@ const SmartCarConnect = ({
 
   return (
     <WebView
+      ref={webView}
       style={styles.container}
-      originWhitelist={[`${BASE_URL}/smartcar/login`, "https"]}
+      originWhitelist={[BASE_URL, "https://*.smartcar.com"]}
       source={{ uri: `${BASE_URL}/smartcar/login` }}
-      onNavigationStateChange={handleNavigationStateChangeAsync}
+      onShouldStartLoadWithRequest={handleNavigationStateChange}
+      setSupportMultipleWindows={false}
     />
   );
 };
