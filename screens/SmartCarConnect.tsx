@@ -58,7 +58,8 @@ const SmartCarConnect = ({
   const handleNavigationStateChangeAsync = async (
     navState: WebViewNavigation
   ) => {
-    if (navState.url.includes(`${BASE_URL}/smartcar/exchange`)) {
+    const { url } = navState;
+    if (url.includes(`${BASE_URL}/smartcar/exchange`)) {
       setStatus("Loading");
 
       const userId = user?.id;
@@ -68,7 +69,7 @@ const SmartCarConnect = ({
         return null;
       }
 
-      const token = await getTokenMutation.mutateAsync(navState.url);
+      const token = await getTokenMutation.mutateAsync(url);
 
       const car = await storeTokenMutation.mutateAsync({
         userId,
