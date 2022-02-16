@@ -20,8 +20,8 @@ import { RootStackParamList } from "../types";
 
 import {
   registerLocationTask,
-  subscribeToLocationUpdates,
-  unregisterLocationTask,
+  subscribeToLocationUpdatesAsync,
+  unregisterLocationTaskAsync,
 } from "../services/Location";
 
 const CarListScreen = ({
@@ -44,14 +44,14 @@ const CarListScreen = ({
   useEffect(() => {
     const startLocationService = async () => {
       registerLocationTask(user?.id);
-      await subscribeToLocationUpdates();
+      await subscribeToLocationUpdatesAsync();
     };
 
     startLocationService();
 
     return () => {
       const stopLocationService = async () => {
-        await unregisterLocationTask();
+        await unregisterLocationTaskAsync();
       };
 
       stopLocationService();

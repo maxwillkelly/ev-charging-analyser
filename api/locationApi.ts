@@ -5,13 +5,20 @@ import {
   RecordUserLocationDto,
 } from "./dtos/Location.dto";
 
-const CONTROLLER_URL = `${BASE_URL}/cars`;
+const CONTROLLER_URL = `${BASE_URL}/location`;
 
-export const recordLocationAsync = async (
-  dto: RecordCarLocationDto | RecordUserLocationDto
-) => {
+export const recordCarLocationAsync = async (dto: RecordCarLocationDto) => {
   return axios
-    .post(CONTROLLER_URL, dto)
+    .post(`${CONTROLLER_URL}/car`, dto)
+    .then((response) => response.data)
+    .catch((response) => {
+      throw response;
+    });
+};
+
+export const recordUserLocationAsync = async (dto: RecordUserLocationDto) => {
+  return axios
+    .post(`${CONTROLLER_URL}/user`, dto)
     .then((response) => response.data)
     .catch((response) => {
       throw response;
