@@ -1,6 +1,11 @@
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
-import { recordLocationAsync } from "../api/locationApi";
+import { recordUserLocationAsync } from "../api/locationApi";
+import {
+  RecordUserLocationDto,
+  UserLocationData,
+  UserLocations,
+} from "../api/dtos/Location.dto";
 
 const WATCH_LOCATION_TASK = "watch-location-task";
 
@@ -14,7 +19,7 @@ export const getLocationPermissions = async (): Promise<boolean> => {
   return false;
 };
 
-export const subscribeToLocationUpdates = async (): Promise<void> => {
+export const subscribeToLocationUpdatesAsync = async (): Promise<void> => {
   const permitted = await getLocationPermissions();
   if (!permitted) {
     console.log("Permission to get current location was denied");
@@ -40,17 +45,19 @@ export const subscribeToLocationUpdates = async (): Promise<void> => {
 
 export const registerLocationTask = (userId?: string) => {
   if (!userId) return;
-  TaskManager.defineTask(WATCH_LOCATION_TASK, ({ data, error }) => {
+  TaskManager.defineTask(WATCH_LOCATION_TASK, async ({ data, error }) => {
     if (error) {
-      console.log(`Error in ${WATCH_LOCATION_TASK}`, error.message);
+      console.log(`Error in ${WATCH_LOCATION_TASK}`, error);
       return;
     }
     if (data) {
-      console.log(JSON.stringify(data, null, 2));
-      // recordLocationAsync({ userId, ...data, recordedAt:  });
+      const locationData = data as UserLocations;
+      const location = locationData.locations[0];
+      const dto: RecordUserLocationDto = { userId, ...location };
+      await recordUserLocationAsync(dto);
     }
   });
 };
 
-export const unregisterLocationTask = async () =>
+export const unregisterLocationTaskAsync = async () =>
   await TaskManager.unregisterTaskAsync(WATCH_LOCATION_TASK);

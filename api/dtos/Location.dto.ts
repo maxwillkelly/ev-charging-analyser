@@ -1,22 +1,29 @@
 export interface RecordCarLocationDto {
-  carId?: string;
+  carId: string;
   latitude: number;
   longitude: number;
   recordedAt: string;
 }
 
 export type UserCoordinatesDto = {
-  altitude: number,
-  heading: number,
-  altitudeAccuracy: number;
   latitude: number;
-  speed: number;
   longitude: number;
+  altitude: number;
+  heading: number;
+  altitudeAccuracy: number;
+  speed: number;
   accuracy: number;
+};
+
+export type UserLocations = {
+  locations: UserLocationData[];
 }
 
-export interface RecordUserLocationDto {
-  userId?: string;
+export type UserLocationData = {
   timestamp: number;
   coords: UserCoordinatesDto;
+};
+
+export interface RecordUserLocationDto extends UserLocationData {
+  userId: string;
 }
