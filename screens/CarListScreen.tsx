@@ -49,13 +49,13 @@ const CarListScreen = ({
 
     startLocationService();
 
-    return () => {
-      const stopLocationService = async () => {
-        await unregisterLocationTaskAsync();
-      };
+    // return () => {
+    //   const stopLocationService = async () => {
+    //     await unregisterLocationTaskAsync();
+    //   };
 
-      stopLocationService();
-    };
+    //   stopLocationService();
+    // };
   }, [user]);
 
   if (isLoading)
