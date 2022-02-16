@@ -5,8 +5,12 @@ import { recordLocationAsync } from "../api/locationApi";
 const WATCH_LOCATION_TASK = "watch-location-task";
 
 export const getLocationPermissions = async (): Promise<boolean> => {
-  let { status } = await Location.requestBackgroundPermissionsAsync();
-  if (status === "granted") return true;
+  const { status: foregroundStatus } =
+    await Location.requestForegroundPermissionsAsync();
+  const { status: backgroundStatus } =
+    await Location.requestBackgroundPermissionsAsync();
+  if (foregroundStatus === "granted" && backgroundStatus === "granted")
+    return true;
   return false;
 };
 
@@ -42,10 +46,11 @@ export const registerLocationTask = (userId?: string) => {
       return;
     }
     if (data) {
-      console.log(JSON.stringify(data, null, 2))
+      console.log(JSON.stringify(data, null, 2));
       // recordLocationAsync({ userId, ...data, recordedAt:  });
     }
   });
 };
 
-export const unregisterLocationTask = async () => await TaskManager.unregisterTaskAsync(WATCH_LOCATION_TASK);
+export const unregisterLocationTask = async () =>
+  await TaskManager.unregisterTaskAsync(WATCH_LOCATION_TASK);
