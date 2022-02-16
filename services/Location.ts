@@ -3,7 +3,6 @@ import * as TaskManager from "expo-task-manager";
 import { recordUserLocationAsync } from "../api/locationApi";
 import {
   RecordUserLocationDto,
-  UserLocationData,
   UserLocations,
 } from "../api/dtos/Location.dto";
 

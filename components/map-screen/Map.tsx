@@ -7,38 +7,36 @@ import { getCarLocationAsync } from "../../api/carsApi";
 import { useQuery } from "react-query";
 import { useUserStore } from "../../stores/useUserStore";
 import { AxiosError } from "axios";
-import { LocationDto } from "../../api/dtos/Location.dto";
 import { View, Text } from "../Themed";
 import { NewCarDto } from "../../api/dtos/Attributes.dto";
-import { recordLocationAsync } from "../../api/locationApi";
 
-type Marker = {
-  id: string;
-  coordinate: LatLng;
-  title: string;
-  description: string;
-};
+// type Marker = {
+//   id: string;
+//   coordinate: LatLng;
+//   title: string;
+//   description: string;
+// };
 
-const markers: Marker[] = [
-  {
-    id: "1",
-    coordinate: {
-      latitude: 56.46855061730443,
-      longitude: -2.994651893483153,
-    },
-    title: "2019 JAGUAR I-Pace",
-    description: "Car",
-  },
-  {
-    id: "2",
-    coordinate: {
-      latitude: 56.47055061730443,
-      longitude: -2.994651893483153,
-    },
-    title: "I am here",
-    description: "Person",
-  },
-];
+// const markers: Marker[] = [
+//   {
+//     id: "1",
+//     coordinate: {
+//       latitude: 56.46855061730443,
+//       longitude: -2.994651893483153,
+//     },
+//     title: "2019 JAGUAR I-Pace",
+//     description: "Car",
+//   },
+//   {
+//     id: "2",
+//     coordinate: {
+//       latitude: 56.47055061730443,
+//       longitude: -2.994651893483153,
+//     },
+//     title: "I am here",
+//     description: "Person",
+//   },
+// ];
 
 type MapMarkerIconProps = {
   description: string;
@@ -66,7 +64,7 @@ type Props = {
 export const Map: React.FC<Props> = ({ car }) => {
   const { smartCarToken } = useUserStore();
 
-  const { isLoading, error, data } = useQuery<LocationDto, AxiosError>(
+  const { isLoading, error, data } = useQuery<LatLng, AxiosError>(
     "carLocation",
     () => getCarLocationAsync(smartCarToken?.accessToken),
     {
