@@ -1,13 +1,22 @@
-export type LocationDto = {
+export interface RecordCarLocationDto {
+  carId?: string;
   latitude: number;
   longitude: number;
   recordedAt: string;
-};
-
-export interface RecordCarLocationDto extends LocationDto {
-  carId?: string;
 }
 
-export interface RecordUserLocationDto extends LocationDto {
+export type UserCoordinatesDto = {
+  altitude: number,
+  heading: number,
+  altitudeAccuracy: number;
+  latitude: number;
+  speed: number;
+  longitude: number;
+  accuracy: number;
+}
+
+export interface RecordUserLocationDto {
   userId?: string;
+  timestamp: number;
+  coords: UserCoordinatesDto;
 }
