@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Dimensions, ActivityIndicator } from "react-native";
 import MapView, { LatLng, Marker as MapMarker } from "react-native-maps";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
@@ -9,34 +9,14 @@ import { useUserStore } from "../../stores/useUserStore";
 import { AxiosError } from "axios";
 import { View, Text } from "../Themed";
 import { NewCarDto } from "../../api/dtos/Attributes.dto";
+import { useLocationStore } from "../../stores/LocationStore";
 
-// type Marker = {
-//   id: string;
-//   coordinate: LatLng;
-//   title: string;
-//   description: string;
-// };
-
-// const markers: Marker[] = [
-//   {
-//     id: "1",
-//     coordinate: {
-//       latitude: 56.46855061730443,
-//       longitude: -2.994651893483153,
-//     },
-//     title: "2019 JAGUAR I-Pace",
-//     description: "Car",
-//   },
-//   {
-//     id: "2",
-//     coordinate: {
-//       latitude: 56.47055061730443,
-//       longitude: -2.994651893483153,
-//     },
-//     title: "I am here",
-//     description: "Person",
-//   },
-// ];
+const INITIAL_REGION = {
+  latitude: 56.46855061730443,
+  longitude: -2.994651893483153,
+  latitudeDelta: 0.12,
+  longitudeDelta: 0.12,
+};
 
 type MapMarkerIconProps = {
   description: string;
@@ -62,7 +42,18 @@ type Props = {
 };
 
 export const Map: React.FC<Props> = ({ car }) => {
+  const [userCoordinates, setUserCoordinates] = useState<LatLng>();
   const { smartCarToken } = useUserStore();
+  const { lastLocation } = useLocationStore();
+
+  useEffect(() => {
+    if (!lastLocation) return;
+
+    const { coords } = lastLocation;
+    const { latitude, longitude } = coords;
+
+    setUserCoordinates({ latitude, longitude });
+  }, [lastLocation]);
 
   const { isLoading, error, data } = useQuery<LatLng, AxiosError>(
     "carLocation",
@@ -90,29 +81,19 @@ export const Map: React.FC<Props> = ({ car }) => {
   return (
     <MapView
       style={styles.map}
-      initialRegion={{
-        latitude: 56.46855061730443,
-        longitude: -2.994651893483153,
-        latitudeDelta: 0.12,
-        longitudeDelta: 0.12,
-      }}
+      initialRegion={INITIAL_REGION}
       mapType="standard"
     >
+      {userCoordinates && (
+        <MapMarker coordinate={userCoordinates} title="I am here">
+          <MapMarkerIcon description="Person" />
+        </MapMarker>
+      )}
       {data && (
         <MapMarker coordinate={data} title={car.name}>
           <MapMarkerIcon description="Car" />
         </MapMarker>
       )}
-      {/* {markers.map((m) => (
-        <MapMarker
-          key={m.id}
-          coordinate={m.coordinate}
-          title={m.title}
-          // description={m.description}
-        >
-          <MapMarkerIcon description={m.description} />
-        </MapMarker>
-      ))} */}
     </MapView>
   );
 };
