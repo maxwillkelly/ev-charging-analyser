@@ -25,7 +25,7 @@ const SmartCarConnect = ({
     if (!user) return navigation.navigate("Login");
     const uri = generateUri(user.id);
     setUri(uri);
-  }, [user]);
+  }, [user, user?.id]);
 
   const mutation = useMutation<boolean, AxiosError, string>(
     "smartCarToken",

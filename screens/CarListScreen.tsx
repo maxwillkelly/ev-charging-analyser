@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useQuery } from "react-query";
 import { getCarsAsync } from "../api/carsApi";
-import { CarDto } from "../api/dtos/Attributes.dto";
+import { CarDto } from "../api/dtos/Car.dto";
 import { CarCard } from "../components/car-list/CarCard";
 import { Text, View } from "../components/Themed";
 import { useUserStore } from "../stores/useUserStore";
@@ -21,25 +21,24 @@ import { RootStackParamList } from "../types";
 import {
   registerLocationTask,
   subscribeToLocationUpdatesAsync,
-  unregisterLocationTaskAsync,
 } from "../services/Location";
 
 const CarListScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList>) => {
-  const { user, smartCarToken } = useUserStore();
-
-  const { isIdle, isLoading, error, data } = useQuery<CarDto[], AxiosError>(
-    "cars",
-    () => getCarsAsync(smartCarToken?.accessToken),
-    {
-      enabled: !!smartCarToken?.accessToken,
-    }
-  );
+  const { user } = useUserStore();
 
   useEffect(() => {
     if (!user) navigation.navigate("Login");
-  }, [user]);
+  }, [user, user?.id]);
+
+  const { isIdle, isLoading, error, data } = useQuery<CarDto[], AxiosError>(
+    "cars",
+    () => getCarsAsync(user?.id),
+    {
+      enabled: !!user?.id,
+    }
+  );
 
   useEffect(() => {
     const startLocationService = async () => {
@@ -48,15 +47,7 @@ const CarListScreen = ({
     };
 
     startLocationService();
-
-    // return () => {
-    //   const stopLocationService = async () => {
-    //     await unregisterLocationTaskAsync();
-    //   };
-
-    //   stopLocationService();
-    // };
-  }, [user]);
+  }, [user, user?.id]);
 
   if (isLoading)
     return (

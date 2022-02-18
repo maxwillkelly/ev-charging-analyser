@@ -6,7 +6,9 @@ import { CarLocationDto } from "./dtos/CarLocation.dto";
 
 const CONTROLLER_URL = `${BASE_URL}/cars`;
 
-export const getCarsAsync = async (userId: string): Promise<CarDto[]> => {
+export const getCarsAsync = async (userId?: string): Promise<CarDto[]> => {
+  if (!userId) return [];
+
   const config: AxiosRequestConfig<GetCarsDto> = {
     params: { userId },
   };
