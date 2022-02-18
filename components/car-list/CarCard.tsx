@@ -1,6 +1,6 @@
 import React from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { CarDto } from "../../api/dtos/Attributes.dto";
+import { CarDto } from "../../api/dtos/Car.dto";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
 import { RootStackParamList } from "../../types";

@@ -9,7 +9,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { CarDto } from "./api/dtos/Attributes.dto";
+import { CarDto } from "./api/dtos/Car.dto";
 
 declare global {
   namespace ReactNavigation {

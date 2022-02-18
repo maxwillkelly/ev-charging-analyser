@@ -5,11 +5,12 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import colours from "../../styles/colours";
 import { getCarLocationAsync } from "../../api/carsApi";
 import { useQuery } from "react-query";
-import { useUserStore } from "../../stores/useUserStore";
 import { AxiosError } from "axios";
 import { View, Text } from "../Themed";
-import { CarDto } from "../../api/dtos/Attributes.dto";
+import { CarDto } from "../../api/dtos/Car.dto";
 import { useLocationStore } from "../../stores/LocationStore";
+import { useUserStore } from "../../stores/useUserStore";
+import { useCarStore } from "../../stores/useCarStore";
 
 const INITIAL_REGION = {
   latitude: 56.46855061730443,
@@ -43,7 +44,12 @@ type Props = {
 
 export const Map: React.FC<Props> = ({ car }) => {
   const [userCoordinates, setUserCoordinates] = useState<LatLng>();
+  const { selectedCar } = useCarStore();
   const { lastLocation } = useLocationStore();
+  const { user } = useUserStore();
+  
+  const userId = user?.id as string;
+  const vehicleId = selectedCar?.id as string;
 
   useEffect(() => {
     if (!lastLocation) return;
@@ -56,9 +62,9 @@ export const Map: React.FC<Props> = ({ car }) => {
 
   const { isLoading, error, data } = useQuery<LatLng, AxiosError>(
     "carLocation",
-    () => getCarLocationAsync(smartCarToken?.accessToken),
+    () => getCarLocationAsync({ userId, vehicleId }),
     {
-      enabled: !!smartCarToken?.accessToken,
+      enabled: !!userId && !!vehicleId,
     }
   );
 
