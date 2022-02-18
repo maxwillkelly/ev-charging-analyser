@@ -1,27 +1,20 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { BASE_URL } from ".";
-import { NewCarDto } from "./dtos/Attributes.dto";
-import { AddCarDto, CarDto } from "./dtos/Car.dto";
+import { CarDto, GetCarsDto } from "./dtos/Car.dto";
 import { CarActionDto, CarActionResponse } from "./dtos/CarAction.dto";
-import { LocationDto } from "./dtos/Location.dto";
+import { CarLocationDto } from "./dtos/CarLocation.dto";
 
 const CONTROLLER_URL = `${BASE_URL}/cars`;
 
-export const addCarAsync = async (dto: AddCarDto): Promise<CarDto> => {
-  return axios
-    .post(`${CONTROLLER_URL}/add`, dto)
-    .then((response) => response.data)
-    .catch((response) => {
-      throw response;
-    });
-};
+export const getCarsAsync = async (userId?: string): Promise<CarDto[]> => {
+  if (!userId) return [];
 
-export const getCarsAsync = async (
-  smartCarAccessToken: string | undefined
-): Promise<NewCarDto[]> => {
-  if (!smartCarAccessToken) return [];
+  const config: AxiosRequestConfig<GetCarsDto> = {
+    params: { userId },
+  };
+
   return axios
-    .get(`${CONTROLLER_URL}/${smartCarAccessToken}`)
+    .get(CONTROLLER_URL, config)
     .then((response) => response.data)
     .catch((response) => {
       throw response;
@@ -29,10 +22,14 @@ export const getCarsAsync = async (
 };
 
 export const getCarLocationAsync = async (
-  smartCarAccessToken:  string | undefined
-): Promise<LocationDto> => {
+  dto: CarActionDto
+): Promise<CarLocationDto> => {
+  const config: AxiosRequestConfig<CarActionDto> = {
+    params: dto,
+  };
+
   return axios
-    .get(`${CONTROLLER_URL}/location/${smartCarAccessToken}`)
+    .get(`${CONTROLLER_URL}/location`, config)
     .then((response) => response.data)
     .catch((response) => {
       throw response;

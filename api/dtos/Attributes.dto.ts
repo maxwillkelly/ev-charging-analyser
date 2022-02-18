@@ -7,9 +7,3 @@ export type AttributesDto = {
   year: number;
   meta: MetaDto;
 };
-
-export interface NewCarDto extends AttributesDto {
-  percentRemaining: number;
-  range: number;
-  name: string;
-}

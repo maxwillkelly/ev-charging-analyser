@@ -9,21 +9,23 @@ import { lockAsync, unlockAsync } from "../../api/carsApi";
 import { CarActionResponse } from "../../api/dtos/CarAction.dto";
 import { useUserStore } from "../../stores/useUserStore";
 import fonts from "../../styles/fonts";
+import { useCarStore } from "../../stores/useCarStore";
 
 export const LockWidget = () => {
   const [locked, toggleLocked] = useToggle();
-  const { smartCarToken } = useUserStore();
+  const { selectedCar } = useCarStore();
+  const { user } = useUserStore();
+
+  const userId = user?.id as string;
+  const vehicleId = selectedCar?.id as string;
 
   const lockMutation = useMutation<CarActionResponse>(
     "lockUnlockEvent",
     () => {
-      if (!smartCarToken?.accessToken)
-        throw new Error("Smartcar Access Token not stored");
-      else
-        return lockAsync({ smartCarAccessToken: smartCarToken?.accessToken });
+      return lockAsync({ userId, vehicleId });
     },
     {
-      onSuccess: toggleLocked,
+      onSuccess: () => toggleLocked(true),
       onError: (error) => console.error(error),
     }
   );
@@ -31,13 +33,10 @@ export const LockWidget = () => {
   const unlockMutation = useMutation<CarActionResponse>(
     "lockUnlockEvent",
     () => {
-      if (!smartCarToken?.accessToken)
-        throw new Error("Smartcar Access Token not stored");
-      else
-        return unlockAsync({ smartCarAccessToken: smartCarToken?.accessToken });
+      return unlockAsync({ userId, vehicleId });
     },
     {
-      onSuccess: toggleLocked,
+      onSuccess: () => toggleLocked(false),
       onError: (error) => console.error(error),
     }
   );

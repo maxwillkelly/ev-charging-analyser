@@ -17,16 +17,13 @@ import { ColorSchemeName, Pressable } from "react-native";
 import Colors from "../constants/Colours";
 import useColourScheme from "../hooks/useColourScheme";
 import LoginScreen from "../screens/LoginScreen";
-import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import SmartCarConnect from "../screens/SmartCarConnect";
 import CarScreen from "../screens/CarScreen";
-import VehicleScreen from "../screens/VehicleScreen";
 import {
   OnboardingTabParamList,
   RootStackParamList,
   RootTabParamList,
-  RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import MapScreen from "../screens/MapScreen";
@@ -37,7 +34,6 @@ import fonts from "../styles/fonts";
 import colours from "../styles/colours";
 import CarListScreen from "../screens/CarListScreen";
 import OnboardingLocationScreen from "../screens/onboarding/OnboardingLocationScreen";
-import OnboardingSteps from "../components/onboarding/OnboardingSteps";
 
 export default function Navigation({
   colorScheme,
@@ -92,11 +88,6 @@ function RootNavigator() {
         name="SmartCarConnect"
         component={SmartCarConnect}
         options={{ title: "Connect Car" }}
-      />
-      <Stack.Screen
-        name="Vehicle"
-        component={VehicleScreen}
-        options={{ title: "Vehicle" }}
       />
       {/* <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />

@@ -1,6 +1,6 @@
 import React from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { NewCarDto } from "../../api/dtos/Attributes.dto";
+import { CarDto } from "../../api/dtos/Car.dto";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
 import { RootStackParamList } from "../../types";
@@ -8,7 +8,7 @@ import { Pressable, View, Image, Text, StyleSheet } from "react-native";
 import { BatteryWidgetHorizontal } from "../battery-widgets/BatteryWidgetHorizontal";
 
 type CarCardProps = {
-  car: NewCarDto;
+  car: CarDto;
   navigation: NativeStackNavigationProp<RootStackParamList>;
 };
 

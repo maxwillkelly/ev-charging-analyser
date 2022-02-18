@@ -1,9 +1,9 @@
 import create from "zustand";
-import { NewCarDto } from "../api/dtos/Attributes.dto";
+import { CarDto } from "../api/dtos/Car.dto";
 
 type CarStore = {
-  selectedCar?: NewCarDto;
-  setSelectedCar: (car: NewCarDto) => void;
+  selectedCar?: CarDto;
+  setSelectedCar: (car: CarDto) => void;
 };
 
 export const useCarStore = create<CarStore>((set) => ({

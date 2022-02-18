@@ -1,15 +1,11 @@
-import { GetSmartCarTokenDto } from "./GetSmartCarToken.dto";
+import { AttributesDto } from "./Attributes.dto";
 
-export interface CarDto extends GetSmartCarTokenDto {
-  id: string;
-  userId: string;
-  name: string;
+export interface CarDto extends AttributesDto {
   percentRemaining: number;
-  createdAt: string;
-  updatedAt: string;
+  range: number;
+  name: string;
 }
 
-export interface AddCarDto extends GetSmartCarTokenDto {
+export type GetCarsDto = {
   userId: string;
-}
-
+};

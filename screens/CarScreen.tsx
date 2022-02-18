@@ -10,13 +10,11 @@ import { LockWidget } from "../components/car-screen/LockWidget";
 import { useCarStore } from "../stores/useCarStore";
 
 const CarScreen = ({ route }: RootTabScreenProps<"Car">) => {
-  const { setSelectedCar } = useCarStore();
+  const { selectedCar, setSelectedCar } = useCarStore();
   const { car } = route.params;
-  
-  useEffect(() => {
-    setSelectedCar(car);
-  }, [])
-  
+
+  useEffect(() => setSelectedCar(car), []);
+
   return (
     <View style={styles.container}>
       <Image
