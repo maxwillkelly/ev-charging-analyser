@@ -1,33 +1,13 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { GetSmartCarTokenDto } from "./dtos/GetSmartCarToken.dto";
-import { VehicleDto } from "./dtos/VehicleDto.dto";
+import axios from "axios";
 
-export const getSmartCarTokenAsync = async (
-  smartCarConnectRedirectUrl: string
-): Promise<GetSmartCarTokenDto> => {
-  return axios
-    .get(smartCarConnectRedirectUrl)
-    .then((response) => response.data)
-    .catch((response) => {
-      throw response;
-    });
+export type SmartCarExchange = {
+  url: string;
+  userId: string;
 };
 
-type SmartCarAccessTokenDto = {
-  smartCarAccessToken: string;
-};
-
-export const getVehicleAsync = async (
-  smartCarAccessToken: string
-): Promise<VehicleDto> => {
-  const config: AxiosRequestConfig<SmartCarAccessTokenDto> = {
-    params: {
-      smartCarAccessToken,
-    },
-  };
-
+export const exchangeAsync = async (url: string): Promise<boolean> => {
   return axios
-    .get("http://localhost:5000/smartcar/vehicle", config)
+    .get(url)
     .then((response) => response.data)
     .catch((response) => {
       throw response;

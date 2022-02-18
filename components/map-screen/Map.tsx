@@ -8,7 +8,7 @@ import { useQuery } from "react-query";
 import { useUserStore } from "../../stores/useUserStore";
 import { AxiosError } from "axios";
 import { View, Text } from "../Themed";
-import { NewCarDto } from "../../api/dtos/Attributes.dto";
+import { CarDto } from "../../api/dtos/Attributes.dto";
 import { useLocationStore } from "../../stores/LocationStore";
 
 const INITIAL_REGION = {
@@ -38,12 +38,11 @@ export const MapMarkerIcon: React.FC<MapMarkerIconProps> = ({
 };
 
 type Props = {
-  car: NewCarDto;
+  car: CarDto;
 };
 
 export const Map: React.FC<Props> = ({ car }) => {
   const [userCoordinates, setUserCoordinates] = useState<LatLng>();
-  const { smartCarToken } = useUserStore();
   const { lastLocation } = useLocationStore();
 
   useEffect(() => {

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useQuery } from "react-query";
 import { getCarsAsync } from "../api/carsApi";
-import { NewCarDto } from "../api/dtos/Attributes.dto";
+import { CarDto } from "../api/dtos/Attributes.dto";
 import { CarCard } from "../components/car-list/CarCard";
 import { Text, View } from "../components/Themed";
 import { useUserStore } from "../stores/useUserStore";
@@ -29,7 +29,7 @@ const CarListScreen = ({
 }: NativeStackScreenProps<RootStackParamList>) => {
   const { user, smartCarToken } = useUserStore();
 
-  const { isIdle, isLoading, error, data } = useQuery<NewCarDto[], AxiosError>(
+  const { isIdle, isLoading, error, data } = useQuery<CarDto[], AxiosError>(
     "cars",
     () => getCarsAsync(smartCarToken?.accessToken),
     {

@@ -1,19 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
-import WebView, { WebViewNavigation } from "react-native-webview";
+import WebView from "react-native-webview";
 import { useMutation, useQueryClient } from "react-query";
 import { useUserStore } from "../stores/useUserStore";
-import { GetSmartCarTokenDto } from "../api/dtos/GetSmartCarToken.dto";
-import { getSmartCarTokenAsync } from "../api/smartCarApi";
+import { exchangeAsync } from "../api/smartCarApi";
 import { RootStackScreenProps } from "../types";
-import { AddCarDto, CarDto } from "../api/dtos/Car.dto";
-import { addCarAsync } from "../api/carsApi";
 import { AxiosError } from "axios";
 import { BASE_URL } from "../api";
-import {
-  OnShouldStartLoadWithRequest,
-  ShouldStartLoadRequest,
-} from "react-native-webview/lib/WebViewTypes";
+import { OnShouldStartLoadWithRequest } from "react-native-webview/lib/WebViewTypes";
 
 type Status = "Initial" | "Loading" | "Success" | "Error";
 
@@ -23,31 +17,19 @@ const SmartCarConnect = ({
   const webView = useRef<WebView>(null);
   const [status, setStatus] = useState<Status>("Initial");
   const [error, setError] = useState<Error>();
+  const [uri, setUri] = useState("");
   const queryClient = useQueryClient();
-  const { setSmartCarToken, user } = useUserStore();
+  const { user } = useUserStore();
 
   useEffect(() => {
-    if (!user) navigation.navigate("Login");
+    if (!user) return navigation.navigate("Login");
+    const uri = generateUri(user.id);
+    setUri(uri);
   }, [user]);
 
-  const getTokenMutation = useMutation<GetSmartCarTokenDto, AxiosError, string>(
+  const mutation = useMutation<boolean, AxiosError, string>(
     "smartCarToken",
-    (url) => getSmartCarTokenAsync(url),
-    {
-      onError: (error) => {
-        console.error(error);
-        setError(error);
-        setStatus("Error");
-      },
-      onSuccess: (data) => {
-        setSmartCarToken(data);
-      },
-    }
-  );
-
-  const storeTokenMutation = useMutation<CarDto, Error, AddCarDto>(
-    "car",
-    addCarAsync,
+    (url) => exchangeAsync(url),
     {
       onError: (error) => {
         console.error(error);
@@ -60,6 +42,13 @@ const SmartCarConnect = ({
       },
     }
   );
+
+  const generateUri = (userId: string): string => {
+    const startingUri = `${BASE_URL}/smartcar/login`;
+    const url = new URL(startingUri);
+    url.searchParams.append("userId", userId);
+    return url.href;
+  };
 
   const handleNavigationStateChange: OnShouldStartLoadWithRequest = (
     request
@@ -77,14 +66,7 @@ const SmartCarConnect = ({
         return false;
       }
 
-      const mutateAsync = async () => {
-        const token = await getTokenMutation.mutateAsync(url);
-
-        const car = await storeTokenMutation.mutateAsync({
-          userId,
-          ...token,
-        });
-      };
+      const mutateAsync = async () => await mutation.mutateAsync(url);
 
       mutateAsync();
       return false;
@@ -113,7 +95,7 @@ const SmartCarConnect = ({
       ref={webView}
       style={styles.container}
       originWhitelist={[BASE_URL, "https://*.smartcar.com"]}
-      source={{ uri: `${BASE_URL}/smartcar/login` }}
+      source={{ uri }}
       onShouldStartLoadWithRequest={handleNavigationStateChange}
       setSupportMultipleWindows={false}
     />
