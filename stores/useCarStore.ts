@@ -1,5 +1,5 @@
 import create from "zustand";
-import { CarDto } from "../api/dtos/Attributes.dto";
+import { CarDto } from "../api/dtos/Car.dto";
 
 type CarStore = {
   selectedCar?: CarDto;
