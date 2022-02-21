@@ -4,7 +4,3 @@ export type RegisterDto = {
   email: string;
   password: string;
 };
-
-export type RegisterResponse = {
-  token: string;
-};

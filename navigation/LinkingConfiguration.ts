@@ -44,13 +44,14 @@ const linking: LinkingOptions<RootStackParamList> = {
       },
       Onboarding: {
         screens: {
-          Location: "location"
-        }
+          Location: "location",
+        },
       },
       CarList: "carList",
       SmartCarConnect: "smartCarConnect",
       Modal: "modal",
       Login: "login",
+      Register: "register",
       NotFound: "*",
     },
   },

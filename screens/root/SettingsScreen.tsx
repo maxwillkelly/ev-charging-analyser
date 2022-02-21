@@ -1,15 +1,15 @@
 import * as React from "react";
 import { Button, StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
-import { useUserStore } from "../../stores/useUserStore";
+import useLogout from "../../hooks/useLogout";
 import { RootTabScreenProps } from "../../types";
 
 const SettingsScreen = ({ navigation }: RootTabScreenProps<"Settings">) => {
-  const { logout } = useUserStore();
+  const logout = useLogout();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
+      <Text style={styles.title}>Debug</Text>
       <Button
         title="Log out"
         onPress={() => {
@@ -20,8 +20,14 @@ const SettingsScreen = ({ navigation }: RootTabScreenProps<"Settings">) => {
       <Button
         title="Onboard"
         onPress={() => {
-          logout();
           navigation.navigate("Onboarding", { screen: "Location" });
+        }}
+      />
+      <Button
+        title="Register"
+        onPress={() => {
+          logout();
+          navigation.navigate("Register");
         }}
       />
     </View>

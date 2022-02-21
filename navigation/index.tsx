@@ -29,6 +29,7 @@ import fonts from "../styles/fonts";
 import colours from "../styles/colours";
 import CarListScreen from "../screens/CarListScreen";
 import OnboardingLocationScreen from "../screens/onboarding/OnboardingLocationScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 
 export default function Navigation({
   colorScheme,
@@ -63,6 +64,11 @@ function RootNavigator() {
         name="Login"
         component={LoginScreen}
         options={{ title: "Login" }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ title: "Register" }}
       />
       <Stack.Screen
         name="Root"
