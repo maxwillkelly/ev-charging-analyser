@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from ".";
+import { BASE_URL, getGenericConfig } from ".";
 import {
   RecordCarLocationDto,
   RecordUserLocationDto,
@@ -8,8 +8,10 @@ import {
 const CONTROLLER_URL = `${BASE_URL}/location`;
 
 export const recordCarLocationAsync = async (dto: RecordCarLocationDto) => {
+  const config = getGenericConfig();
+
   return axios
-    .post(`${CONTROLLER_URL}/car`, dto)
+    .post(`${CONTROLLER_URL}/car`, dto, config)
     .then((response) => response.data)
     .catch((response) => {
       throw response;
@@ -17,8 +19,10 @@ export const recordCarLocationAsync = async (dto: RecordCarLocationDto) => {
 };
 
 export const recordUserLocationAsync = async (dto: RecordUserLocationDto) => {
+  const config = getGenericConfig();
+
   return axios
-    .post(`${CONTROLLER_URL}/user`, dto)
+    .post(`${CONTROLLER_URL}/user`, dto, config)
     .then((response) => response.data)
     .catch((response) => {
       throw response;
