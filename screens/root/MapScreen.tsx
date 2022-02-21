@@ -1,8 +1,8 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Map } from "../components/map-screen/Map";
-import { View } from "../components/Themed";
-import { useCarStore } from "../stores/useCarStore";
+import { Map } from "../../components/map-screen/Map";
+import { View } from "../../components/Themed";
+import { useCarStore } from "../../stores/useCarStore";
 
 const MapScreen: React.FC = () => {
   const { selectedCar } = useCarStore();
