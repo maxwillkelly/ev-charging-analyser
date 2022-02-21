@@ -37,6 +37,9 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "baseUrl": "https://ev-charging-analyser-api.herokuapp.com"
     }
   }
 }
