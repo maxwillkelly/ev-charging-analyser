@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { BASE_URL } from ".";
+import { BASE_URL, getHeaders, getGenericConfig } from ".";
 import { CarDto, GetCarsDto } from "./dtos/Car.dto";
 import { CarActionDto, CarActionResponse } from "./dtos/CarAction.dto";
 import { CarLocationDto } from "./dtos/CarLocation.dto";
@@ -10,6 +10,7 @@ export const getCarsAsync = async (userId?: string): Promise<CarDto[]> => {
   if (!userId) return [];
 
   const config: AxiosRequestConfig<GetCarsDto> = {
+    headers: getHeaders(),
     params: { userId },
   };
 
@@ -25,6 +26,7 @@ export const getCarLocationAsync = async (
   dto: CarActionDto
 ): Promise<CarLocationDto> => {
   const config: AxiosRequestConfig<CarActionDto> = {
+    headers: getHeaders(),
     params: dto,
   };
 
@@ -39,8 +41,10 @@ export const getCarLocationAsync = async (
 export const lockAsync = async (
   dto: CarActionDto
 ): Promise<CarActionResponse> => {
+  const config = getGenericConfig();
+
   return axios
-    .post(`${CONTROLLER_URL}/lock`, dto)
+    .post(`${CONTROLLER_URL}/lock`, dto, config)
     .then((response) => response.data)
     .catch((response) => {
       throw response;
@@ -50,8 +54,10 @@ export const lockAsync = async (
 export const unlockAsync = async (
   dto: CarActionDto
 ): Promise<CarActionResponse> => {
+  const config = getGenericConfig();
+
   return axios
-    .post(`${CONTROLLER_URL}/unlock`, dto)
+    .post(`${CONTROLLER_URL}/unlock`, dto, config)
     .then((response) => response.data)
     .catch((response) => {
       throw response;

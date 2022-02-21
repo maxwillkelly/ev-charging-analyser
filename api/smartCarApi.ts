@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getGenericConfig } from ".";
 
 export type SmartCarExchange = {
   url: string;
@@ -6,8 +7,10 @@ export type SmartCarExchange = {
 };
 
 export const exchangeAsync = async (url: string): Promise<boolean> => {
+  const config = getGenericConfig();
+
   return axios
-    .get(url)
+    .get(url, config)
     .then((response) => response.data)
     .catch((response) => {
       throw response;
