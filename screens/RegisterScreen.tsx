@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Button, TextInput, HelperText } from "react-native-paper";
 import { useFormik } from "formik";
 import { useMutation } from "react-query";
@@ -56,6 +56,7 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
 
   return (
     <View>
+      <Text>Register</Text>
       <View>
         <View>
           <TextInput

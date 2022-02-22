@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Button, TextInput, HelperText } from "react-native-paper";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -44,6 +44,7 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
 
   return (
     <View>
+      <Text>Login</Text>
       <View>
         <TextInput
           label="Email"
