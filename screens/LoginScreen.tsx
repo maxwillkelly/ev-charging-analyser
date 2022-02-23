@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { Button, TextInput, HelperText } from "react-native-paper";
+import { View } from "react-native";
+import { TextInput, HelperText } from "react-native-paper";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { loginAsync } from "../api/usersApi";
@@ -9,6 +9,9 @@ import { LoginDto, LoginResponse } from "../api/dtos/Login.dto";
 import { AxiosError } from "axios";
 import { RootStackScreenProps } from "../types";
 import { useUserStore } from "../stores/useUserStore";
+import Title from "../components/Title";
+import MyButton from "../components/MyButton";
+import ButtonGroup from "../components/ButtonGroup";
 
 const validationSchema = yup.object({
   email: yup
@@ -43,42 +46,51 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
   });
 
   return (
-    <View>
-      <Text>Login</Text>
+    <View style={{ flex: 1 }}>
+      <Title title="Sign In" />
       <View>
-        <TextInput
-          label="Email"
-          value={formik.values.email}
-          onChangeText={formik.handleChange("email")}
-          onBlur={formik.handleBlur("email")}
-          autoComplete
-        />
-        <HelperText
-          type="error"
-          visible={Boolean(formik.touched.email && formik.errors.email)}
-        >
-          {formik.errors.email}
-        </HelperText>
+        <View>
+          <TextInput
+            label="Email"
+            value={formik.values.email}
+            onChangeText={formik.handleChange("email")}
+            onBlur={formik.handleBlur("email")}
+            autoComplete
+          />
+          <HelperText
+            type="error"
+            visible={Boolean(formik.touched.email && formik.errors.email)}
+          >
+            {formik.errors.email}
+          </HelperText>
+        </View>
+        <View>
+          <TextInput
+            label="Password"
+            placeholder="Enter Password"
+            value={formik.values.password}
+            onChangeText={formik.handleChange("password")}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            onBlur={formik.handleBlur("password")}
+            autoComplete={false}
+            secureTextEntry
+          />
+          <HelperText
+            type="error"
+            visible={Boolean(formik.touched.password && formik.errors.password)}
+          >
+            {formik.errors.password}
+          </HelperText>
+        </View>
       </View>
-      <View>
-        <TextInput
-          label="Password"
-          placeholder="Enter Password"
-          value={formik.values.password}
-          onChangeText={formik.handleChange("password")}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          onBlur={formik.handleBlur("password")}
-          autoComplete={false}
-          secureTextEntry
+      <ButtonGroup>
+        <MyButton onPress={formik.handleSubmit} title="Sign In" />
+        <MyButton
+          onPress={() => navigation.navigate("Register")}
+          title="Register"
+          variant="secondary"
         />
-        <HelperText
-          type="error"
-          visible={Boolean(formik.touched.password && formik.errors.password)}
-        >
-          {formik.errors.password}
-        </HelperText>
-      </View>
-      <Button onPress={formik.handleSubmit}>Sign In</Button>
+      </ButtonGroup>
     </View>
   );
 };
