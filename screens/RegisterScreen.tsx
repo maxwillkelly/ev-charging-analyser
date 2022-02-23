@@ -60,8 +60,9 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
   });
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: colours.white }}>
-      {/* <View> */}
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1, backgroundColor: colours.white }}
+    >
       <Title title="Register" />
       <View style={{ flex: 1 }}>
         <MyTextInput label="First Name" fieldName="firstName" formik={formik} />
@@ -84,94 +85,6 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
           secureTextEntry
           formik={formik}
         />
-
-        {/* <View>
-          <TextInput
-            label="First Name"
-            value={formik.values.firstName}
-            onChangeText={formik.handleChange("firstName")}
-            onBlur={formik.handleBlur("firstName")}
-            autoComplete
-          />
-          <HelperText
-            type="error"
-            visible={Boolean(
-              formik.touched.firstName && formik.errors.firstName
-            )}
-          >
-            {formik.errors.firstName}
-          </HelperText>
-        </View> */}
-        {/* <View>
-          <TextInput
-            label="Last Name"
-            value={formik.values.lastName}
-            onChangeText={formik.handleChange("lastName")}
-            onBlur={formik.handleBlur("lastName")}
-            autoComplete
-          />
-          <HelperText
-            type="error"
-            visible={Boolean(formik.touched.lastName && formik.errors.lastName)}
-          >
-            {formik.errors.lastName}
-          </HelperText>
-        </View>
-        <View>
-          <TextInput
-            label="Email"
-            value={formik.values.email}
-            onChangeText={formik.handleChange("email")}
-            onBlur={formik.handleBlur("email")}
-            autoComplete
-          />
-          <HelperText
-            type="error"
-            visible={Boolean(formik.touched.email && formik.errors.email)}
-          >
-            {formik.errors.email}
-          </HelperText>
-        </View>
-        <View>
-          <TextInput
-            label="Password"
-            placeholder="Enter Password"
-            value={formik.values.password}
-            onChangeText={formik.handleChange("password")}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            onBlur={formik.handleBlur("password")}
-            autoComplete={false}
-            secureTextEntry
-          />
-          <HelperText
-            type="error"
-            visible={Boolean(formik.touched.password && formik.errors.password)}
-          >
-            {formik.errors.password}
-          </HelperText>
-        </View>
-        <View>
-          <TextInput
-            label="Confirm Password"
-            placeholder="Confirm Password"
-            value={formik.values.confirmPassword}
-            onChangeText={formik.handleChange("confirmPassword")}
-            error={
-              formik.touched.password && Boolean(formik.errors.confirmPassword)
-            }
-            onBlur={formik.handleBlur("confirmPassword")}
-            autoComplete={false}
-            secureTextEntry
-          />
-          <HelperText
-            type="error"
-            visible={Boolean(
-              formik.touched.confirmPassword && formik.errors.confirmPassword
-            )}
-          >
-            {formik.errors.confirmPassword}
-          </HelperText>
-        </View> */}
       </View>
       <ButtonGroup>
         <MyButton onPress={formik.handleSubmit} title="Register" />

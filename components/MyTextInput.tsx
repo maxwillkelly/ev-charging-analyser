@@ -31,6 +31,10 @@ const MyTextInput: React.FC<Props> = ({
   keyboardType,
   secureTextEntry,
 }) => {
+  const visible = Boolean(
+    formik.touched[fieldName] && formik.errors[fieldName]
+  );
+
   return (
     <View style={{ marginHorizontal: 16 }}>
       <TextInput
@@ -43,11 +47,7 @@ const MyTextInput: React.FC<Props> = ({
         secureTextEntry={secureTextEntry}
         style={styles.input}
       />
-      <HelperText
-        type="error"
-        visible={Boolean(formik.touched[fieldName] && formik.errors[fieldName])}
-        style={styles.helperText}
-      >
+      <HelperText type="error" visible={visible} style={styles.helperText}>
         {formik.errors[fieldName]}
       </HelperText>
     </View>

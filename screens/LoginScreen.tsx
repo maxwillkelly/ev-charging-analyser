@@ -48,7 +48,9 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
   });
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: colours.white }}>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1, backgroundColor: colours.white }}
+    >
       <Title title="Sign In" />
       <View style={{ flex: 1 }}>
         <MyTextInput
@@ -63,39 +65,6 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
           secureTextEntry
           formik={formik}
         />
-        {/* <View>
-          <TextInput
-            label="Email"
-            value={formik.values.email}
-            onChangeText={formik.handleChange("email")}
-            onBlur={formik.handleBlur("email")}
-            autoComplete
-          />
-          <HelperText
-            type="error"
-            visible={Boolean(formik.touched.email && formik.errors.email)}
-          >
-            {formik.errors.email}
-          </HelperText>
-        </View>
-        <View>
-          <TextInput
-            label="Password"
-            placeholder="Enter Password"
-            value={formik.values.password}
-            onChangeText={formik.handleChange("password")}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            onBlur={formik.handleBlur("password")}
-            autoComplete={false}
-            secureTextEntry
-          />
-          <HelperText
-            type="error"
-            visible={Boolean(formik.touched.password && formik.errors.password)}
-          >
-            {formik.errors.password}
-          </HelperText>
-        </View> */}
       </View>
       <ButtonGroup>
         <MyButton onPress={formik.handleSubmit} title="Sign In" />
