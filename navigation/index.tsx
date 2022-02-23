@@ -68,7 +68,7 @@ function RootNavigator() {
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={{ title: "Register" }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Root"

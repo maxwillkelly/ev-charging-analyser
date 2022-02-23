@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { Button, TextInput, HelperText } from "react-native-paper";
 import { useFormik } from "formik";
 import { useMutation } from "react-query";
@@ -10,6 +10,9 @@ import { registerAsync } from "../api/usersApi";
 import { useUserStore } from "../stores/useUserStore";
 import { LoginResponse } from "../api/dtos/Login.dto";
 import { RegisterDto } from "../api/dtos/Register.dto";
+import Title from "../components/Title";
+import ButtonGroup from "../components/ButtonGroup";
+import MyButton from "../components/MyButton";
 
 const validationSchema = yup.object({
   firstName: yup.string().required("First Name is required"),
@@ -55,8 +58,8 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
   });
 
   return (
-    <View>
-      <Text>Register</Text>
+    <View style={{ flex: 1 }}>
+      <Title title="Register" />
       <View>
         <View>
           <TextInput
@@ -146,7 +149,14 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
           </HelperText>
         </View>
       </View>
-      <Button onPress={formik.handleSubmit}>Register</Button>
+      <ButtonGroup>
+        <MyButton onPress={formik.handleSubmit} title="Register" />
+        <MyButton
+          onPress={() => navigation.goBack()}
+          title="Go Back"
+          variant="secondary"
+        />
+      </ButtonGroup>
     </View>
   );
 };
