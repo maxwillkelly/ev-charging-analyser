@@ -1,21 +1,24 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
-import { TextInput, HelperText } from "react-native-paper";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
+import { Button, TextInput, HelperText } from "react-native-paper";
 import { useFormik } from "formik";
-import * as yup from "yup";
-import { loginAsync } from "../api/usersApi";
 import { useMutation } from "react-query";
-import { LoginDto, LoginResponse } from "../api/dtos/Login.dto";
+import * as yup from "yup";
 import { AxiosError } from "axios";
 import { RootStackScreenProps } from "../types";
+import { registerAsync } from "../api/usersApi";
 import { useUserStore } from "../stores/useUserStore";
+import { LoginResponse } from "../api/dtos/Login.dto";
+import { RegisterDto } from "../api/dtos/Register.dto";
 import Title from "../components/Title";
-import MyButton from "../components/MyButton";
 import ButtonGroup from "../components/ButtonGroup";
+import MyButton from "../components/MyButton";
 import MyTextInput from "../components/MyTextInput";
 import colours from "../styles/colours";
 
 const validationSchema = yup.object({
+  firstName: yup.string().required("First Name is required"),
+  lastName: yup.string().required("Last Name is required"),
   email: yup
     .string()
     .email("Enter a valid email")
@@ -24,14 +27,17 @@ const validationSchema = yup.object({
     .string()
     .min(8, "Password should be of minimum 8 characters length")
     .required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
-const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
+const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
   const { login } = useUserStore();
 
-  const mutation = useMutation<LoginResponse, AxiosError, LoginDto>(
+  const mutation = useMutation<LoginResponse, AxiosError, RegisterDto>(
     "userToken",
-    loginAsync,
+    registerAsync,
     {
       onSuccess: (dto) => {
         login(dto);
@@ -42,7 +48,13 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
   );
 
   const formik = useFormik({
-    initialValues: { email: "", password: "" },
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
     validationSchema,
     onSubmit: (values) => mutation.mutate(values),
   });
@@ -51,8 +63,10 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
     <ScrollView
       contentContainerStyle={{ flexGrow: 1, backgroundColor: colours.white }}
     >
-      <Title title="Sign In" />
+      <Title title="Register" />
       <View style={{ flex: 1 }}>
+        <MyTextInput label="First Name" fieldName="firstName" formik={formik} />
+        <MyTextInput label="Last Name" fieldName="lastName" formik={formik} />
         <MyTextInput
           label="Email"
           fieldName="email"
@@ -65,12 +79,18 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
           secureTextEntry
           formik={formik}
         />
+        <MyTextInput
+          label="Confirm Password"
+          fieldName="confirmPassword"
+          secureTextEntry
+          formik={formik}
+        />
       </View>
       <ButtonGroup>
-        <MyButton onPress={formik.handleSubmit} title="Sign In" />
+        <MyButton onPress={formik.handleSubmit} title="Register" />
         <MyButton
-          onPress={() => navigation.navigate("Register")}
-          title="Register"
+          onPress={() => navigation.goBack()}
+          title="Go Back"
           variant="secondary"
         />
       </ButtonGroup>
@@ -78,4 +98,4 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;

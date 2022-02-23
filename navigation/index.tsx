@@ -1,8 +1,3 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -19,21 +14,22 @@ import useColourScheme from "../hooks/useColourScheme";
 import LoginScreen from "../screens/LoginScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import SmartCarConnect from "../screens/SmartCarConnect";
-import CarScreen from "../screens/CarScreen";
+import CarScreen from "../screens/root/CarScreen";
 import {
   OnboardingTabParamList,
   RootStackParamList,
   RootTabParamList,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import MapScreen from "../screens/MapScreen";
-import JourneysScreen from "../screens/JourneysScreen";
-import ChargingScreen from "../screens/ChargingScreen";
-import SettingsScreen from "../screens/SettingsScreen";
+import MapScreen from "../screens/root/MapScreen";
+import JourneysScreen from "../screens/root/JourneysScreen";
+import ChargingScreen from "../screens/root/ChargingScreen";
+import SettingsScreen from "../screens/root/SettingsScreen";
 import fonts from "../styles/fonts";
 import colours from "../styles/colours";
 import CarListScreen from "../screens/CarListScreen";
 import OnboardingLocationScreen from "../screens/onboarding/OnboardingLocationScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 
 export default function Navigation({
   colorScheme,
@@ -67,7 +63,12 @@ function RootNavigator() {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ title: "Login" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Root"
