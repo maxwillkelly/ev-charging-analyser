@@ -4,9 +4,9 @@ import fonts from "../styles/fonts";
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 64,
+    marginTop: 56,
     marginBottom: 24,
-    marginHorizontal: 16,
+    marginHorizontal: 20,
   },
   title: {
     fontFamily: fonts.bold,

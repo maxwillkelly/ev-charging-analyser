@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -12,6 +12,8 @@ import { useUserStore } from "../stores/useUserStore";
 import Title from "../components/Title";
 import MyButton from "../components/MyButton";
 import ButtonGroup from "../components/ButtonGroup";
+import MyTextInput from "../components/MyTextInput";
+import colours from "../styles/colours";
 
 const validationSchema = yup.object({
   email: yup
@@ -46,10 +48,22 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
   });
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: colours.white }}>
       <Title title="Sign In" />
-      <View>
-        <View>
+      <View style={{ flex: 1 }}>
+        <MyTextInput
+          label="Email"
+          fieldName="email"
+          keyboardType="email-address"
+          formik={formik}
+        />
+        <MyTextInput
+          label="Password"
+          fieldName="password"
+          secureTextEntry
+          formik={formik}
+        />
+        {/* <View>
           <TextInput
             label="Email"
             value={formik.values.email}
@@ -81,7 +95,7 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
           >
             {formik.errors.password}
           </HelperText>
-        </View>
+        </View> */}
       </View>
       <ButtonGroup>
         <MyButton onPress={formik.handleSubmit} title="Sign In" />
@@ -91,7 +105,7 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
           variant="secondary"
         />
       </ButtonGroup>
-    </View>
+    </ScrollView>
   );
 };
 

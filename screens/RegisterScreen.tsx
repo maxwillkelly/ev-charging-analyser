@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { Button, TextInput, HelperText } from "react-native-paper";
 import { useFormik } from "formik";
 import { useMutation } from "react-query";
@@ -13,6 +13,8 @@ import { RegisterDto } from "../api/dtos/Register.dto";
 import Title from "../components/Title";
 import ButtonGroup from "../components/ButtonGroup";
 import MyButton from "../components/MyButton";
+import MyTextInput from "../components/MyTextInput";
+import colours from "../styles/colours";
 
 const validationSchema = yup.object({
   firstName: yup.string().required("First Name is required"),
@@ -58,10 +60,32 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
   });
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: colours.white }}>
+      {/* <View> */}
       <Title title="Register" />
-      <View>
-        <View>
+      <View style={{ flex: 1 }}>
+        <MyTextInput label="First Name" fieldName="firstName" formik={formik} />
+        <MyTextInput label="Last Name" fieldName="lastName" formik={formik} />
+        <MyTextInput
+          label="Email"
+          fieldName="email"
+          keyboardType="email-address"
+          formik={formik}
+        />
+        <MyTextInput
+          label="Password"
+          fieldName="password"
+          secureTextEntry
+          formik={formik}
+        />
+        <MyTextInput
+          label="Confirm Password"
+          fieldName="confirmPassword"
+          secureTextEntry
+          formik={formik}
+        />
+
+        {/* <View>
           <TextInput
             label="First Name"
             value={formik.values.firstName}
@@ -77,8 +101,8 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
           >
             {formik.errors.firstName}
           </HelperText>
-        </View>
-        <View>
+        </View> */}
+        {/* <View>
           <TextInput
             label="Last Name"
             value={formik.values.lastName}
@@ -147,7 +171,7 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
           >
             {formik.errors.confirmPassword}
           </HelperText>
-        </View>
+        </View> */}
       </View>
       <ButtonGroup>
         <MyButton onPress={formik.handleSubmit} title="Register" />
@@ -157,7 +181,7 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
           variant="secondary"
         />
       </ButtonGroup>
-    </View>
+    </ScrollView>
   );
 };
 

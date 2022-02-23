@@ -3,8 +3,6 @@ import { StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({
   outerContainer: {
-    position: "absolute",
-    bottom: 0,
     width: "100%",
   },
   innerContainer: {
