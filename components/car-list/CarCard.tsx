@@ -52,7 +52,7 @@ export const CarCard: React.FC<CarCardProps> = ({ car, navigation }) => {
               source={require("../../assets/images/tesla-model-x.png")}
               style={{ height: 68, width: 138 }}
             />
-            <BatteryWidgetHorizontal percentRemaining={car.percentRemaining} />
+            <BatteryWidgetHorizontal percentRemaining={car.percentRemaining} state={car.state} />
           </View>
           <Text style={styles.name}>{car.name}</Text>
         </View>

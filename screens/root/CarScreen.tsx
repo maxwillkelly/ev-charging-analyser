@@ -23,7 +23,7 @@ const CarScreen = ({ route }: RootTabScreenProps<"Car">) => {
       />
       <Text style={styles.title}>{car.name}</Text>
       <View style={styles.appletContainer}>
-        <BatteryWidgetVertical percentRemaining={car.percentRemaining} />
+        <BatteryWidgetVertical percentRemaining={car.percentRemaining} state={car.state}/>
         <View>
           <RangeWidget range={car.range} />
           <LockWidget />
