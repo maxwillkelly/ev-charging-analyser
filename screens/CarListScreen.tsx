@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useQuery } from "react-query";
 import { getCarsAsync } from "../api/carsApi";
-import { CarDto } from "../api/dtos/Car.dto";
+import { Car } from "../api/dtos/Car.dto";
 import { CarCard } from "../components/car-list/CarCard";
 import { Text, View } from "../components/Themed";
 import { useUserStore } from "../stores/useUserStore";
@@ -32,7 +32,7 @@ const CarListScreen = ({
     if (!user) navigation.navigate("Login");
   }, [user, user?.id]);
 
-  const { isIdle, isLoading, error, data } = useQuery<CarDto[], AxiosError>(
+  const { isIdle, isLoading, error, data } = useQuery<Car[], AxiosError>(
     "cars",
     () => getCarsAsync(user?.id),
     {

@@ -5,8 +5,6 @@ export type CarActionDto = {
   vehicleId: string;
 };
 
-export type UnitSystem = "metric" | "imperial";
-
 export type CarActionResponse = {
   status: string;
   meta: MetaDto;

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { BASE_URL, getHeaders, getGenericConfig } from ".";
-import { CarDto, GetCarsDto } from "./dtos/Car.dto";
+import { CarDto } from "./dtos/Car.dto";
 import { CarActionDto, CarActionResponse } from "./dtos/CarAction.dto";
 import { CarLocationDto } from "./dtos/CarLocation.dto";
 
@@ -9,7 +9,7 @@ const CONTROLLER_URL = `${BASE_URL}/cars`;
 export const getCarsAsync = async (userId?: string): Promise<CarDto[]> => {
   if (!userId) return [];
 
-  const config: AxiosRequestConfig<GetCarsDto> = {
+  const config: AxiosRequestConfig<{ userId: string }> = {
     headers: getHeaders(),
     params: { userId },
   };
