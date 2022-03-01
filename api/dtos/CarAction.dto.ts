@@ -1,4 +1,4 @@
-import { MetaDto } from "./Meta.dto";
+import { Meta } from "./Meta.dto";
 
 export type CarActionDto = {
   userId: string;
@@ -7,5 +7,5 @@ export type CarActionDto = {
 
 export type CarActionResponse = {
   status: string;
-  meta: MetaDto;
+  meta: Meta;
 };

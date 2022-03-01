@@ -1,4 +1,4 @@
-import { MetaDto } from "./Meta.dto";
+import { Meta } from "./Meta.dto";
 
 export type ChargeState = "CHARGING" | "FULLY_CHARGED" | "NOT_CHARGING";
 
@@ -12,5 +12,5 @@ export type Car = {
   range: number;
   isPluggedIn: boolean;
   state: ChargeState;
-  meta: MetaDto;
+  meta: Meta;
 };

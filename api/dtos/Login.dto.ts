@@ -1,4 +1,4 @@
-import { UserDto } from "./User.dto";
+import { User } from "./User.dto";
 
 export type LoginDto = {
   email: string;
@@ -6,6 +6,6 @@ export type LoginDto = {
 };
 
 export type LoginResponse = {
-  user: UserDto;
+  user: User;
   token: string;
 };

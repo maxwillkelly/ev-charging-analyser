@@ -1,7 +1,7 @@
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
-import { recordUserLocationAsync } from "../api/locationApi";
-import { RecordUserLocationDto, UserLocations } from "../api/dtos/Location.dto";
+import { recordLocationAsync } from "../api/locationApi";
+import { RecordLocationDto, UserLocations } from "../api/dtos/Location.dto";
 import { useLocationStore } from "../stores/LocationStore";
 
 const WATCH_LOCATION_TASK = "watch-location-task";
@@ -51,8 +51,8 @@ export const registerLocationTask = (userId?: string) => {
       const locationData = data as UserLocations;
       const location = locationData.locations[0];
       useLocationStore.setState({ lastLocation: location });
-      const dto: RecordUserLocationDto = { userId, ...location };
-      await recordUserLocationAsync(dto);
+      const dto: RecordLocationDto = { userId, ...location };
+      await recordLocationAsync(dto);
     }
   });
 };

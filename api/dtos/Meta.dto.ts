@@ -1,6 +1,6 @@
 export type UnitSystem = "metric" | "imperial";
 
-export type MetaDto = {
+export type Meta = {
   dataAge: Date;
   requestId: string;
   unitSystem: UnitSystem;
