@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ChargingIconHorizontal: React.FC = () => (
+const ChargingIconHorizontal: React.FC = () => (
   <View
     style={{
       position: "absolute",
@@ -59,7 +59,6 @@ export const BatteryWidgetHorizontal: React.FC<BatteryWidgetProps> = ({
   percentRemaining,
   state,
 }) => {
-  console.log(state);
   const percentageString = getPercentageString(percentRemaining);
   return (
     <View style={styles.card}>
