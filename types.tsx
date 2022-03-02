@@ -9,7 +9,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { CarDto } from "./api/dtos/Car.dto";
+import { Car } from "./api/dtos/Car.dto";
 
 declare global {
   namespace ReactNavigation {
@@ -33,11 +33,11 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
 export type RootTabParamList = {
-  Car: { car: CarDto };
-  Map: { car: CarDto };
-  Journeys: { car: CarDto };
-  Charging: { car: CarDto };
-  Settings: { car: CarDto };
+  Car: { car: Car };
+  Map: { car: Car };
+  Journeys: { car: Car };
+  Charging: { car: Car };
+  Settings: { car: Car };
 };
 
 export type OnboardingTabParamList = {

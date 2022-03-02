@@ -1,6 +1,6 @@
 import React from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { CarDto } from "../../api/dtos/Car.dto";
+import { Car } from "../../api/dtos/Car.dto";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
 import { RootStackParamList } from "../../types";
@@ -8,7 +8,7 @@ import { Pressable, View, Image, Text, StyleSheet } from "react-native";
 import { BatteryWidgetHorizontal } from "../battery-widgets/BatteryWidgetHorizontal";
 
 type CarCardProps = {
-  car: CarDto;
+  car: Car;
   navigation: NativeStackNavigationProp<RootStackParamList>;
 };
 
@@ -52,7 +52,7 @@ export const CarCard: React.FC<CarCardProps> = ({ car, navigation }) => {
               source={require("../../assets/images/tesla-model-x.png")}
               style={{ height: 68, width: 138 }}
             />
-            <BatteryWidgetHorizontal percentRemaining={car.percentRemaining} />
+            <BatteryWidgetHorizontal percentRemaining={car.percentRemaining} state={car.state} />
           </View>
           <Text style={styles.name}>{car.name}</Text>
         </View>

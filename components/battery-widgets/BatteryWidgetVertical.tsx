@@ -1,11 +1,27 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
 import { BatteryWidgetProps, getPercentageString } from "./shared";
 
+const ChargingIconVertical: React.FC = () => (
+  <MaterialCommunityIcons
+    name="lightning-bolt"
+    size={32}
+    color={colours.white}
+    style={{
+      padding: 16,
+      position: "absolute",
+      zIndex: 10,
+      alignSelf: "center",
+    }}
+  />
+);
+
 export const BatteryWidgetVertical: React.FC<BatteryWidgetProps> = ({
   percentRemaining,
+  state,
 }) => {
   const percentageString = getPercentageString(percentRemaining);
   return (
@@ -13,6 +29,7 @@ export const BatteryWidgetVertical: React.FC<BatteryWidgetProps> = ({
       <Text style={styles.cardHeading}>Battery</Text>
       <View style={styles.cardCentred}>
         <View style={styles.batteryWidgetVertical}>
+          {state === "CHARGING" && <ChargingIconVertical />}
           <View
             style={{
               zIndex: 10,

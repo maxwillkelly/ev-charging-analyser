@@ -4,6 +4,7 @@ import { Text, View } from "../Themed";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
 import { BatteryWidgetProps, getPercentageString } from "./shared";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
   card: {
@@ -33,8 +34,30 @@ const styles = StyleSheet.create({
   },
 });
 
+const ChargingIconHorizontal: React.FC = () => (
+  <View
+    style={{
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "transparent",
+    }}
+  >
+    <MaterialCommunityIcons
+      name="lightning-bolt"
+      size={24}
+      color={colours.white}
+      style={{ zIndex: 10, alignSelf: "center" }}
+    />
+  </View>
+);
+
 export const BatteryWidgetHorizontal: React.FC<BatteryWidgetProps> = ({
   percentRemaining,
+  state,
 }) => {
   const percentageString = getPercentageString(percentRemaining);
   return (
@@ -43,6 +66,7 @@ export const BatteryWidgetHorizontal: React.FC<BatteryWidgetProps> = ({
         <View
           style={{ ...styles.batteryLevel, width: percentageString }}
         ></View>
+        {state === "CHARGING" && <ChargingIconHorizontal />}
       </View>
       <Text style={styles.percentage}>{percentageString}</Text>
     </View>

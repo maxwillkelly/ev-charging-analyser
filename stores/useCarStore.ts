@@ -1,9 +1,9 @@
 import create from "zustand";
-import { CarDto } from "../api/dtos/Car.dto";
+import { Car } from "../api/dtos/Car.dto";
 
 type CarStore = {
-  selectedCar?: CarDto;
-  setSelectedCar: (car: CarDto) => void;
+  selectedCar?: Car;
+  setSelectedCar: (car: Car) => void;
   reset: () => void;
 };
 

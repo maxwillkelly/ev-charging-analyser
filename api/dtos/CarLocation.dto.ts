@@ -1,7 +1,7 @@
-import { MetaDto } from "./Meta.dto";
+import { Meta } from "./Meta.dto";
 
-export type CarLocationDto = {
+export type CarLocation = {
   latitude: number;
   longitude: number;
-  meta: MetaDto;
+  meta: Meta;
 };

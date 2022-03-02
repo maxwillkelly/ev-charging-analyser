@@ -1,11 +1,16 @@
-import { AttributesDto } from "./Attributes.dto";
+import { Meta } from "./Meta.dto";
 
-export interface CarDto extends AttributesDto {
+export type ChargeState = "CHARGING" | "FULLY_CHARGED" | "NOT_CHARGING";
+
+export type Car = {
+  id: string;
+  make: string;
+  model: string;
+  year: number;
+  name: string;
   percentRemaining: number;
   range: number;
-  name: string;
-}
-
-export type GetCarsDto = {
-  userId: string;
+  isPluggedIn: boolean;
+  state: ChargeState;
+  meta: Meta;
 };

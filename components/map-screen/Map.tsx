@@ -7,7 +7,7 @@ import { getCarLocationAsync } from "../../api/carsApi";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
 import { View, Text } from "../Themed";
-import { CarDto } from "../../api/dtos/Car.dto";
+import { Car } from "../../api/dtos/Car.dto";
 import { useLocationStore } from "../../stores/LocationStore";
 import { useUserStore } from "../../stores/useUserStore";
 import { useCarStore } from "../../stores/useCarStore";
@@ -39,7 +39,7 @@ export const MapMarkerIcon: React.FC<MapMarkerIconProps> = ({
 };
 
 type Props = {
-  car: CarDto;
+  car: Car;
 };
 
 export const Map: React.FC<Props> = ({ car }) => {
