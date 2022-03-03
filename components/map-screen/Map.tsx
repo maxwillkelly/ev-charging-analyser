@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions, ActivityIndicator } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import MapView, { LatLng, Marker as MapMarker } from "react-native-maps";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import colours from "../../styles/colours";
@@ -11,6 +11,7 @@ import { Car } from "../../api/dtos/Car.dto";
 import { useLocationStore } from "../../stores/LocationStore";
 import { useUserStore } from "../../stores/useUserStore";
 import { useCarStore } from "../../stores/useCarStore";
+import Spinner from "../Spinner";
 
 const INITIAL_REGION = {
   latitude: 56.46855061730443,
@@ -47,7 +48,7 @@ export const Map: React.FC<Props> = ({ car }) => {
   const { selectedCar } = useCarStore();
   const { lastLocation } = useLocationStore();
   const { user } = useUserStore();
-  
+
   const userId = user?.id as string;
   const vehicleId = selectedCar?.id as string;
 
@@ -68,12 +69,7 @@ export const Map: React.FC<Props> = ({ car }) => {
     }
   );
 
-  if (isLoading)
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="#999999" />
-      </View>
-    );
+  if (isLoading) return <Spinner />;
 
   if (error)
     return (

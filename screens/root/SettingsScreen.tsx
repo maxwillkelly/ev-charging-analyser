@@ -23,13 +23,6 @@ const SettingsScreen = ({ navigation }: RootTabScreenProps<"Settings">) => {
           navigation.navigate("Onboarding", { screen: "Location" });
         }}
       />
-      <Button
-        title="Register"
-        onPress={() => {
-          logout();
-          navigation.navigate("Register");
-        }}
-      />
     </View>
   );
 };
