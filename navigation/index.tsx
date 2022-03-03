@@ -135,7 +135,7 @@ const BottomTabNavigator: React.FC = () => {
         name="Car"
         component={CarScreen}
         options={{
-          title: "Andy's Tesla Model X",
+          title: "Car",
           tabBarLabel: "Car",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="car" size={30} color={color} />
