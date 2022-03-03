@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import WebView from "react-native-webview";
 import { useMutation, useQueryClient } from "react-query";
 import { useUserStore } from "../stores/useUserStore";
@@ -8,6 +8,7 @@ import { RootStackScreenProps } from "../types";
 import { AxiosError } from "axios";
 import { BASE_URL } from "../api";
 import { OnShouldStartLoadWithRequest } from "react-native-webview/lib/WebViewTypes";
+import Spinner from "../components/Spinner";
 
 type Status = "Initial" | "Loading" | "Success" | "Error";
 
@@ -74,12 +75,7 @@ const SmartCarConnect = ({
     return true;
   };
 
-  if (status === "Loading")
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="#999999" />
-      </View>
-    );
+  if (status === "Loading") return <Spinner />;
 
   if (status === "Error") {
     return (

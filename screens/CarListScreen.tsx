@@ -2,17 +2,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AxiosError } from "axios";
 import React, { useEffect } from "react";
-import {
-  StyleSheet,
-  Pressable,
-  ActivityIndicator,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Pressable, ScrollView } from "react-native";
 import { useQuery } from "react-query";
 import { getCarsAsync } from "../api/carsApi";
 import { Car } from "../api/dtos/Car.dto";
 import { CarCard } from "../components/car-list/CarCard";
 import { Text, View } from "../components/Themed";
+import Spinner from "../components/Spinner";
 import { useUserStore } from "../stores/useUserStore";
 import colours from "../styles/colours";
 import fonts from "../styles/fonts";
@@ -49,12 +45,7 @@ const CarListScreen = ({
     startLocationService();
   }, [user, user?.id]);
 
-  if (isLoading)
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="#999999" />
-      </View>
-    );
+  if (isLoading) return <Spinner />;
 
   if (error)
     return (
