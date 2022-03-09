@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
-import { TextInput, HelperText } from "react-native-paper";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { loginAsync } from "../api/usersApi";
@@ -27,6 +26,7 @@ const validationSchema = yup.object({
 });
 
 const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
+  const [error, setError] = useState<string>();
   const { login } = useUserStore();
 
   const mutation = useMutation<LoginResponse, AxiosError, LoginDto>(
@@ -37,7 +37,17 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
         login(dto);
         navigation.navigate("CarList");
       },
-      onError: (error) => console.error(error),
+      onError: (error) => {
+        switch (error.response?.status) {
+          case 401:
+            setError("Username or password is incorrect");
+            break;
+          default:
+            setError(
+              "An unknown error has occurred, please try again later or contact support"
+            );
+        }
+      },
     }
   );
 
@@ -58,12 +68,17 @@ const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
           fieldName="email"
           keyboardType="email-address"
           formik={formik}
+          additionalError={error}
+          setAdditionalError={setError}
         />
         <MyTextInput
           label="Password"
           fieldName="password"
           secureTextEntry
           formik={formik}
+          additionalError={error}
+          setAdditionalError={setError}
+          showAdditionalError
         />
       </View>
       <ButtonGroup>

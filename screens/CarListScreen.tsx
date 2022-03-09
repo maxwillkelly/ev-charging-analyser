@@ -49,10 +49,9 @@ const CarListScreen = ({
 
   if (error)
     return (
-      <View style={styles.container}>
-        <Text>Error occurred</Text>
+      <ScrollView>
         <Text>{JSON.stringify(error, null, 2)}</Text>
-      </View>
+      </ScrollView>
     );
 
   if (isIdle || data)

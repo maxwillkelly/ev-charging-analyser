@@ -8,10 +8,7 @@ const CONTROLLER_URL = `${BASE_URL}/users`;
 export const loginAsync = async (dto: LoginDto): Promise<LoginResponse> => {
   return axios
     .post(`${CONTROLLER_URL}/login`, dto)
-    .then((response) => response.data)
-    .catch((response) => {
-      throw response;
-    });
+    .then((response) => response.data);
 };
 
 export const registerAsync = async (
@@ -19,8 +16,5 @@ export const registerAsync = async (
 ): Promise<LoginResponse> => {
   return axios
     .post(`${CONTROLLER_URL}/register`, dto)
-    .then((response) => response.data)
-    .catch((response) => {
-      throw response;
-    });
+    .then((response) => response.data);
 };
