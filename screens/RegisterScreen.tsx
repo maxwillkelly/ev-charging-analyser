@@ -80,15 +80,11 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
           label="First Name"
           fieldName="firstName"
           formik={formik}
-          additionalError={error}
-          setAdditionalError={setError}
         />
         <MyTextInput
           label="Last Name"
           fieldName="lastName"
           formik={formik}
-          additionalError={error}
-          setAdditionalError={setError}
         />
         <MyTextInput
           label="Email"
@@ -97,23 +93,19 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
           formik={formik}
           additionalError={error}
           setAdditionalError={setError}
+          showAdditionalError
         />
         <MyTextInput
           label="Password"
           fieldName="password"
           secureTextEntry
           formik={formik}
-          additionalError={error}
-          setAdditionalError={setError}
         />
         <MyTextInput
           label="Confirm Password"
           fieldName="confirmPassword"
           secureTextEntry
           formik={formik}
-          additionalError={error}
-          setAdditionalError={setError}
-          showAdditionalError
         />
       </View>
       <ButtonGroup>

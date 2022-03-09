@@ -23,7 +23,7 @@ type Props = {
   keyboardType?: KeyboardTypeOptions;
   secureTextEntry?: boolean;
   additionalError?: string;
-  setAdditionalError: Dispatch<SetStateAction<string | undefined>>;
+  setAdditionalError?: Dispatch<SetStateAction<string | undefined>>;
   showAdditionalError?: boolean;
 };
 
@@ -49,7 +49,9 @@ const MyTextInput: React.FC<Props> = ({
         label={label}
         mode="outlined"
         onChangeText={formik.handleChange(fieldName)}
-        onChange={() => setAdditionalError(undefined)}
+        onChange={() => {
+          if (setAdditionalError) setAdditionalError(undefined);
+        }}
         onBlur={formik.handleBlur(fieldName)}
         value={formik.values[fieldName]}
         keyboardType={keyboardType}
