@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { KeyboardTypeOptions, StyleSheet, View } from "react-native";
 import colours from "../styles/colours";
 import fonts from "../styles/fonts";
@@ -22,6 +22,9 @@ type Props = {
   formik: Record<string, any>;
   keyboardType?: KeyboardTypeOptions;
   secureTextEntry?: boolean;
+  additionalError?: string;
+  setAdditionalError: Dispatch<SetStateAction<string | undefined>>;
+  showAdditionalError?: boolean;
 };
 
 const MyTextInput: React.FC<Props> = ({
@@ -30,10 +33,15 @@ const MyTextInput: React.FC<Props> = ({
   fieldName,
   keyboardType,
   secureTextEntry,
+  additionalError,
+  setAdditionalError,
+  showAdditionalError,
 }) => {
-  const visible = Boolean(
-    formik.touched[fieldName] && formik.errors[fieldName]
+  const errorVisible = Boolean(
+    formik.touched[fieldName] && (formik.errors[fieldName] || additionalError)
   );
+
+  const errorMessage = formik.errors[fieldName] || additionalError;
 
   return (
     <View style={{ marginHorizontal: 16 }}>
@@ -41,14 +49,16 @@ const MyTextInput: React.FC<Props> = ({
         label={label}
         mode="outlined"
         onChangeText={formik.handleChange(fieldName)}
+        onChange={() => setAdditionalError(undefined)}
         onBlur={formik.handleBlur(fieldName)}
         value={formik.values[fieldName]}
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
         style={styles.input}
+        error={errorVisible}
       />
-      <HelperText type="error" visible={visible} style={styles.helperText}>
-        {formik.errors[fieldName]}
+      <HelperText type="error" visible={errorVisible} style={styles.helperText}>
+        {showAdditionalError && errorMessage}
       </HelperText>
     </View>
   );
