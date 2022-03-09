@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { Button, TextInput, HelperText } from "react-native-paper";
 import { useFormik } from "formik";
@@ -33,6 +33,7 @@ const validationSchema = yup.object({
 });
 
 const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
+  const [error, setError] = useState<string>();
   const { login } = useUserStore();
 
   const mutation = useMutation<LoginResponse, AxiosError, RegisterDto>(
@@ -43,7 +44,17 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
         login(dto);
         navigation.navigate("CarList");
       },
-      onError: (error) => console.error(error),
+      onError: (error) => {
+        switch (error.response?.status) {
+          case 400:
+            setError("An account is already registered with this email");
+            break;
+          default:
+            setError(
+              "An unknown error has occurred, please try again later or contact support"
+            );
+        }
+      },
     }
   );
 
@@ -65,25 +76,44 @@ const RegisterScreen = ({ navigation }: RootStackScreenProps<"Register">) => {
     >
       <Title title="Register" />
       <View style={{ flex: 1 }}>
-        <MyTextInput label="First Name" fieldName="firstName" formik={formik} />
-        <MyTextInput label="Last Name" fieldName="lastName" formik={formik} />
+        <MyTextInput
+          label="First Name"
+          fieldName="firstName"
+          formik={formik}
+          additionalError={error}
+          setAdditionalError={setError}
+        />
+        <MyTextInput
+          label="Last Name"
+          fieldName="lastName"
+          formik={formik}
+          additionalError={error}
+          setAdditionalError={setError}
+        />
         <MyTextInput
           label="Email"
           fieldName="email"
           keyboardType="email-address"
           formik={formik}
+          additionalError={error}
+          setAdditionalError={setError}
         />
         <MyTextInput
           label="Password"
           fieldName="password"
           secureTextEntry
           formik={formik}
+          additionalError={error}
+          setAdditionalError={setError}
         />
         <MyTextInput
           label="Confirm Password"
           fieldName="confirmPassword"
           secureTextEntry
           formik={formik}
+          additionalError={error}
+          setAdditionalError={setError}
+          showAdditionalError
         />
       </View>
       <ButtonGroup>

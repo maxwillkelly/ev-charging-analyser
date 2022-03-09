@@ -27,8 +27,8 @@ const validationSchema = yup.object({
 });
 
 const LoginScreen = ({ navigation }: RootStackScreenProps<"Login">) => {
-  const { login } = useUserStore();
   const [error, setError] = useState<string>();
+  const { login } = useUserStore();
 
   const mutation = useMutation<LoginResponse, AxiosError, LoginDto>(
     "userToken",

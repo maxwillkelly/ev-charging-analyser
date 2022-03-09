@@ -16,6 +16,5 @@ export const registerAsync = async (
 ): Promise<LoginResponse> => {
   return axios
     .post(`${CONTROLLER_URL}/register`, dto)
-    .then((response) => response.data)
-    .catch((response) => response);
+    .then((response) => response.data);
 };
