@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, Text, ScrollView } from "react-native";
 import WebView from "react-native-webview";
 import { useMutation, useQueryClient } from "react-query";
 import { useUserStore } from "../stores/useUserStore";
@@ -55,7 +55,7 @@ const SmartCarConnect = ({
     request
   ) => {
     const { url } = request;
-    if (url.includes(`${BASE_URL}/smartcar/exchange`)) {
+    if (url.includes(`smartcar/exchange`)) {
       setStatus("Loading");
 
       webView.current?.stopLoading();
@@ -79,10 +79,10 @@ const SmartCarConnect = ({
 
   if (status === "Error") {
     return (
-      <View style={styles.container}>
+      <ScrollView>
         <Text>Error occurred</Text>
         <Text>{JSON.stringify(error, null, 2)}</Text>
-      </View>
+      </ScrollView>
     );
   }
 
@@ -90,7 +90,11 @@ const SmartCarConnect = ({
     <WebView
       ref={webView}
       style={styles.container}
-      originWhitelist={[BASE_URL, "https://*.smartcar.com"]}
+      originWhitelist={[
+        BASE_URL,
+        "https://ev-charging-analyser-api.herokuapp.com",
+        "https://*.smartcar.com",
+      ]}
       source={{ uri }}
       onShouldStartLoadWithRequest={handleNavigationStateChange}
       setSupportMultipleWindows={false}

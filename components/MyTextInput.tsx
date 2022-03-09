@@ -41,7 +41,13 @@ const MyTextInput: React.FC<Props> = ({
     formik.touched[fieldName] && (formik.errors[fieldName] || additionalError)
   );
 
-  const errorMessage = formik.errors[fieldName] || additionalError;
+  const getErrorMessage = () => {
+    if (formik.errors[fieldName]) return formik.errors[fieldName];
+    if (showAdditionalError && additionalError) return additionalError;
+    return "";
+  };
+
+  const errorMessage = getErrorMessage();
 
   return (
     <View style={{ marginHorizontal: 16 }}>
