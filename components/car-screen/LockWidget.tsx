@@ -10,7 +10,7 @@ import { CarActionResponse } from "../../api/dtos/CarAction.dto";
 import { useUserStore } from "../../stores/useUserStore";
 import fonts from "../../styles/fonts";
 import { useCarStore } from "../../stores/useCarStore";
-import { rightCardStyles } from "../cards/RightCard";
+import { rightCardStyles } from "./cards/RightCard";
 
 export const LockWidget = () => {
   const [locked, toggleLocked] = useToggle();

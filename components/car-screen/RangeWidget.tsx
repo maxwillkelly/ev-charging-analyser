@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, View } from "../../components/Themed";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
-import RightCard from "../cards/RightCard";
+import RightCard from "./cards/RightCard";
 
 type RangeWidgetProps = { range: number };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import colours from "../../styles/colours";
+import colours from "../../../styles/colours";
 
 const RightCard: React.FC = ({ children }) => (
   <View style={rightCardStyles.rightCard}>{children}</View>

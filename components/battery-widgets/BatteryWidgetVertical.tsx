@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
-import LeftCard from "../cards/LeftCard";
+import LeftCard from "../car-screen/cards/LeftCard";
 import { BatteryWidgetProps, getPercentageString } from "./shared";
 
 const ChargingIconVertical: React.FC = () => (

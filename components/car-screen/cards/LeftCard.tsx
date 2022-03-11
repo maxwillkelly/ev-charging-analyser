@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import colours from "../../styles/colours";
+import colours from "../../../styles/colours";
 
 export const LeftCard: React.FC = ({ children }) => {
   return (
