@@ -4,13 +4,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, View } from "../../components/Themed";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
+import RightCard from "../cards/RightCard";
 
 type RangeWidgetProps = { range: number };
 
 export const RangeWidget: React.FC<RangeWidgetProps> = ({ range }) => {
   const roundedRange = Math.round(range);
   return (
-    <View style={styles.rightCard}>
+    <RightCard>
       <Text style={styles.cardHeading}>Range</Text>
       <View style={styles.line}>
         <MaterialCommunityIcons
@@ -21,7 +22,7 @@ export const RangeWidget: React.FC<RangeWidgetProps> = ({ range }) => {
         />
         <Text style={styles.cardBody}>{roundedRange} miles</Text>
       </View>
-    </View>
+    </RightCard>
   );
 };
 
@@ -40,16 +41,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-  },
-  rightCard: {
-    borderRadius: 6,
-    margin: 10,
-    padding: 10,
-    backgroundColor: colours.lightestGrey,
-    height: 94,
-    width: 177,
-    alignItems: "flex-start",
-    justifyContent: "center",
   },
   leftIcon: {
     marginRight: 30,

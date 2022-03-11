@@ -3,6 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
+import LeftCard from "../cards/LeftCard";
 import { BatteryWidgetProps, getPercentageString } from "./shared";
 
 const ChargingIconVertical: React.FC = () => (
@@ -25,7 +26,7 @@ export const BatteryWidgetVertical: React.FC<BatteryWidgetProps> = ({
 }) => {
   const percentageString = getPercentageString(percentRemaining);
   return (
-    <View style={styles.leftCard}>
+    <LeftCard>
       <Text style={styles.cardHeading}>Battery</Text>
       <View style={styles.cardCentred}>
         <View style={styles.batteryWidgetVertical}>
@@ -48,7 +49,7 @@ export const BatteryWidgetVertical: React.FC<BatteryWidgetProps> = ({
           ></View>
         </View>
       </View>
-    </View>
+    </LeftCard>
   );
 };
 
@@ -84,15 +85,5 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     width: "100%",
-  },
-  leftCard: {
-    borderRadius: 6,
-    margin: 10,
-    padding: 10,
-    backgroundColor: colours.lightestGrey,
-    height: 206,
-    width: 142,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
   },
 });
