@@ -3,8 +3,13 @@ import React from "react";
 import fonts from "../../styles/fonts";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colours from "../../styles/colours";
+import { useCarStore } from "../../stores/useCarStore";
 
 const ChargingConnection = () => {
+  const { selectedCar } = useCarStore();
+
+  if (!selectedCar) return null;
+
   return (
     <Pressable onPress={() => undefined}>
       <View
@@ -34,7 +39,9 @@ const ChargingConnection = () => {
             size={30}
             color={colours.secondary}
           />
-          <Text style={styles.cardDescription}>Unplugged</Text>
+          <Text style={styles.cardDescription}>
+            {selectedCar.isPluggedIn ? "Plugged In" : "Unplugged"}
+          </Text>
         </View>
       </View>
     </Pressable>

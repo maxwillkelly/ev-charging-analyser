@@ -3,8 +3,29 @@ import React from "react";
 import fonts from "../../styles/fonts";
 import colours from "../../styles/colours";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useCarStore } from "../../stores/useCarStore";
+import { ChargeState } from "../../api/dtos/Car.dto";
 
 const BatteryStatusWidget = () => {
+  const { selectedCar } = useCarStore();
+
+  if (!selectedCar) return null;
+
+  const getChargeStateString = (chargeState: ChargeState) => {
+    switch (chargeState) {
+      case "CHARGING":
+        return "Charging";
+      case "FULLY_CHARGED":
+        return "Fully Charged";
+      case "NOT_CHARGING":
+        return "Not Charging";
+      default:
+        return "Error";
+    }
+  };
+
+  const chargeStateString = getChargeStateString(selectedCar.state);
+
   return (
     <Pressable onPress={() => undefined}>
       <View
@@ -34,7 +55,7 @@ const BatteryStatusWidget = () => {
             size={30}
             color={colours.secondary}
           />
-          <Text style={styles.cardDescription}>Discharging</Text>
+          <Text style={styles.cardDescription}>{chargeStateString}</Text>
         </View>
       </View>
     </Pressable>
