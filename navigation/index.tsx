@@ -73,7 +73,7 @@ const RootNavigator = () => (
     <Stack.Screen
       name="ChargingSchedule"
       component={ChargingScheduleScreen}
-      options={{ title: "Charging Schedule" }}
+      options={{ title: "Schedule Charging" }}
     />
     <Stack.Screen
       name="Root"
