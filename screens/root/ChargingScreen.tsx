@@ -1,7 +1,7 @@
 import * as React from "react";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet } from "react-native";
 import BatteryStatusWidget from "../../components/charging-screen/BatteryStatusWidget";
-import ChargeCard from "../../components/charging-screen/ChargeCard";
+// import ChargeCard from "../../components/charging-screen/ChargeCard";
 import ChargingConnection from "../../components/charging-screen/ChargingConnection";
 import ChargingWidget from "../../components/charging-screen/ChargingWidget";
 import HistoryCard from "../../components/charging-screen/HistoryCard";
@@ -11,15 +11,11 @@ import { View } from "../../components/Themed";
 const ChargingScreen = () => {
   return (
     <View style={styles.container}>
-      {/* <Image
-        source={require("../../assets/images/tesla-model-x.png")}
-        style={{ marginTop: 80, height: 162, width: 330 }}
-      /> */}
       <ChargingWidget />
       <View style={styles.appletContainer}>
         <BatteryStatusWidget />
         <ChargingConnection />
-        <ChargeCard />
+        {/* <ChargeCard /> */}
         <ScheduleCard />
         <HistoryCard />
       </View>
@@ -38,8 +34,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   appletContainer: {
+    display: "flex",
     flex: 1,
     flexWrap: "wrap",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    marginBottom: 100,
   },
 });
 
