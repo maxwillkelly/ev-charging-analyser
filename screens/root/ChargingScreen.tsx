@@ -7,8 +7,9 @@ import ChargingWidget from "../../components/charging-screen/ChargingWidget";
 import HistoryCard from "../../components/charging-screen/HistoryCard";
 import ScheduleCard from "../../components/charging-screen/ScheduleCard";
 import { View } from "../../components/Themed";
+import { RootTabScreenProps } from "../../types";
 
-const ChargingScreen = () => {
+const ChargingScreen = ({ route, navigation }: RootTabScreenProps<"Charging">) => {
   return (
     <View style={styles.container}>
       <ChargingWidget />
@@ -17,7 +18,7 @@ const ChargingScreen = () => {
         <ChargingConnection />
         {/* <ChargeCard /> */}
         <ScheduleCard />
-        <HistoryCard />
+        <HistoryCard route={route} navigation={navigation} />
       </View>
     </View>
   );

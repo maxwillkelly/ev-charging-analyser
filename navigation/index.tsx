@@ -1,13 +1,13 @@
-import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
 } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName } from "react-native";
 
 import Colors from "../constants/Colours";
 import useColourScheme from "../hooks/useColourScheme";
@@ -26,10 +26,11 @@ import JourneysScreen from "../screens/root/JourneysScreen";
 import ChargingScreen from "../screens/root/ChargingScreen";
 import SettingsScreen from "../screens/root/SettingsScreen";
 import fonts from "../styles/fonts";
-import colours from "../styles/colours";
 import CarListScreen from "../screens/CarListScreen";
 import OnboardingLocationScreen from "../screens/onboarding/OnboardingLocationScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import ChargeHistoryScreen from "../screens/ChargeHistoryScreen";
+import HeaderBackButton from "./HeaderBackButton";
 
 export default function Navigation({
   colorScheme,
@@ -46,15 +47,20 @@ export default function Navigation({
   );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={({ route, navigation }) => ({
+        headerTitleStyle: {
+          fontFamily: fonts.medium,
+        },
+        headerLeft: () => (
+          <HeaderBackButton navigation={navigation} path="Root" />
+        ),
+      })}
+    >
       <Stack.Screen
         name="CarList"
         component={CarListScreen}
@@ -69,6 +75,11 @@ function RootNavigator() {
         name="Register"
         component={RegisterScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ChargingHistory"
+        component={ChargeHistoryScreen}
+        options={{ title: "Charging History" }}
       />
       <Stack.Screen
         name="Root"
@@ -115,19 +126,7 @@ const BottomTabNavigator: React.FC = () => {
           fontFamily: fonts.medium,
         },
         headerLeft: () => (
-          <Pressable
-            onPress={() => navigation.navigate("CarList")}
-            style={({ pressed }) => ({
-              opacity: pressed ? 0.5 : 1,
-            })}
-          >
-            <MaterialCommunityIcons
-              name="arrow-left"
-              size={25}
-              color={colours.secondary}
-              style={{ marginHorizontal: 15 }}
-            />
-          </Pressable>
+          <HeaderBackButton navigation={navigation} path="CarList" />
         ),
       })}
     >
@@ -192,18 +191,6 @@ const BottomTabNavigator: React.FC = () => {
       />
     </BottomTab.Navigator>
   );
-};
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-type TabBarIconProps = {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-};
-
-const TabBarIcon: React.FC<TabBarIconProps> = (props) => {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 };
 
 const Step = createBottomTabNavigator<OnboardingTabParamList>();

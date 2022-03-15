@@ -3,10 +3,11 @@ import React from "react";
 import colours from "../../styles/colours";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import fonts from "../../styles/fonts";
+import { RootTabScreenProps } from "../../types";
 
-const HistoryCard = () => {
+const HistoryCard = ({ navigation }: RootTabScreenProps<"Charging">) => {
   return (
-    <Pressable onPress={() => undefined}>
+    <Pressable onPress={() => navigation.navigate("ChargingHistory")}>
       <View
         style={{
           borderRadius: 6,

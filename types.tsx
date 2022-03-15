@@ -20,6 +20,7 @@ declare global {
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList>;
   Onboarding: NavigatorScreenParams<OnboardingTabParamList>;
+  ChargingHistory: undefined;
   CarList: undefined;
   SmartCarConnect: undefined;
   Vehicle: undefined;
@@ -42,7 +43,7 @@ export type RootTabParamList = {
 
 export type OnboardingTabParamList = {
   Location: undefined;
-}
+};
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
   CompositeScreenProps<
