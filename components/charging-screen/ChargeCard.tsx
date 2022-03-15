@@ -1,13 +1,36 @@
-import { Pressable, Text, View } from "react-native";
+import { GestureResponderEvent, Pressable, Text, View } from "react-native";
 import React from "react";
 import colours from "../../styles/colours";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import fonts from "../../styles/fonts";
 import { ChargeState } from "../../api/dtos/Car.dto";
 import { useCarStore } from "../../stores/useCarStore";
+import { useMutation, useQueryClient } from "react-query";
+import { CarActionDto, CarActionResponse } from "../../api/dtos/CarAction.dto";
+import { AxiosError } from "axios";
+import { startChargingAsync, stopChargingAsync } from "../../api/carsApi";
+import { useUserStore } from "../../stores/useUserStore";
 
 const ChargeCard = () => {
   const { selectedCar } = useCarStore();
+  const { user } = useUserStore();
+  const queryClient = useQueryClient();
+
+  const startChargingMutation = useMutation<
+    CarActionResponse,
+    AxiosError,
+    CarActionDto
+  >("startCharging", startChargingAsync, {
+    onSuccess: () => queryClient.invalidateQueries("cars"),
+  });
+
+  const stopChargingMutation = useMutation<
+    CarActionResponse,
+    AxiosError,
+    CarActionDto
+  >("stopCharging", stopChargingAsync, {
+    onSuccess: () => queryClient.invalidateQueries("cars"),
+  });
 
   if (!selectedCar) return null;
 
@@ -26,8 +49,26 @@ const ChargeCard = () => {
 
   const chargeActionString = getChargeActionString(state);
 
+  const onPressFunction = async (_event: GestureResponderEvent) => {
+    const variables = {
+      userId: user?.id as string,
+      vehicleId: selectedCar.id,
+    };
+
+    switch (state) {
+      case "CHARGING":
+        await stopChargingMutation.mutateAsync(variables);
+        break;
+      case "NOT_CHARGING":
+        await stopChargingMutation.mutateAsync(variables);
+        break;
+      default:
+        return;
+    }
+  };
+
   return (
-    <Pressable onPress={() => undefined}>
+    <Pressable onPress={onPressFunction}>
       <View
         style={{
           borderRadius: 6,
