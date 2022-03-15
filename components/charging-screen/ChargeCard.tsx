@@ -60,7 +60,7 @@ const ChargeCard = () => {
         await stopChargingMutation.mutateAsync(variables);
         break;
       case "NOT_CHARGING":
-        await stopChargingMutation.mutateAsync(variables);
+        await startChargingMutation.mutateAsync(variables);
         break;
       default:
         return;
