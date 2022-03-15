@@ -1,16 +1,19 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import Colors from "../constants/Colours";
 import useColourScheme from "../hooks/useColourScheme";
+import fonts from "../styles/fonts";
+import { RootTabParamList } from "../types";
+
+import HeaderBackButton from "./HeaderBackButton";
+
 import CarScreen from "../screens/root/CarScreen";
 import ChargingScreen from "../screens/root/ChargingScreen";
 import JourneysScreen from "../screens/root/JourneysScreen";
 import MapScreen from "../screens/root/MapScreen";
 import SettingsScreen from "../screens/root/SettingsScreen";
-import fonts from "../styles/fonts";
-import { RootTabParamList } from "../types";
-import HeaderBackButton from "./HeaderBackButton";
 
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
