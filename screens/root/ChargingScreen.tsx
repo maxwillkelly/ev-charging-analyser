@@ -17,7 +17,7 @@ const ChargingScreen = ({ route, navigation }: RootTabScreenProps<"Charging">) =
         <BatteryStatusWidget />
         <ChargingConnection />
         {/* <ChargeCard /> */}
-        <ScheduleCard />
+        <ScheduleCard route={route} navigation={navigation} />
         <HistoryCard route={route} navigation={navigation} />
       </View>
     </View>

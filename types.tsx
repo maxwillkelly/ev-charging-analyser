@@ -21,6 +21,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList>;
   Onboarding: NavigatorScreenParams<OnboardingTabParamList>;
   ChargingHistory: undefined;
+  ChargingSchedule: undefined;
   CarList: undefined;
   SmartCarConnect: undefined;
   Vehicle: undefined;

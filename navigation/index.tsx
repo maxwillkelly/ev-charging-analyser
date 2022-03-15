@@ -16,7 +16,8 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import SmartCarConnect from "../screens/SmartCarConnect";
 import CarListScreen from "../screens/CarListScreen";
 import RegisterScreen from "../screens/RegisterScreen";
-import ChargeHistoryScreen from "../screens/ChargeHistoryScreen";
+import ChargingHistoryScreen from "../screens/ChargingHistoryScreen";
+import ChargingScheduleScreen from "../screens/ChargingScheduleScreen";
 
 import HeaderBackButton from "./HeaderBackButton";
 
@@ -66,8 +67,13 @@ const RootNavigator = () => (
     />
     <Stack.Screen
       name="ChargingHistory"
-      component={ChargeHistoryScreen}
+      component={ChargingHistoryScreen}
       options={{ title: "Charging History" }}
+    />
+    <Stack.Screen
+      name="ChargingSchedule"
+      component={ChargingScheduleScreen}
+      options={{ title: "Charging Schedule" }}
     />
     <Stack.Screen
       name="Root"

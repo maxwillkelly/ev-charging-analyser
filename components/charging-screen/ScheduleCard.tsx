@@ -3,10 +3,11 @@ import React from "react";
 import fonts from "../../styles/fonts";
 import colours from "../../styles/colours";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { RootTabScreenProps } from "../../types";
 
-const ScheduleCard = () => {
+const ScheduleCard = ({ navigation }: RootTabScreenProps<"Charging">) => {
   return (
-    <Pressable onPress={() => undefined}>
+    <Pressable onPress={() => navigation.navigate("ChargingSchedule")}>
       <View
         style={{
           borderRadius: 6,
