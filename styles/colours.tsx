@@ -25,7 +25,8 @@ const colours: Colours = {
   white: "#FFFFFF",
   green: "#21C056",
   error: "#F40119",
-  warning: "#FF8C00",
+  // warning: "#FF950A",
+  warning: "#F4E915"
 };
 
 export default colours;

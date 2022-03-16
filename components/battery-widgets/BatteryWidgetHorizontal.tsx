@@ -3,36 +3,12 @@ import { StyleSheet } from "react-native";
 import { Text, View } from "../Themed";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
-import { BatteryWidgetProps, getPercentageString } from "./shared";
+import {
+  BatteryWidgetProps,
+  getBatteryColour,
+  getPercentageString,
+} from "./shared";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: colours.lightestGrey,
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    height: 50,
-  },
-  batteryIcon: {
-    backgroundColor: colours.lightGrey,
-    borderRadius: 6,
-    marginVertical: 5,
-    marginHorizontal: 2,
-    width: "60%",
-  },
-  batteryLevel: {
-    backgroundColor: colours.green,
-    height: "100%",
-    borderBottomLeftRadius: 6,
-    borderTopLeftRadius: 6,
-  },
-  percentage: {
-    fontFamily: fonts.bold,
-    fontSize: 18,
-  },
-});
 
 const ChargingIconHorizontal: React.FC = () => (
   <View
@@ -55,16 +31,24 @@ const ChargingIconHorizontal: React.FC = () => (
   </View>
 );
 
-export const BatteryWidgetHorizontal: React.FC<BatteryWidgetProps> = ({
+const BatteryWidgetHorizontal: React.FC<BatteryWidgetProps> = ({
   percentRemaining,
   state,
 }) => {
+  const batteryColour = getBatteryColour(percentRemaining);
   const percentageString = getPercentageString(percentRemaining);
+
   return (
     <View style={styles.card}>
       <View style={styles.batteryIcon}>
         <View
-          style={{ ...styles.batteryLevel, width: percentageString }}
+          style={{
+            backgroundColor: batteryColour,
+            height: "100%",
+            borderBottomLeftRadius: 6,
+            borderTopLeftRadius: 6,
+            width: percentageString,
+          }}
         ></View>
         {state === "CHARGING" && <ChargingIconHorizontal />}
       </View>
@@ -72,3 +56,27 @@ export const BatteryWidgetHorizontal: React.FC<BatteryWidgetProps> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: colours.lightestGrey,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    height: 50,
+  },
+  batteryIcon: {
+    backgroundColor: colours.lightGrey,
+    borderRadius: 6,
+    marginVertical: 5,
+    marginHorizontal: 2,
+    width: "60%",
+  },
+  percentage: {
+    fontFamily: fonts.bold,
+    fontSize: 18,
+  },
+});
+
+export default BatteryWidgetHorizontal;

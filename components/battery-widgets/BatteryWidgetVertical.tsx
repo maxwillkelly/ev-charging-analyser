@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
 import LeftCard from "../car-screen/cards/LeftCard";
-import { BatteryWidgetProps, getPercentageString } from "./shared";
+import { BatteryWidgetProps, getBatteryColour, getPercentageString } from "./shared";
 
 const ChargingIconVertical: React.FC = () => (
   <MaterialCommunityIcons
@@ -24,7 +24,9 @@ export const BatteryWidgetVertical: React.FC<BatteryWidgetProps> = ({
   percentRemaining,
   state,
 }) => {
+  const batteryColour = getBatteryColour(percentRemaining);
   const percentageString = getPercentageString(percentRemaining);
+  
   return (
     <LeftCard>
       <Text style={styles.cardHeading}>Battery</Text>
@@ -45,7 +47,13 @@ export const BatteryWidgetVertical: React.FC<BatteryWidgetProps> = ({
             <Text style={styles.batteryPercentage}>{percentageString}</Text>
           </View>
           <View
-            style={{ ...styles.batteryLevel, height: percentageString }}
+            style={{
+              backgroundColor: batteryColour,
+              width: "100%",
+              borderBottomLeftRadius: 6,
+              borderBottomRightRadius: 6,
+              height: percentageString,
+            }}
           ></View>
         </View>
       </View>
@@ -58,12 +66,6 @@ const styles = StyleSheet.create({
     color: colours.white,
     fontFamily: fonts.medium,
     fontSize: 28,
-  },
-  batteryLevel: {
-    backgroundColor: colours.green,
-    width: "100%",
-    borderBottomLeftRadius: 6,
-    borderBottomRightRadius: 6,
   },
   batteryWidgetVertical: {
     backgroundColor: colours.lightGrey,

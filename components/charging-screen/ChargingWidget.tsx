@@ -1,10 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import fonts from "../../styles/fonts";
-import colours from "../../styles/colours";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useCarStore } from "../../stores/useCarStore";
-import { getPercentageString } from "../battery-widgets/shared";
+import { getBatteryColour, getPercentageString } from "../battery-widgets/shared";
 
 const ChargingWidget = () => {
   const { selectedCar } = useCarStore();
@@ -13,13 +12,7 @@ const ChargingWidget = () => {
 
   const { percentRemaining } = selectedCar;
 
-  const getMainColour = (percentage: number) => {
-    if (percentage > 0.3) return colours.green;
-    if (percentage > 0.1) return colours.warning;
-    return colours.error;
-  };
-
-  const mainColour = getMainColour(percentRemaining);
+  const mainColour = getBatteryColour(percentRemaining);
   const percentageString = getPercentageString(percentRemaining);
 
   return (
