@@ -41,6 +41,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => (
   <Stack.Navigator
+    initialRouteName="CarList"
     screenOptions={({ route, navigation }) => ({
       headerTitleStyle: {
         fontFamily: fonts.medium,
