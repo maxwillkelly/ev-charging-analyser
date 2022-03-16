@@ -5,7 +5,7 @@ import BatteryStatusWidget from "../../components/charging-screen/BatteryStatusW
 import ChargingConnection from "../../components/charging-screen/ChargingConnection";
 import ChargingWidget from "../../components/charging-screen/ChargingWidget";
 import HistoryCard from "../../components/charging-screen/HistoryCard";
-import ScheduleCard from "../../components/charging-screen/ScheduleCard";
+// import ScheduleCard from "../../components/charging-screen/ScheduleCard";
 import { View } from "../../components/Themed";
 import { RootTabScreenProps } from "../../types";
 
@@ -17,7 +17,7 @@ const ChargingScreen = ({ route, navigation }: RootTabScreenProps<"Charging">) =
         <BatteryStatusWidget />
         <ChargingConnection />
         {/* <ChargeCard /> */}
-        <ScheduleCard route={route} navigation={navigation} />
+        {/* <ScheduleCard route={route} navigation={navigation} /> */}
         <HistoryCard route={route} navigation={navigation} />
       </View>
     </View>
