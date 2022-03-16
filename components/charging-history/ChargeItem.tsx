@@ -3,6 +3,7 @@ import React from "react";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
+import ChargingWidgetSmall from "./ChargingWidgetSmall";
 
 const ChargeItem = () => {
   return (
@@ -13,7 +14,6 @@ const ChargeItem = () => {
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
-        borderWidth: 1,
       }}
     >
       <MaterialCommunityIcons
@@ -27,12 +27,16 @@ const ChargeItem = () => {
         <Text style={styles.timesBetween}>1:23am - 4:56am</Text>
         <Text style={styles.chargingSpeed}>50kWh</Text>
       </View>
-      <View>
+      <View
+        style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+      >
+        <ChargingWidgetSmall percentRemaining={0.78} />
         <MaterialIcons
           name="arrow-right-alt"
           size={30}
           color={colours.secondary}
         />
+        <ChargingWidgetSmall percentRemaining={1} />
       </View>
     </View>
   );

@@ -1,17 +1,17 @@
 import { Text, View } from "react-native";
 import React from "react";
 import fonts from "../../styles/fonts";
+import {
+  getBatteryColour,
+  getPercentageString,
+} from "../battery-widgets/shared";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useCarStore } from "../../stores/useCarStore";
-import { getBatteryColour, getPercentageString } from "../battery-widgets/shared";
 
-const ChargingWidget = () => {
-  const { selectedCar } = useCarStore();
+type Props = {
+  percentRemaining: number;
+};
 
-  if (!selectedCar) return null;
-
-  const { percentRemaining } = selectedCar;
-
+const ChargingWidgetSmall: React.FC<Props> = ({ percentRemaining }) => {
   const mainColour = getBatteryColour(percentRemaining);
   const percentageString = getPercentageString(percentRemaining);
 
@@ -19,35 +19,35 @@ const ChargingWidget = () => {
     <View>
       <View
         style={{
-          width: 160,
-          height: 160,
-          borderRadius: 160 / 2,
-          borderWidth: 10,
+          width: 40,
+          height: 40,
+          borderRadius: 40 / 2,
+          borderWidth: 4.5,
           borderColor: mainColour,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          margin: 48,
           flexDirection: "row",
+          margin: 3,
         }}
       >
         <MaterialCommunityIcons
           name="lightning-bolt"
-          size={24}
+          size={6}
           color={mainColour}
           style={{
             position: "absolute",
             zIndex: 10,
             alignSelf: "flex-start",
-            margin: 20,
+            margin: 3,
           }}
         />
         <View
           style={{
-            width: 200,
-            height: 200,
-            borderRadius: 200 / 2,
-            borderWidth: 2,
+            width: 50,
+            height: 50,
+            borderRadius: 50 / 2,
+            borderWidth: 1.5,
             borderColor: mainColour,
             position: "absolute",
             display: "flex",
@@ -58,7 +58,7 @@ const ChargingWidget = () => {
           <Text
             style={{
               alignSelf: "center",
-              fontSize: 36,
+              fontSize: 9,
               fontFamily: fonts.semiBold,
             }}
           >
@@ -70,4 +70,4 @@ const ChargingWidget = () => {
   );
 };
 
-export default ChargingWidget;
+export default ChargingWidgetSmall;
