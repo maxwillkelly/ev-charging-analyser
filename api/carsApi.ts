@@ -63,3 +63,29 @@ export const unlockAsync = async (
       throw response;
     });
 };
+
+export const startChargingAsync = async (
+  dto: CarActionDto
+): Promise<CarActionResponse> => {
+  const config = getGenericConfig();
+
+  return axios
+    .post(`${CONTROLLER_URL}/startCharging`, dto, config)
+    .then((response) => response.data)
+    .catch((response) => {
+      throw response;
+    });
+};
+
+export const stopChargingAsync = async (
+  dto: CarActionDto
+): Promise<CarActionResponse> => {
+  const config = getGenericConfig();
+
+  return axios
+    .post(`${CONTROLLER_URL}/stopCharging`, dto, config)
+    .then((response) => response.data)
+    .catch((response) => {
+      throw response;
+    });
+};

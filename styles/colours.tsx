@@ -11,6 +11,7 @@ type Colours = {
   white: string;
   green: string;
   error: string;
+  warning: string;
 };
 
 const colours: Colours = {
@@ -24,6 +25,7 @@ const colours: Colours = {
   white: "#FFFFFF",
   green: "#21C056",
   error: "#F40119",
+  warning: "#FFDD1F"
 };
 
 export default colours;

@@ -10,6 +10,7 @@ import { CarActionResponse } from "../../api/dtos/CarAction.dto";
 import { useUserStore } from "../../stores/useUserStore";
 import fonts from "../../styles/fonts";
 import { useCarStore } from "../../stores/useCarStore";
+import { rightCardStyles } from "./cards/RightCard";
 
 export const LockWidget = () => {
   const [locked, toggleLocked] = useToggle();
@@ -49,7 +50,11 @@ export const LockWidget = () => {
   return (
     <Pressable onPress={toggle}>
       <View
-        style={locked ? styles.rightCard : [styles.rightCard, styles.active]}
+        style={
+          locked
+            ? rightCardStyles.rightCard
+            : [rightCardStyles.rightCard, styles.active]
+        }
       >
         <Text
           style={
@@ -103,16 +108,6 @@ const styles = StyleSheet.create({
     backgroundColor: colours.lightestGrey,
     flexDirection: "column",
     alignContent: "center",
-    justifyContent: "center",
-  },
-  rightCard: {
-    borderRadius: 6,
-    margin: 10,
-    padding: 10,
-    backgroundColor: colours.lightestGrey,
-    height: 94,
-    width: 177,
-    alignItems: "flex-start",
     justifyContent: "center",
   },
 });

@@ -5,7 +5,7 @@ import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
 import { RootStackParamList } from "../../types";
 import { Pressable, View, Image, Text, StyleSheet } from "react-native";
-import { BatteryWidgetHorizontal } from "../battery-widgets/BatteryWidgetHorizontal";
+import BatteryWidgetHorizontal from "../battery-widgets/BatteryWidgetHorizontal";
 
 type CarCardProps = {
   car: Car;
