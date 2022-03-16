@@ -11,9 +11,9 @@ import HeaderBackButton from "./HeaderBackButton";
 
 import CarScreen from "../screens/root/CarScreen";
 import ChargingScreen from "../screens/root/ChargingScreen";
-import JourneysScreen from "../screens/root/JourneysScreen";
+// import JourneysScreen from "../screens/root/JourneysScreen";
 import MapScreen from "../screens/root/MapScreen";
-import SettingsScreen from "../screens/root/SettingsScreen";
+// import SettingsScreen from "../screens/root/SettingsScreen";
 
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
@@ -54,7 +54,7 @@ const BottomTabNavigator: React.FC = () => {
           ),
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Journeys"
         component={JourneysScreen}
         options={{
@@ -67,7 +67,7 @@ const BottomTabNavigator: React.FC = () => {
             />
           ),
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Charging"
         component={ChargingScreen}
@@ -82,7 +82,7 @@ const BottomTabNavigator: React.FC = () => {
           ),
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
@@ -91,7 +91,7 @@ const BottomTabNavigator: React.FC = () => {
             <MaterialCommunityIcons name="car-cog" size={30} color={color} />
           ),
         }}
-      />
+      /> */}
     </BottomTab.Navigator>
   );
 };
