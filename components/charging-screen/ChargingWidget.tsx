@@ -3,8 +3,25 @@ import React from "react";
 import fonts from "../../styles/fonts";
 import colours from "../../styles/colours";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useCarStore } from "../../stores/useCarStore";
+import { getPercentageString } from "../battery-widgets/shared";
 
 const ChargingWidget = () => {
+  const { selectedCar } = useCarStore();
+
+  if (!selectedCar) return null;
+
+  const { percentRemaining } = selectedCar;
+
+  const getMainColour = (percentage: number) => {
+    if (percentage > 0.3) return colours.green;
+    if (percentage > 0.1) return colours.warning;
+    return colours.error;
+  };
+
+  const mainColour = getMainColour(percentRemaining);
+  const percentageString = getPercentageString(percentRemaining);
+
   return (
     <View>
       <View
@@ -13,7 +30,7 @@ const ChargingWidget = () => {
           height: 160,
           borderRadius: 160 / 2,
           borderWidth: 10,
-          borderColor: colours.green,
+          borderColor: mainColour,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -24,12 +41,12 @@ const ChargingWidget = () => {
         <MaterialCommunityIcons
           name="lightning-bolt"
           size={24}
-          color={colours.green}
+          color={mainColour}
           style={{
             position: "absolute",
             zIndex: 10,
             alignSelf: "flex-start",
-            margin: 20
+            margin: 20,
           }}
         />
         <View
@@ -38,7 +55,7 @@ const ChargingWidget = () => {
             height: 200,
             borderRadius: 200 / 2,
             borderWidth: 2,
-            borderColor: colours.green,
+            borderColor: mainColour,
             position: "absolute",
             display: "flex",
             alignItems: "center",
@@ -52,7 +69,7 @@ const ChargingWidget = () => {
               fontFamily: fonts.semiBold,
             }}
           >
-            80%
+            {percentageString}
           </Text>
         </View>
       </View>
