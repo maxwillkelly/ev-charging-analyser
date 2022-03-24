@@ -18,11 +18,13 @@ import {
   registerLocationTask,
   subscribeToLocationUpdatesAsync,
 } from "../services/Location";
+import useLogout from "../hooks/useLogout";
 
 const CarListScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList>) => {
   const { user } = useUserStore();
+  const logout = useLogout();
 
   useEffect(() => {
     if (!user) navigation.navigate("Login");
@@ -33,6 +35,13 @@ const CarListScreen = ({
     () => getCarsAsync(user?.id),
     {
       enabled: !!user?.id,
+      onError: (error) => {
+        switch (error.response?.status) {
+          case 401:
+            logout();
+            break;
+        }
+      },
     }
   );
 
