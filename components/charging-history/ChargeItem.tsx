@@ -27,7 +27,6 @@ const ChargeItem: React.FC<Props> = ({ charge }) => {
         justifyContent: "space-around",
         alignItems: "center",
         padding: 12,
-        backgroundColor: colours.white,
       }}
     >
       <MaterialCommunityIcons
@@ -37,9 +36,9 @@ const ChargeItem: React.FC<Props> = ({ charge }) => {
         style={{ alignSelf: "flex-start" }}
       />
       <View>
-        <Text style={styles.location}>Home (15 Privet Drive)</Text>
+        <Text style={styles.location}>Location</Text>
         <Text style={styles.timesBetween}>{timeString}</Text>
-        <Text style={styles.chargingSpeed}>50kWh</Text>
+        <Text style={styles.chargingSpeed}>Charging Speed</Text>
       </View>
       <View
         style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
