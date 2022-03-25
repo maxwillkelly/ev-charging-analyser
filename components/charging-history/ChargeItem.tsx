@@ -5,12 +5,19 @@ import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
 import ChargingWidgetSmall from "./ChargingWidgetSmall";
 import { Charge } from "../../api/dtos/Charge";
+import { format, parseISO } from "date-fns";
+
+const DATE_FORMAT = "h:mm aaa";
 
 type Props = {
   charge: Charge;
 };
 
 const ChargeItem: React.FC<Props> = ({ charge }) => {
+  const startTime = format(parseISO(charge.startedAtTime), DATE_FORMAT);
+  const finishTime = format(parseISO(charge.finishedAtTime), DATE_FORMAT);
+  const timeString = `${startTime} - ${finishTime}`;
+
   return (
     <View
       style={{
@@ -31,7 +38,7 @@ const ChargeItem: React.FC<Props> = ({ charge }) => {
       />
       <View>
         <Text style={styles.location}>Home (15 Privet Drive)</Text>
-        <Text style={styles.timesBetween}>1:23am - 4:56am</Text>
+        <Text style={styles.timesBetween}>{timeString}</Text>
         <Text style={styles.chargingSpeed}>50kWh</Text>
       </View>
       <View
