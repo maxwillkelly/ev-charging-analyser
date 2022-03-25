@@ -27,7 +27,6 @@ const ChargeItem: React.FC<Props> = ({ charge }) => {
         justifyContent: "space-around",
         alignItems: "center",
         padding: 12,
-        backgroundColor: colours.white,
       }}
     >
       <MaterialCommunityIcons

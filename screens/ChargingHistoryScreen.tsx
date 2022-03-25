@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useQuery } from "react-query";
 import { getChargesAsync } from "../api/carsApi";
@@ -6,19 +6,20 @@ import Spinner from "../components/Spinner";
 import { useCarStore } from "../stores/useCarStore";
 import ChargeItem from "../components/charging-history/ChargeItem";
 import fonts from "../styles/fonts";
-// import BatteryLineChart from "../components/charging-history/BatteryLineChart";
 import { Charge } from "../api/dtos/Charge";
 import colours from "../styles/colours";
 import DateNav from "../components/charging-history/DateNav";
-
-const SELECTED_DATE = "2022-03-25T00:00:00+0000";
+import { formatISO, startOfToday } from "date-fns";
 
 const ChargeHistoryScreen = () => {
+  const [selectedDay, setSelectedDay] = useState<Date>(startOfToday());
   const { selectedCar } = useCarStore();
 
+  const selectedDayString = formatISO(selectedDay);
+
   const { isLoading, error, data } = useQuery<Charge[]>(
-    "charges",
-    () => getChargesAsync(selectedCar?.id, SELECTED_DATE),
+    ["charges", selectedDayString],
+    () => getChargesAsync(selectedCar?.id, selectedDayString),
     {
       enabled: !!selectedCar,
     }
@@ -28,7 +29,7 @@ const ChargeHistoryScreen = () => {
 
   if (error)
     return (
-      <ScrollView style={{ backgroundColor: colours.white }}>
+      <ScrollView>
         <Text>{JSON.stringify(error, null, 2)}</Text>
       </ScrollView>
     );
@@ -46,7 +47,7 @@ const ChargeHistoryScreen = () => {
 
   return (
     <View style={styles.container}>
-      <DateNav />
+      <DateNav selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
       <ScrollView>
         {data.map((charge) => (
           <ChargeItem charge={charge} key={charge.startedAtTime} />
@@ -60,6 +61,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: colours.white
   },
 });
 
