@@ -1,8 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { BASE_URL, getHeaders, getGenericConfig } from ".";
+import { BatteryCharge } from "./dtos/BatteryCharge";
 import { Car } from "./dtos/Car.dto";
 import { CarActionDto, CarActionResponse } from "./dtos/CarAction.dto";
 import { CarLocation } from "./dtos/CarLocation.dto";
+import { Charge } from "./dtos/Charge";
 
 const CONTROLLER_URL = `${BASE_URL}/cars`;
 
@@ -84,6 +86,38 @@ export const stopChargingAsync = async (
 
   return axios
     .post(`${CONTROLLER_URL}/stopCharging`, dto, config)
+    .then((response) => response.data)
+    .catch((response) => {
+      throw response;
+    });
+};
+
+export const getChargingHistoryAsync = async (
+  vehicleId?: string
+): Promise<BatteryCharge[]> => {
+  const config: AxiosRequestConfig<{ vehicleId: string }> = {
+    headers: getHeaders(),
+    params: { vehicleId },
+  };
+
+  return axios
+    .get(`${CONTROLLER_URL}/chargingHistory`, config)
+    .then((response) => response.data)
+    .catch((response) => {
+      throw response;
+    });
+};
+
+export const getChargesAsync = async (
+  vehicleId?: string
+): Promise<Charge[]> => {
+  const config: AxiosRequestConfig<{ vehicleId: string }> = {
+    headers: getHeaders(),
+    params: { vehicleId },
+  };
+
+  return axios
+    .get(`${CONTROLLER_URL}/charges`, config)
     .then((response) => response.data)
     .catch((response) => {
       throw response;

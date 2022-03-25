@@ -4,8 +4,13 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
 import ChargingWidgetSmall from "./ChargingWidgetSmall";
+import { Charge } from "../../api/dtos/Charge";
 
-const ChargeItem = () => {
+type Props = {
+  charge: Charge;
+};
+
+const ChargeItem: React.FC<Props> = ({ charge }) => {
   return (
     <View
       style={{
@@ -14,6 +19,8 @@ const ChargeItem = () => {
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
+        padding: 12,
+        backgroundColor: colours.white,
       }}
     >
       <MaterialCommunityIcons
@@ -30,13 +37,17 @@ const ChargeItem = () => {
       <View
         style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
       >
-        <ChargingWidgetSmall percentRemaining={0.78} />
+        <ChargingWidgetSmall
+          percentRemaining={charge.startedAtPercentRemaining}
+        />
         <MaterialIcons
           name="arrow-right-alt"
-          size={30}
+          size={24}
           color={colours.secondary}
         />
-        <ChargingWidgetSmall percentRemaining={1} />
+        <ChargingWidgetSmall
+          percentRemaining={charge.finishedAtPercentRemaining}
+        />
       </View>
     </View>
   );
