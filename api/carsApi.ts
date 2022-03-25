@@ -109,11 +109,12 @@ export const getChargingHistoryAsync = async (
 };
 
 export const getChargesAsync = async (
-  vehicleId?: string
+  vehicleId?: string,
+  date?: string
 ): Promise<Charge[]> => {
-  const config: AxiosRequestConfig<{ vehicleId: string }> = {
+  const config: AxiosRequestConfig<{ vehicleId: string; date: string }> = {
     headers: getHeaders(),
-    params: { vehicleId },
+    params: { vehicleId, date },
   };
 
   return axios

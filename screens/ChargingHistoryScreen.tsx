@@ -11,12 +11,14 @@ import { Charge } from "../api/dtos/Charge";
 import colours from "../styles/colours";
 import DateNav from "../components/charging-history/DateNav";
 
+const SELECTED_DATE = "2022-03-25T00:00:00+0000";
+
 const ChargeHistoryScreen = () => {
   const { selectedCar } = useCarStore();
 
   const { isLoading, error, data } = useQuery<Charge[]>(
     "charges",
-    () => getChargesAsync(selectedCar?.id),
+    () => getChargesAsync(selectedCar?.id, SELECTED_DATE),
     {
       enabled: !!selectedCar,
     }
@@ -46,9 +48,7 @@ const ChargeHistoryScreen = () => {
     <View style={styles.container}>
       <DateNav />
       <ScrollView>
-        {/* <BatteryLineChart batteryCharges={data} /> */}
         {data.map((charge) => (
-          // <Text key={i}>{JSON.stringify(charge, null, 2)}</Text>
           <ChargeItem charge={charge} key={charge.startedAtTime} />
         ))}
       </ScrollView>
