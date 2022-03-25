@@ -6,9 +6,10 @@ import Spinner from "../components/Spinner";
 import { useCarStore } from "../stores/useCarStore";
 import ChargeItem from "../components/charging-history/ChargeItem";
 import fonts from "../styles/fonts";
-import BatteryLineChart from "../components/charging-history/BatteryLineChart";
+// import BatteryLineChart from "../components/charging-history/BatteryLineChart";
 import { Charge } from "../api/dtos/Charge";
 import colours from "../styles/colours";
+import DateNav from "../components/charging-history/DateNav";
 
 const ChargeHistoryScreen = () => {
   const { selectedCar } = useCarStore();
@@ -43,6 +44,7 @@ const ChargeHistoryScreen = () => {
 
   return (
     <View style={styles.container}>
+      <DateNav />
       <ScrollView>
         {/* <BatteryLineChart batteryCharges={data} /> */}
         {data.map((charge) => (
