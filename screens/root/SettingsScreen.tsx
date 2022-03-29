@@ -1,42 +1,87 @@
+/*
+  Much of this code was inspired by this Marius Reimer's article here: https://reime005.medium.com/simple-settings-list-in-react-native-f37109f9f7c5
+*/
+
 import * as React from "react";
-import { Button, StyleSheet } from "react-native";
-import { Text, View } from "../../components/Themed";
-import useLogout from "../../hooks/useLogout";
+import { SectionList } from "react-native";
+import SettingsListItem from "../../components/settings/SettingsListItem";
+import SettingsListSectionHeader from "../../components/settings/SettingsListSectionHeader";
+import colours from "../../styles/colours";
 import { RootTabScreenProps } from "../../types";
 
-const SettingsScreen = ({ navigation }: RootTabScreenProps<"Settings">) => {
-  const logout = useLogout();
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Debug</Text>
-      <Button
-        title="Log out"
-        onPress={() => {
-          logout();
-          navigation.navigate("Login");
-        }}
-      />
-      <Button
-        title="Onboard"
-        onPress={() => {
-          navigation.navigate("Onboarding", { screen: "Location" });
-        }}
-      />
-    </View>
-  );
+export type Setting = {
+  title: string;
+  route: string;
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+export type SettingsGroup = {
+  title: string;
+  data: Setting[];
+};
+
+export const settingsData: SettingsGroup[] = [
+  {
+    title: "Vehicle",
+    data: [
+      {
+        title: "Type pressures",
+        route: "typePressures",
+      },
+      {
+        title: "Vehicle information",
+        route: "vehicleInformation",
+      },
+    ],
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+  {
+    title: "Leave",
+    data: [
+      {
+        title: "Logout",
+        route: "logout",
+      },
+      {
+        title: "Disconnect vehicle",
+        route: "disconnect",
+      },
+    ],
   },
-});
+];
+
+const SettingsScreen = ({ navigation }: RootTabScreenProps<"Settings">) => {
+  const renderItem = (props: {
+    item: Setting;
+    index: number;
+    section: { data: unknown[] };
+  }) => {
+    const { index, section, item } = props;
+    const isFirstElement = index === 0;
+    const isLastElement = index === section.data.length - 1;
+
+    return (
+      <SettingsListItem
+        item={item}
+        isFirstElement={isFirstElement}
+        isLastElement={isLastElement}
+        navigation={navigation}
+      />
+    );
+  };
+
+  const renderSectionHeader = ({ section }: { section: SettingsGroup }) => {
+    const { title } = section;
+    return <SettingsListSectionHeader title={title} />;
+  };
+
+  return (
+    <SectionList
+      sections={settingsData}
+      style={{ flex: 1, width: "100%", backgroundColor: colours.white }}
+      keyExtractor={(item) => item.title}
+      renderItem={renderItem}
+      renderSectionHeader={renderSectionHeader}
+    />
+  );
+};
 
 export default SettingsScreen;
