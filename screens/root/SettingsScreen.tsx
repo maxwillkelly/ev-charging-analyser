@@ -3,7 +3,7 @@
 */
 
 import * as React from "react";
-import { SectionList, StyleSheet } from "react-native";
+import { SectionList } from "react-native";
 import SettingsListItem from "../../components/settings/SettingsListItem";
 import SettingsListSectionHeader from "../../components/settings/SettingsListSectionHeader";
 import colours from "../../styles/colours";
