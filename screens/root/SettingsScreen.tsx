@@ -9,10 +9,10 @@ import SettingsListItem from "../../components/settings/SettingsListItem";
 import SettingsListSectionHeader from "../../components/settings/SettingsListSectionHeader";
 import useLogout from "../../hooks/useLogout";
 import colours from "../../styles/colours";
-import { RootTabScreenProps } from "../../types";
+import { RootTabScreenProps, SettingsTabParamList } from "../../types";
 
 export type Setting = {
-  title: string;
+  title: "Type pressures" | "Vehicle information" | "Logout" | "Disconnect vehicle";
   route: string;
 };
 
@@ -27,11 +27,11 @@ export const settingsData: SettingsGroup[] = [
     data: [
       {
         title: "Type pressures",
-        route: "",
+        route: "typePressures",
       },
       {
         title: "Vehicle information",
-        route: "",
+        route: "vehicleInformation",
       },
     ],
   },
@@ -40,11 +40,11 @@ export const settingsData: SettingsGroup[] = [
     data: [
       {
         title: "Logout",
-        route: "Login",
+        route: "logout",
       },
       {
         title: "Disconnect vehicle",
-        route: "",
+        route: "disconnect",
       },
     ],
   },
@@ -67,6 +67,7 @@ const SettingsScreen = ({ navigation }: RootTabScreenProps<"Settings">) => {
         item={item}
         isFirstElement={isFirstElement}
         isLastElement={isLastElement}
+        navigation={navigation}
       />
     );
   };

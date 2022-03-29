@@ -23,6 +23,7 @@ import HeaderBackButton from "./HeaderBackButton";
 
 import BottomTabNavigator from "./BottomTabNavigator";
 import StepNavigator from "./StepNavigator";
+import SettingsNavigator from "./SettingsNavigator";
 
 type Props = {
   colorScheme: ColorSchemeName;
@@ -84,6 +85,11 @@ const RootNavigator = () => (
     <Stack.Screen
       name="Onboarding"
       component={StepNavigator}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="SettingsRoot"
+      component={SettingsNavigator}
       options={{ headerShown: false }}
     />
     <Stack.Screen

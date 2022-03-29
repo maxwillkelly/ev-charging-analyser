@@ -47,6 +47,14 @@ const linking: LinkingOptions<RootStackParamList> = {
           Location: "location",
         },
       },
+      SettingsRoot: {
+        screens: {
+          TypePressures: "tyrePressures",
+          VehicleInformation: "vehicleInformation",
+          Logout: "logout",
+          Disconnect: "disconnect"
+        },
+      },
       CarList: "carList",
       SmartCarConnect: "smartCarConnect",
       Modal: "modal",
