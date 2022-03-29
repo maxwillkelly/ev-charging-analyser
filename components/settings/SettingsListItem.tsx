@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colours from "../../styles/colours";
 import fonts from "../../styles/fonts";
 import { Pressable } from "react-native";
-import useLogout from "../../hooks/useLogout";
 import { CompositeNavigationProp } from "@react-navigation/native";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { RootStackParamList, RootTabParamList } from "../../types";
