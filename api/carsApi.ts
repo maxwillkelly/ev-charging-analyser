@@ -124,3 +124,17 @@ export const getChargesAsync = async (
       throw response;
     });
 };
+
+export const disconnectCarAsync = async (dto: CarActionDto) => {
+  const config: AxiosRequestConfig = {
+    headers: getHeaders(),
+    data: dto,
+  };
+
+  return axios
+    .delete(`${CONTROLLER_URL}/disconnect`, config)
+    .then((response) => response.data)
+    .catch((response) => {
+      throw response;
+    });
+};

@@ -35,6 +35,14 @@ export type RootStackParamList = {
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
+export type OnboardingStackScreenProps<
+  Screen extends keyof OnboardingTabParamList
+> = NativeStackScreenProps<OnboardingTabParamList, Screen>;
+
+export type SettingsStackScreenProps<
+  Screen extends keyof SettingsTabParamList
+> = NativeStackScreenProps<SettingsTabParamList, Screen>;
+
 export type RootTabParamList = {
   Car: { car: Car };
   Map: { car: Car };
