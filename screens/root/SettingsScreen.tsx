@@ -11,7 +11,7 @@ import { RootTabScreenProps } from "../../types";
 
 export type Setting = {
   title: string;
-  route: string;
+  route: "Disconnect" | "Logout" | "VehicleInformation" | "TypePressures";
 };
 
 export type SettingsGroup = {
@@ -25,11 +25,11 @@ export const settingsData: SettingsGroup[] = [
     data: [
       {
         title: "Type pressures",
-        route: "typePressures",
+        route: "TypePressures",
       },
       {
         title: "Vehicle information",
-        route: "vehicleInformation",
+        route: "VehicleInformation",
       },
     ],
   },
@@ -38,11 +38,11 @@ export const settingsData: SettingsGroup[] = [
     data: [
       {
         title: "Logout",
-        route: "logout",
+        route: "Logout",
       },
       {
         title: "Disconnect vehicle",
-        route: "disconnect",
+        route: "Disconnect",
       },
     ],
   },
