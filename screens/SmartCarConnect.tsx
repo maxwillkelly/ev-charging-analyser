@@ -6,7 +6,7 @@ import { useUserStore } from "../stores/useUserStore";
 import { exchangeAsync } from "../api/smartCarApi";
 import { RootStackScreenProps } from "../types";
 import { AxiosError } from "axios";
-import { BASE_URL } from "../api";
+import { API_URL } from "../api";
 import { OnShouldStartLoadWithRequest } from "react-native-webview/lib/WebViewTypes";
 import Spinner from "../components/Spinner";
 
@@ -45,7 +45,7 @@ const SmartCarConnect = ({
   );
 
   const generateUri = (userId: string): string => {
-    const startingUri = `${BASE_URL}/smartcar/login`;
+    const startingUri = `${API_URL}/smartcar/login`;
     const url = new URL(startingUri);
     url.searchParams.append("userId", userId);
     return url.href;
@@ -91,7 +91,7 @@ const SmartCarConnect = ({
       ref={webView}
       style={styles.container}
       originWhitelist={[
-        BASE_URL,
+        API_URL,
         "https://ev-charging-analyser-api.herokuapp.com",
         "https://*.smartcar.com",
       ]}

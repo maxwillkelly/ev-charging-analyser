@@ -1,8 +1,8 @@
 import axios from "axios";
-import { BASE_URL, getGenericConfig } from ".";
+import { API_URL, getGenericConfig } from ".";
 import { RecordLocationDto } from "./dtos/Location.dto";
 
-const CONTROLLER_URL = `${BASE_URL}/location`;
+const CONTROLLER_URL = `${API_URL}/location`;
 
 export const recordLocationAsync = async (dto: RecordLocationDto) => {
   const config = getGenericConfig();
