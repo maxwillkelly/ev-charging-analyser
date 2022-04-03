@@ -5,15 +5,29 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "API_URL": "https://ev-charging-analyser-api-stag.herokuapp.com"
+      }
     },
-    "preview": {
+    "staging": {
       "distribution": "internal",
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "API_URL": "https://ev-charging-analyser-api-stag.herokuapp.com"
       }
     },
-    "production": {}
+    "production": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "API_URL": "https://ev-charging-analyser-api-prod.herokuapp.com"
+      }
+    }
   },
   "submit": {
     "production": {}

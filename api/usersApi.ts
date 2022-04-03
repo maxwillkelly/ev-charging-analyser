@@ -1,9 +1,9 @@
 import axios from "axios";
-import { BASE_URL } from ".";
+import { API_URL } from ".";
 import { LoginDto, LoginResponse } from "./dtos/Login.dto";
 import { RegisterDto } from "./dtos/Register.dto";
 
-const CONTROLLER_URL = `${BASE_URL}/users`;
+const CONTROLLER_URL = `${API_URL}/users`;
 
 export const loginAsync = async (dto: LoginDto): Promise<LoginResponse> => {
   return axios
