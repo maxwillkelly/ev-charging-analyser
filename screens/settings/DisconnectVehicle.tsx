@@ -46,7 +46,7 @@ const DisconnectVehicle = ({
       <View style={styles.container}>
         <View style={styles.iconContainer}>
           <MaterialCommunityIcons
-            name="logout"
+            name="pipe-disconnected"
             size={200}
             color={colours.primary}
           />
@@ -54,7 +54,7 @@ const DisconnectVehicle = ({
         <View style={styles.center}>
           <Text style={styles.title}>Disconnect</Text>
           <Text style={styles.description}>
-            Are you sure you want to disconnect your vehicle
+            Are you sure you want to disconnect your vehicle?
           </Text>
         </View>
       </View>
