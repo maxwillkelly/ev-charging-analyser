@@ -10,7 +10,7 @@
         "API_URL": "https://ev-charging-analyser-api-stag.herokuapp.com"
       }
     },
-    "preview": {
+    "staging": {
       "distribution": "internal",
       "android": {
         "buildType": "apk"
