@@ -2,7 +2,7 @@ import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 import { recordLocationAsync } from "../api/locationApi";
 import { RecordLocationDto, UserLocations } from "../api/dtos/Location.dto";
-import { useLocationStore } from "../stores/LocationStore";
+import { useLocationStore } from "../stores/useLocationStore";
 
 const WATCH_LOCATION_TASK = "watch-location-task";
 

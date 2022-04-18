@@ -8,7 +8,7 @@ import { useQuery } from "react-query";
 import { AxiosError } from "axios";
 import { View, Text } from "../Themed";
 import { Car } from "../../api/dtos/Car.dto";
-import { useLocationStore } from "../../stores/LocationStore";
+import { useLocationStore } from "../../stores/useLocationStore";
 import { useUserStore } from "../../stores/useUserStore";
 import { useCarStore } from "../../stores/useCarStore";
 import Spinner from "../Spinner";
