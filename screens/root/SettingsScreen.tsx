@@ -20,19 +20,19 @@ export type SettingsGroup = {
 };
 
 export const settingsData: SettingsGroup[] = [
-  {
-    title: "Vehicle",
-    data: [
-      {
-        title: "Type pressures",
-        route: "TypePressures",
-      },
-      {
-        title: "Vehicle information",
-        route: "VehicleInformation",
-      },
-    ],
-  },
+  // {
+  //   title: "Vehicle",
+  //   data: [
+  //     {
+  //       title: "Type pressures",
+  //       route: "TypePressures",
+  //     },
+  //     {
+  //       title: "Vehicle information",
+  //       route: "VehicleInformation",
+  //     },
+  //   ],
+  // },
   {
     title: "Leave",
     data: [
