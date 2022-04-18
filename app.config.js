@@ -1,11 +1,11 @@
-// const API_TEST_URL = "http://localhost:5000";
-const API_TEST_URL = "https://ev-charging-analyser-api-stag.herokuapp.com";
+import 'dotenv/config';
 
 export default ({ config }) => {
   return {
     ...config,
     extra: {
-      apiUrl: process.env.API_URL ?? API_TEST_URL,
+      apiUrl: process.env.API_URL,
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
     },
   };
 };
