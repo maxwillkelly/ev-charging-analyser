@@ -57,7 +57,6 @@ const linking: LinkingOptions<RootStackParamList> = {
       },
       CarList: "carList",
       SmartCarConnect: "smartCarConnect",
-      Modal: "modal",
       Login: "login",
       Register: "register",
       NotFound: "*",
