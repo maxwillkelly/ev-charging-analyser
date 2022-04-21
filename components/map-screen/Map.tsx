@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import MapView, { LatLng, Marker as MapMarker } from "react-native-maps";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import colours from "../../styles/colours";
 import { getCarLocationAsync } from "../../api/carsApi";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
-import { View, Text } from "../Themed";
+import { Text, View } from "../Themed";
 import { Car } from "../../api/dtos/Car.dto";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { useUserStore } from "../../stores/useUserStore";
@@ -56,9 +61,8 @@ export const Map: React.FC<Props> = ({ car }) => {
     if (!lastLocation) return;
 
     const { coords } = lastLocation;
-    const { latitude, longitude } = coords;
 
-    setUserCoordinates({ latitude, longitude });
+    setUserCoordinates({ ...coords });
   }, [lastLocation]);
 
   const { isLoading, error, data } = useQuery<LatLng, AxiosError>(
@@ -69,14 +73,24 @@ export const Map: React.FC<Props> = ({ car }) => {
     }
   );
 
-  if (isLoading) return <Spinner />;
+  if (isLoading)
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color={colours.secondary} />
+      </View>
+    );
 
   if (error)
     return (
-      <View style={styles.container}>
-        <Text>Error occurred</Text>
+      <ScrollView>
         <Text>{JSON.stringify(error, null, 2)}</Text>
-      </View>
+      </ScrollView>
     );
 
   return (
