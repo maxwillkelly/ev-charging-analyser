@@ -1,20 +1,6 @@
 import color from "color";
 
-type Colours = {
-  primary: string;
-  secondary: string;
-  lightestGrey: string;
-  lightGrey: string;
-  jet: string;
-  darkGrey: string;
-  black: string;
-  white: string;
-  green: string;
-  error: string;
-  warning: string;
-};
-
-const colours: Colours = {
+const colours = {
   primary: "#0A99FF",
   secondary: color("#000000").alpha(0.64).rgb().string(),
   lightestGrey: "#e5e5e5",
