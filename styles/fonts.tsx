@@ -1,12 +1,4 @@
-type Fonts = {
-  light: string;
-  regular: string;
-  medium: string;
-  semiBold: string;
-  bold: string;
-};
-
-const fonts: Fonts = {
+const fonts = {
   light: "Montserrat_300Light",
   regular: "Montserrat_400Regular",
   medium: "Montserrat_500Medium",

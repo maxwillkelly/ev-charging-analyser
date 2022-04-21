@@ -26,7 +26,6 @@ export type RootStackParamList = {
   CarList: undefined;
   SmartCarConnect: undefined;
   Vehicle: undefined;
-  Modal: undefined;
   NotFound: undefined;
   Login: undefined;
   Register: undefined;
