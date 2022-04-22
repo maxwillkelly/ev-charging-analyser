@@ -20,7 +20,7 @@ export const RangeWidget: React.FC<RangeWidgetProps> = ({ range }) => {
           color={colours.secondary}
           style={styles.leftIcon}
         />
-        <Text style={styles.cardBody}>{roundedRange} miles</Text>
+        <Text style={styles.cardBody}>{roundedRange} kms</Text>
       </View>
     </RightCard>
   );
