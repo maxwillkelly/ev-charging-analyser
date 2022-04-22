@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, Dimensions, ActivityIndicator } from "react-native";
 import MapView, { LatLng, Marker as MapMarker } from "react-native-maps";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import colours from "../../styles/colours";
 import { getCarLocationAsync } from "../../api/carsApi";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
-import { Text, View } from "../Themed";
+import { View } from "../Themed";
 import { Car } from "../../api/dtos/Car.dto";
 import { useLocationStore } from "../../stores/useLocationStore";
 import { useUserStore } from "../../stores/useUserStore";
 import { useCarStore } from "../../stores/useCarStore";
-import Spinner from "../Spinner";
+import ErrorToast from "../ErrorToast";
 
 const INITIAL_REGION = {
   latitude: 56.46855061730443,
@@ -86,12 +81,7 @@ export const Map: React.FC<Props> = ({ car }) => {
       </View>
     );
 
-  if (error)
-    return (
-      <ScrollView>
-        <Text>{JSON.stringify(error, null, 2)}</Text>
-      </ScrollView>
-    );
+  if (error) return <ErrorToast message={error.message} />;
 
   return (
     <MapView

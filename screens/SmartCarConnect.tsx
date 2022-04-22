@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, ScrollView } from "react-native";
+import { StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import { useMutation, useQueryClient } from "react-query";
 import { useUserStore } from "../stores/useUserStore";
@@ -9,6 +9,7 @@ import { AxiosError } from "axios";
 import { API_URL } from "../api";
 import { OnShouldStartLoadWithRequest } from "react-native-webview/lib/WebViewTypes";
 import Spinner from "../components/Spinner";
+import ErrorToast from "../components/ErrorToast";
 
 type Status = "Initial" | "Loading" | "Success" | "Error";
 
@@ -17,7 +18,7 @@ const SmartCarConnect = ({
 }: RootStackScreenProps<"SmartCarConnect">) => {
   const webView = useRef<WebView>(null);
   const [status, setStatus] = useState<Status>("Initial");
-  const [error, setError] = useState<Error>();
+  const [error, setError] = useState<AxiosError>();
   const [uri, setUri] = useState("");
   const queryClient = useQueryClient();
   const { user } = useUserStore();
@@ -78,12 +79,8 @@ const SmartCarConnect = ({
   if (status === "Loading") return <Spinner />;
 
   if (status === "Error") {
-    return (
-      <ScrollView>
-        <Text>Error occurred</Text>
-        <Text>{JSON.stringify(error, null, 2)}</Text>
-      </ScrollView>
-    );
+    if (error?.response) return <ErrorToast message={error.response.data.message} />
+    return <ErrorToast message={error?.message || ""} />
   }
 
   return (
@@ -92,7 +89,8 @@ const SmartCarConnect = ({
       style={styles.container}
       originWhitelist={[
         API_URL,
-        "https://ev-charging-analyser-api.herokuapp.com",
+        "https://ev-charging-analyser-api-stag.herokuapp.com",
+        "https://ev-charging-analyser-api-prod.herokuapp.com",
         "https://*.smartcar.com",
       ]}
       source={{ uri }}
