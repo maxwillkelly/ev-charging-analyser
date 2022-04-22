@@ -10,6 +10,8 @@ import { Charge } from "../api/dtos/Charge";
 import colours from "../styles/colours";
 import DateNav from "../components/charging-history/DateNav";
 import { formatISO, startOfToday } from "date-fns";
+import ErrorToast from "../components/ErrorToast";
+import { AxiosError } from "axios";
 
 const ChargeHistoryScreen = () => {
   const [selectedDay, setSelectedDay] = useState<Date>(startOfToday());
@@ -17,7 +19,7 @@ const ChargeHistoryScreen = () => {
 
   const selectedDayString = formatISO(selectedDay);
 
-  const { isLoading, error, data } = useQuery<Charge[]>(
+  const { isLoading, error, data } = useQuery<Charge[], AxiosError>(
     ["charges", selectedDayString],
     () => getChargesAsync(selectedCar?.id, selectedDayString),
     {
@@ -27,11 +29,9 @@ const ChargeHistoryScreen = () => {
 
   if (isLoading) return <Spinner />;
 
-  if (error)
+  if (error?.response)
     return (
-      <ScrollView>
-        <Text>{JSON.stringify(error, null, 2)}</Text>
-      </ScrollView>
+      <ErrorToast message={error.response.data.message} />
     );
 
   if (!data)

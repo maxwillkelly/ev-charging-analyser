@@ -8,11 +8,18 @@ import { RangeWidget } from "../../components/car-screen/RangeWidget";
 import { LockWidget } from "../../components/car-screen/LockWidget";
 import { useCarStore } from "../../stores/useCarStore";
 
-const CarScreen = ({ route }: RootTabScreenProps<"Car">) => {
+const CarScreen = ({ route, navigation }: RootTabScreenProps<"Car">) => {
   const { setSelectedCar } = useCarStore();
-  const { car } = route.params;
 
-  useEffect(() => setSelectedCar(car), []);
+  useEffect(() => {
+    if (!route) navigation.navigate("CarList");
+  }, []);
+
+  useEffect(() => {
+    route.params?.car && setSelectedCar(route.params.car);
+  }, []);
+
+  const { car } = route.params;
 
   return (
     <View style={styles.container}>

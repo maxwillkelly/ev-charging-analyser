@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
+import { RootSiblingParent } from "react-native-root-siblings";
 import { Theme } from "react-native-paper/src/types";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import color from "color";
@@ -62,10 +63,12 @@ export default function App() {
     return (
       <QueryClientProvider client={queryClient}>
         <PaperProvider theme={theme}>
-          <SafeAreaProvider>
-            <Navigation colorScheme={colorScheme} />
-            <StatusBar />
-          </SafeAreaProvider>
+          <RootSiblingParent>
+            <SafeAreaProvider>
+              <Navigation colorScheme={colorScheme} />
+              <StatusBar />
+            </SafeAreaProvider>
+          </RootSiblingParent>
         </PaperProvider>
       </QueryClientProvider>
     );

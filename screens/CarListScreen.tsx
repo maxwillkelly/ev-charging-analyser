@@ -19,6 +19,7 @@ import {
   subscribeToLocationUpdatesAsync,
 } from "../services/Location";
 import useLogout from "../hooks/useLogout";
+import ErrorToast from "../components/ErrorToast";
 
 const CarListScreen = ({
   navigation,
@@ -56,14 +57,7 @@ const CarListScreen = ({
 
   if (isLoading) return <Spinner />;
 
-  if (error)
-    return (
-      <ScrollView>
-        <Text>{JSON.stringify(error, null, 2)}</Text>
-      </ScrollView>
-    );
-
-  if (isIdle || data)
+  if (isIdle || error || data)
     return (
       <View style={styles.container}>
         <View style={styles.innerContainer}>
@@ -88,6 +82,7 @@ const CarListScreen = ({
             color={colours.primary}
           />
         </Pressable>
+        {error?.response && <ErrorToast message={error.response.data.message} />}
       </View>
     );
 
