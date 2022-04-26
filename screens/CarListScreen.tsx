@@ -15,6 +15,7 @@ import fonts from "../styles/fonts";
 import { RootStackParamList } from "../types";
 
 import {
+  getLocationPermissions,
   registerLocationTask,
   subscribeToLocationUpdatesAsync,
 } from "../services/Location";
@@ -31,6 +32,20 @@ const CarListScreen = ({
     if (!user) navigation.navigate("Login");
   }, [user, user?.id]);
 
+  useEffect(() => {
+    const startLocationService = async () => {
+      const permitted = await getLocationPermissions();
+      if (!permitted)
+        navigation.navigate("SettingsRoot", { screen: "LocationPermissions" });
+      else {
+        registerLocationTask(user?.id);
+        await subscribeToLocationUpdatesAsync();
+      }
+    };
+
+    startLocationService();
+  }, [user, user?.id]);
+
   const { isIdle, isLoading, error, data } = useQuery<Car[], AxiosError>(
     "cars",
     () => getCarsAsync(user?.id),
@@ -45,15 +60,6 @@ const CarListScreen = ({
       },
     }
   );
-
-  useEffect(() => {
-    const startLocationService = async () => {
-      registerLocationTask(user?.id);
-      await subscribeToLocationUpdatesAsync();
-    };
-
-    startLocationService();
-  }, [user, user?.id]);
 
   if (isLoading) return <Spinner />;
 
@@ -82,7 +88,9 @@ const CarListScreen = ({
             color={colours.primary}
           />
         </Pressable>
-        {error?.response && <ErrorToast message={error.response.data.message} />}
+        {error?.response && (
+          <ErrorToast message={error.response.data.message} />
+        )}
       </View>
     );
 

@@ -57,6 +57,7 @@ export type OnboardingTabParamList = {
 export type SettingsTabParamList = {
   TyrePressures: undefined;
   VehicleInformation: undefined;
+  LocationPermissions: undefined;
   Logout: undefined;
   Disconnect: undefined;
 };

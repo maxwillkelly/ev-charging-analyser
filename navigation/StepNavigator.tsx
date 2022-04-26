@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import OnboardingLocationScreen from "../screens/onboarding/OnboardingLocationScreen";
+import LocationPermissionsScreen from "../screens/settings/LocationPermissionsScreen";
 import { OnboardingTabParamList } from "../types";
 import BottomTabNavigator from "./BottomTabNavigator";
 
@@ -35,7 +35,7 @@ const StepNavigator: React.FC = () => (
     //   ),
     // })}
   >
-    <Step.Screen name="Location" component={OnboardingLocationScreen} />
+    <Step.Screen name="Location" component={LocationPermissionsScreen} />
   </Step.Navigator>
 );
 
