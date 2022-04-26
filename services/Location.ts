@@ -16,14 +16,9 @@ export const getLocationPermissions = async (): Promise<boolean> => {
   return false;
 };
 
-export const subscribeToLocationUpdatesAsync = async (): Promise<void> => {
+export const subscribeToLocationUpdatesAsync = async (): Promise<boolean> => {
   const permitted = await getLocationPermissions();
-  if (!permitted) {
-    console.log("Permission to get current location was denied");
-    return;
-  }
-
-  console.log("Location access permitted");
+  if (!permitted) return false;
 
   const opts: Location.LocationTaskOptions = {
     accuracy: Location.Accuracy.Balanced,
@@ -38,13 +33,14 @@ export const subscribeToLocationUpdatesAsync = async (): Promise<void> => {
   };
 
   await Location.startLocationUpdatesAsync(WATCH_LOCATION_TASK, opts);
+  return true;
 };
 
 export const registerLocationTask = (userId?: string) => {
   if (!userId) return;
   TaskManager.defineTask(WATCH_LOCATION_TASK, async ({ data, error }) => {
     if (error) {
-      console.log(`Error in ${WATCH_LOCATION_TASK}`, error);
+      console.error(`Error in ${WATCH_LOCATION_TASK}`, error);
       return;
     }
     if (data) {

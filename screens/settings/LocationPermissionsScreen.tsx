@@ -3,7 +3,7 @@ import OnboardingScreen from "../../components/onboarding/OnboardingScreen";
 import { RootStackScreenProps } from "../../types";
 import { getLocationPermissions } from "../../services/Location";
 
-const OnboardingLocationScreen = ({ navigation }: RootStackScreenProps<"Onboarding">) => {
+const LocationPermissionsScreen = ({ navigation }: RootStackScreenProps<"Onboarding">) => {
   const onNextHandler = async () => {
     const permitted = await getLocationPermissions();
     if (permitted) {
@@ -21,4 +21,4 @@ const OnboardingLocationScreen = ({ navigation }: RootStackScreenProps<"Onboardi
   );
 };
 
-export default OnboardingLocationScreen;
+export default LocationPermissionsScreen;

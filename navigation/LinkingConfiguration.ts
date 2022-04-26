@@ -51,6 +51,7 @@ const linking: LinkingOptions<RootStackParamList> = {
         screens: {
           TypePressures: "tyrePressures",
           VehicleInformation: "vehicleInformation",
+          LocationPermissions: "locationPermissions",
           Logout: "logout",
           Disconnect: "disconnect"
         },
